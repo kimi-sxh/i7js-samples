@@ -14,9 +14,10 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -48,7 +49,7 @@ public class Listing_04_15_XMen extends GenericTest {
         Table table = new Table(6);
         // first movie
         table.addCell(new Cell()
-                .add("X-Men")
+                .add(new Paragraph("X-Men"))
                 .setHorizontalAlignment(HorizontalAlignment.CENTER)
                 .setVerticalAlignment(VerticalAlignment.TOP));
         // we wrap the image in a Cell
@@ -59,7 +60,7 @@ public class Listing_04_15_XMen extends GenericTest {
         table.addCell(cell);
         // second movie
         table.addCell(new Cell()
-                .add("X2")
+                .add(new Paragraph("X2"))
                 .setHorizontalAlignment(HorizontalAlignment.CENTER)
                 .setVerticalAlignment(VerticalAlignment.MIDDLE));
         // we wrap the image in a Cell and let iText scale it
@@ -70,7 +71,7 @@ public class Listing_04_15_XMen extends GenericTest {
         table.addCell(cell);
         // third movie
         table.addCell(new Cell()
-                .add("X-Men: The Last Stand")
+                .add(new Paragraph("X-Men: The Last Stand"))
                 .setHorizontalAlignment(HorizontalAlignment.CENTER)
                 .setVerticalAlignment(VerticalAlignment.BOTTOM));
         // we add the image with addCell()
@@ -80,10 +81,10 @@ public class Listing_04_15_XMen extends GenericTest {
                 .setVerticalAlignment(VerticalAlignment.BOTTOM));
         // fourth movie
         table.addCell(new Cell()
-                .add("Superman Returns"));
+                .add(new Paragraph("Superman Returns")));
         cell = new Cell();
         // we set the widt percent of image
-        img[3].setWidthPercent(50);
+        img[3].setWidth(50);
         cell
                 .add(img[3])
                 .setHorizontalAlignment(HorizontalAlignment.CENTER)

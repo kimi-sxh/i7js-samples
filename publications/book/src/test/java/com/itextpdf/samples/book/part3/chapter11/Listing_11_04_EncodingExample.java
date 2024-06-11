@@ -59,7 +59,7 @@ public class Listing_11_04_EncodingExample extends GenericTest {
         Document doc = new Document(pdfDoc);
         PdfSimpleFont font;
         for (int i = 0; i < 4; i++) {
-            font = (PdfSimpleFont) PdfFontFactory.createFont(FONT, MOVIES[i][0], true);
+            font = (PdfSimpleFont) PdfFontFactory.createFont(FONT, MOVIES[i][0], PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
             doc.add(new Paragraph("Font: " + font.getFontProgram().getFontNames().getFontName()
                     + " with encoding: " + font.getFontEncoding().getBaseEncoding()));
             doc.add(new Paragraph(MOVIES[i][1]));

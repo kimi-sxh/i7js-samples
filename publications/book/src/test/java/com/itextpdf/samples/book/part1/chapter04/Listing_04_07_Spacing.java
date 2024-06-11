@@ -36,7 +36,7 @@ public class Listing_04_07_Spacing extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(2);
-        //table.setWidthPercent(100);
+        table.setWidth(100);
         Cell cell = new Cell().add(new Paragraph(longText));
         table.addCell("default leading / spacing");
         table.addCell(cell);
@@ -54,7 +54,7 @@ public class Listing_04_07_Spacing extends GenericTest {
         cell = new Cell().add(new Paragraph(longText).setFixedLeading(0).setMultipliedLeading(0));
         table.addCell(cell);
 
-        cell = new Cell().add("Dr. iText or: How I Learned to Stop Worrying and Love PDF");
+        cell = new Cell().add(new Paragraph("Dr. iText or: How I Learned to Stop Worrying and Love PDF"));
         table.addCell("padding 10");
         cell.setPadding(10);
         table.addCell(cell);

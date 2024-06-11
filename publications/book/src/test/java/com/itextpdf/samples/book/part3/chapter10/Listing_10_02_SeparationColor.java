@@ -7,24 +7,21 @@
 
 package com.itextpdf.samples.book.part3.chapter10;
 
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
-import com.itextpdf.kernel.color.DeviceGray;
-import com.itextpdf.kernel.color.DeviceRgb;
-import com.itextpdf.kernel.color.Separation;
-import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.kernel.colors.*;
+import com.itextpdf.kernel.pdf.PdfArray;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfNumber;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.pdf.colorspace.PdfColorSpace;
 import com.itextpdf.kernel.pdf.colorspace.PdfSpecialCs;
 import com.itextpdf.kernel.pdf.function.PdfFunction;
-import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.samples.GenericTest;
+import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_10_02_SeparationColor extends GenericTest {
@@ -102,7 +99,7 @@ public class Listing_10_02_SeparationColor extends GenericTest {
     }
 
     private void colorRectangle(PdfCanvas canvas,
-                               Color color, float x, float y, float width, float height) {
+                                Color color, float x, float y, float width, float height) {
         canvas.saveState();
         canvas.setFillColor(color);
         canvas.rectangle(x, y, width, height);

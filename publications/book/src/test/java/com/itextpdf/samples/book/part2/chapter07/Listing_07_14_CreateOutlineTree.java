@@ -7,27 +7,19 @@
 
 package com.itextpdf.samples.book.part2.chapter07;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
-import com.itextpdf.kernel.utils.CompareTool;
-import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
+import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
 import com.lowagie.database.HsqldbConnection;
 import com.lowagie.filmfestival.Movie;
 import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.experimental.categories.Category;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -40,6 +32,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @Category(SampleTest.class)
 public class Listing_07_14_CreateOutlineTree extends GenericTest {
@@ -88,7 +84,7 @@ public class Listing_07_14_CreateOutlineTree extends GenericTest {
                             pdfDoc.getLastPage().getPageSize().getTop())));
             link = movieBookmark.addOutline("link to IMDB");
             link.setStyle(PdfOutline.FLAG_BOLD);
-            link.setColor(Color.BLUE);
+            link.setColor(ColorConstants.BLUE);
             link.addAction(PdfAction.createURI((String.format(RESOURCE, movie.getImdb()))));
             info = movieBookmark.addOutline("instant info");
             info.addAction(PdfAction.createJavaScript(

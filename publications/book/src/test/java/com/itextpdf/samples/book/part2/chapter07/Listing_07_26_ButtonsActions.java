@@ -9,7 +9,7 @@ package com.itextpdf.samples.book.part2.chapter07;
 
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -41,23 +41,22 @@ public class Listing_07_26_ButtonsActions extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(MOVIE_TEMPLATES), new PdfWriter(DEST));
         PdfButtonFormField saveAs =
                 PdfFormField.createPushButton(pdfDoc, new Rectangle(636, 10, 80, 20), "Save", "Save");
-        saveAs.setBorderColor(Color.BLACK);
+        saveAs.setBorderColor(ColorConstants.BLACK);
         saveAs.setBorderWidth(1);
-        saveAs.setColor(Color.RED);
+        saveAs.setColor(ColorConstants.RED);
         PdfAnnotation saveAsButton = saveAs.getWidgets().get(0);
         saveAs.setAction(PdfAction.createJavaScript("app.execMenuItem('SaveAs')"));
 
         PdfButtonFormField mail =
                 PdfFormField.createPushButton(pdfDoc, new Rectangle(736, 10, 80, 20), "Mail", "Mail");
-        mail.setBorderColor(Color.BLACK);
+        mail.setBorderColor(ColorConstants.BLACK);
         mail.setBorderWidth(1);
-        mail.setColor(Color.RED);
-        PdfAnnotation mailButton = mail.getWidgets().get(0);
-        mailButton.setAction(PdfAction.createJavaScript("app.execMenuItem('AcroSendMail:SendMail')"));
+        mail.setColor(ColorConstants.RED);
+        mail.setAction(PdfAction.createJavaScript("app.execMenuItem('AcroSendMail:SendMail')"));
         // Add the annotations to every page of the document
         for (int page = 1; page <= pdfDoc.getNumberOfPages(); page++) {
             pdfDoc.getPage(page).addAnnotation(saveAsButton);
-            pdfDoc.getPage(page).addAnnotation(mailButton);
+            pdfDoc.getPage(page).addAnnotation(mail.getWidgets().get(0));
         }
         pdfDoc.close();
     }

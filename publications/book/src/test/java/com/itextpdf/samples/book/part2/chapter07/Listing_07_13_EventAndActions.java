@@ -12,8 +12,8 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Link;
@@ -71,7 +71,7 @@ public class Listing_07_13_EventAndActions extends GenericTest {
         // Add this Paragraph to every page
         for (int i = 1; i <= n; i++) {
             canvas = new PdfCanvas(pdfDoc.getPage(i));
-            new Canvas(canvas, pdfDoc, pdfDoc.getPage(i).getPageSize())
+            new Canvas(canvas,  pdfDoc.getPage(i).getPageSize())
                     .showTextAligned(paragraph, 816, 18, i,
                             TextAlignment.RIGHT, VerticalAlignment.MIDDLE, 0);
         }

@@ -7,16 +7,15 @@
 
 package com.itextpdf.samples.book.part3.chapter11;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.FontProgramFactory;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.layout.Document;
 import com.itextpdf.samples.GenericTest;
-
+import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.Ignore;
 import org.junit.experimental.categories.Category;
 
@@ -40,9 +39,9 @@ public class Listing_11_20_FontSelectionExample extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
         // FontSelector selector = new FontSelector();
-        PdfFont font1 = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        PdfFont font1 = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
         // f1.setColor(BaseColor.BLUE); // 12
-        PdfFont font2 = PdfFontFactory.createFont(FontProgramFactory.createFont("MSung-Light"), "UniCNS-UCS2-H", false);
+        PdfFont font2 = PdfFontFactory.createFont(FontProgramFactory.createFont("MSung-Light"), "UniCNS-UCS2-H",  PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         // f2.setColor(BaseColor.RED);
         // selector.addFont(f1);
         // selector.addFont(f2);

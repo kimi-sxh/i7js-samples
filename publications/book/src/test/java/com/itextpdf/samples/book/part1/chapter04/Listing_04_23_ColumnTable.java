@@ -7,9 +7,9 @@
 
 package com.itextpdf.samples.book.part1.chapter04;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -24,7 +24,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -33,13 +33,12 @@ import com.lowagie.database.HsqldbConnection;
 import com.lowagie.filmfestival.Movie;
 import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.Screening;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_04_23_ColumnTable extends GenericTest {
@@ -62,7 +61,7 @@ public class Listing_04_23_ColumnTable extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4).rotate());
 
-        bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD, PdfEncodings.WINANSI);
+        bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD, PdfEncodings.WINANSI);
 
         ColumnDocumentRenderer renderer = new ColumnDocumentRenderer(doc);
         doc.setRenderer(renderer);
@@ -88,8 +87,8 @@ public class Listing_04_23_ColumnTable extends GenericTest {
 
     public static Table getHeaderTable(Date day, int page, PdfFont font) {
         Table header = new Table(3);
-        header.setWidthPercent(100);
-        Style style = new Style().setBackgroundColor(Color.BLACK).setFontColor(Color.WHITE).setFont(font);
+        header.setWidth(100);
+        Style style = new Style().setBackgroundColor(ColorConstants.BLACK).setFontColor(ColorConstants.WHITE).setFont(font);
         Paragraph p = new Paragraph("Foobar Film Festival").addStyle(style);
         header.addCell(new Cell().add(p));
         p = new Paragraph(day.toString()).addStyle(style);
@@ -102,18 +101,18 @@ public class Listing_04_23_ColumnTable extends GenericTest {
     public Table getTable(DatabaseConnection connection, Date day)
             throws SQLException, IOException {
         Table table = new Table(new float[]{2, 1.5f, 2, 4.5f, 1});
-        table.setWidthPercent(100);
-        Style style = new Style().setBackgroundColor(Color.LIGHT_GRAY);
-        table.addHeaderCell(new Cell().add("Location").addStyle(style));
-        table.addHeaderCell(new Cell().add("Time").addStyle(style));
-        table.addHeaderCell(new Cell().add("Run Length").addStyle(style));
-        table.addHeaderCell(new Cell().add("Title").addStyle(style));
-        table.addHeaderCell(new Cell().add("Year").addStyle(style));
-        table.addFooterCell(new Cell().add("Location").addStyle(style));
-        table.addFooterCell(new Cell().add("Time").addStyle(style));
-        table.addFooterCell(new Cell().add("Run Length").addStyle(style));
-        table.addFooterCell(new Cell().add("Title").addStyle(style));
-        table.addFooterCell(new Cell().add("Year").addStyle(style));
+        table.setWidth(100);
+        Style style = new Style().setBackgroundColor(ColorConstants.LIGHT_GRAY);
+        table.addHeaderCell(new Cell().add(new Paragraph("Location")).addStyle(style));
+        table.addHeaderCell(new Cell().add(new Paragraph("Time")).addStyle(style));
+        table.addHeaderCell(new Cell().add(new Paragraph("Run Length")).addStyle(style));
+        table.addHeaderCell(new Cell().add(new Paragraph("Title")).addStyle(style));
+        table.addHeaderCell(new Cell().add(new Paragraph("Year")).addStyle(style));
+        table.addFooterCell(new Cell().add(new Paragraph("Location")).addStyle(style));
+        table.addFooterCell(new Cell().add(new Paragraph("Time")).addStyle(style));
+        table.addFooterCell(new Cell().add(new Paragraph("Run Length")).addStyle(style));
+        table.addFooterCell(new Cell().add(new Paragraph("Title")).addStyle(style));
+        table.addFooterCell(new Cell().add(new Paragraph("Year")).addStyle(style));
 
         List<Screening> screenings = PojoFactory.getScreenings(connection, day);
         Movie movie;
@@ -137,17 +136,17 @@ public class Listing_04_23_ColumnTable extends GenericTest {
 
         @Override
         public LayoutArea updateCurrentArea(LayoutResult overflowResult) {
-            if (nextAreaNumber % 2 == 0) {
-                currentPageNumber = super.updateCurrentArea(overflowResult).getPageNumber();
-
-                addChild(getHeaderTable(date, currentPageNumber, bold).createRendererSubTree());
-
-                nextAreaNumber++;
-                currentArea = new LayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 450));
-            } else {
-                nextAreaNumber++;
-                currentArea = new LayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 450));
-            }
+//            if (nextAreaNumber % 2 == 0) {
+//                currentPageNumber = super.updateCurrentArea(overflowResult).getPageNumber();
+//
+//                addChild(getHeaderTable(date, currentPageNumber, bold).createRendererSubTree());
+//
+//                nextAreaNumber++;
+//                currentArea = new LayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 450));
+//            } else {
+//                nextAreaNumber++;
+//                currentArea = new LayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 450));
+//            }
             return currentArea;
         }
     }

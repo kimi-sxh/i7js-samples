@@ -7,7 +7,7 @@
 
 package com.itextpdf.samples.book.part2.chapter07;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -17,22 +17,17 @@ import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
-import com.itextpdf.layout.border.Border;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Link;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_07_05_TimetableDestinations extends GenericTest {
@@ -59,10 +54,10 @@ public class Listing_07_05_TimetableDestinations extends GenericTest {
         // Make a list with all the possible actions
         actions = new ArrayList<PdfAction>();
         for (int i = 1; i <= n; i++) {
-            actions.add(PdfAction.createGoTo(PdfExplicitDestination.createFit(i)));
+            actions.add(PdfAction.createGoTo(PdfExplicitDestination.createFit(pdfDoc.getPage(i))));
         }
 
-        PdfFont symbol = PdfFontFactory.createFont(FontConstants.SYMBOL);
+        PdfFont symbol = PdfFontFactory.createFont(StandardFonts.SYMBOL);
         // Add a navigation table to every page
         for (int i = 1; i <= n; i++) {
             doc.add(createNavigationTable(i, n).setFixedPosition(i, 696, 0, 120).setFont(symbol));

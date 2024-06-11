@@ -7,10 +7,10 @@
 
 package com.itextpdf.samples.book.part1.chapter05;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -24,7 +24,7 @@ import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Link;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.Property;
+import com.itextpdf.layout.properties.Property;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.LinkRenderer;
 import com.itextpdf.layout.renderer.ParagraphRenderer;
@@ -61,8 +61,8 @@ public class Listing_05_08_MovieYears extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4).rotate());
 
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD, PdfEncodings.WINANSI);
-        PdfFont italic = PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE, PdfEncodings.WINANSI);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD, PdfEncodings.WINANSI);
+        PdfFont italic = PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE, PdfEncodings.WINANSI);
 
         Paragraph p;
         Text text;
@@ -82,7 +82,7 @@ public class Listing_05_08_MovieYears extends GenericTest {
             text = new Text(String.format(" (%d minutes)  ", movie.getDuration())).setFont(italic);
             p.add(text);
             text = new Link("IMDB", PdfAction.createURI("http://www.imdb.com/title/tt" + movie.getImdb()))
-                    .setFont(bold).setFontColor(Color.WHITE);
+                    .setFont(bold).setFontColor(ColorConstants.WHITE);
             text.setNextRenderer(new EllipseTextRenderer((Link) text));
             p.add(text);
             doc.add(p);
@@ -132,7 +132,7 @@ public class Listing_05_08_MovieYears extends GenericTest {
     private class EllipseTextRenderer extends LinkRenderer {
         public EllipseTextRenderer(Link textElement) {
             super(textElement);
-            setProperty(Property.FONT_COLOR, Color.WHITE);
+            setProperty(Property.FONT_COLOR, ColorConstants.WHITE);
         }
 
         @Override

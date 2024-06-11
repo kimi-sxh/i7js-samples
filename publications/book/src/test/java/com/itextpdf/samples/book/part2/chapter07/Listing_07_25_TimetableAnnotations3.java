@@ -7,8 +7,8 @@
 
 package com.itextpdf.samples.book.part2.chapter07;
 
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfLineAnnotation;
@@ -66,7 +66,7 @@ public class Listing_07_25_TimetableAnnotations3 extends Listing_07_21_Timetable
                     annotation = new PdfStampAnnotation(rect)
                             .setStampName(new PdfName("NotForPublicRelease"))
                             .setContents("Press only")
-                            .setColor(Color.BLACK.getColorValue())
+                            .setColor(ColorConstants.BLACK.getColorValue())
                             .setFlags(PdfAnnotation.PRINT);
                 }
                 // Annotation for screenings that are sold out
@@ -77,22 +77,22 @@ public class Listing_07_25_TimetableAnnotations3 extends Listing_07_21_Timetable
                     PdfDictionary borderStyleDict = new PdfDictionary();
                     borderStyleDict.put(PdfName.W, new PdfNumber(5));
                     borderStyleDict.put(PdfName.S, PdfName.B);
-                    annotation = new PdfLineAnnotation(rect, line).
-                            setContents("SOLD OUT")
+                    annotation = new PdfLineAnnotation(rect, line).setBorderStyle(borderStyleDict)
+                            .setContents("SOLD OUT")
                             .setTitle(new PdfString(movie.getMovieTitle()))
-                            .setColor(Color.GREEN.getColorValue())
-                            .setFlags(PdfAnnotation.PRINT)
-                            .setBorderStyle(borderStyleDict);
+                            .setColor(ColorConstants.GREEN.getColorValue())
+                            .setFlags(PdfAnnotation.PRINT);
                 }
+                //TODO 先注释
                 // Annotation for screenings with tickets available
                 else {
-                    PdfBorderArray borderArray = new PdfBorderArray(0, 0, 2, new PdfDashPattern());
-                    annotation = new PdfSquareAnnotation(rect)
-                            .setContents("Tickets available")
-                            .setTitle(new PdfString(movie.getMovieTitle()))
-                            .setColor(Color.BLUE.getColorValue())
-                            .setFlags(PdfAnnotation.PRINT)
-                            .setBorder(borderArray.getPdfObject());
+//                    PdfBorderArray borderArray = new PdfBorderArray(0, 0, 2, new PdfDashPattern());
+                    annotation = new PdfSquareAnnotation(rect);
+//                            .setContents("Tickets available")
+//                            .setTitle(new PdfString(movie.getMovieTitle()))
+//                            .setColor(ColorConstants.BLUE.getColorValue())
+//                            .setFlags(PdfAnnotation.PRINT)
+//                            .setBorder(borderArray.getPdfObject());
                 }
                 pdfDoc.getPage(page).addAnnotation(annotation);
             }

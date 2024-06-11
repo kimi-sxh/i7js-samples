@@ -7,10 +7,10 @@
 
 package com.itextpdf.samples.book.part3.chapter11;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.FontEncoding;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.font.TrueTypeCollection;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -22,7 +22,6 @@ import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
@@ -30,7 +29,7 @@ public class Listing_11_01_FontTypes extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part3/chapter11/Listing_11_01_FontTypes.pdf";
     public static String TEXT = "quick brown fox jumps over the lazy dog\nQUICK BROWN FOX JUMPS OVER THE LAZY DOG";
     public static String[][] FONTS = {
-            {FontConstants.HELVETICA, PdfEncodings.WINANSI},
+            {StandardFonts.HELVETICA, PdfEncodings.WINANSI},
             {"./src/test/resources/font/cmr10.afm", PdfEncodings.WINANSI},
             {"./src/test/resources/font/cmr10.pfm", FontEncoding.FONT_SPECIFIC},
             {"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI},
@@ -52,9 +51,9 @@ public class Listing_11_01_FontTypes extends GenericTest {
         for (int i = 0; i < FONTS.length; i++) {
             if (FONTS[i][0].endsWith(".ttc")) {
                 TrueTypeCollection coll = new TrueTypeCollection(FONTS[i][0]);
-                font = PdfFontFactory.createFont(coll.getFontByTccIndex(0), FONTS[i][1], true);
+                font = PdfFontFactory.createFont(coll.getFontByTccIndex(0), FONTS[i][1], PdfFontFactory.EmbeddingStrategy.FORCE_EMBEDDED);
             } else {
-                font = PdfFontFactory.createFont(FONTS[i][0], FONTS[i][1], true);
+                font = PdfFontFactory.createFont(FONTS[i][0], FONTS[i][1], PdfFontFactory.EmbeddingStrategy.FORCE_EMBEDDED);
             }
             doc.add(new Paragraph(String.format("Font file: %s with encoding %s", FONTS[i][0], FONTS[i][1])));
             doc.add(new Paragraph(String.format("iText class: %s", font.getClass().getName())));

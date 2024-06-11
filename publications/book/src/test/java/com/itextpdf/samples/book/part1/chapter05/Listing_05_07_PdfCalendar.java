@@ -9,8 +9,8 @@ package com.itextpdf.samples.book.part1.chapter05;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -18,12 +18,12 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TabAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TabAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.TableRenderer;
@@ -61,8 +61,8 @@ public class Listing_05_07_PdfCalendar extends Listing_04_21_PdfCalendar {
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4).rotate());
 
         // fonts
-        bold = PdfFontFactory.createFont(/*"c://windows/fonts/arialbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
-        normal = PdfFontFactory.createFont(/*"c://windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
+        bold = PdfFontFactory.createFont(/*"c://windows/fonts/arialbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI);
+        normal = PdfFontFactory.createFont(/*"c://windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI);
 
         // collections
         specialDays.load(new FileInputStream(String.format(SPECIAL, YEAR)));
@@ -77,7 +77,7 @@ public class Listing_05_07_PdfCalendar extends Listing_04_21_PdfCalendar {
             drawImageAndText(calendar, doc);
             // create a table with 7 columns
             table = new Table(7);
-            table.setBackgroundColor(Color.YELLOW);
+            table.setBackgroundColor(ColorConstants.YELLOW);
             table.setWidth(504);
             table.setNextRenderer(new RoundedTableRenderer(table, new Table.RowRange(0, 6)));
             // add the name of the month
@@ -88,7 +88,7 @@ public class Listing_05_07_PdfCalendar extends Listing_04_21_PdfCalendar {
             // add empty cells
             while (position != calendar.get(Calendar.DAY_OF_WEEK)) {
                 position = (position % 7) + 1;
-                Cell cell = new Cell().add("");
+                Cell cell = new Cell().add(new Paragraph(""));
                 cell.setNextRenderer(new RoundedCellRenderer(cell, cmykWhite, false));
                 table.addCell(cell);
             }
@@ -101,7 +101,7 @@ public class Listing_05_07_PdfCalendar extends Listing_04_21_PdfCalendar {
             // add empty cells
             while (position != 2) {
                 position = (position % 7) + 1;
-                Cell cell = new Cell().add("");
+                Cell cell = new Cell().add(new Paragraph(""));
                 cell.setNextRenderer(new RoundedCellRenderer(cell, cmykWhite, false));
                 table.addCell(cell);
             }
@@ -163,7 +163,7 @@ public class Listing_05_07_PdfCalendar extends Listing_04_21_PdfCalendar {
     public Cell getDayCell(Calendar calendar, Locale locale) {
         Cell cell = new Cell();
         cell.setPadding(10);
-        cell.setBackgroundColor(Color.WHITE);
+        cell.setBackgroundColor(ColorConstants.WHITE);
         if (isSunday(calendar) || isSpecialDay(calendar)) {
             cell.setBorder(Border.NO_BORDER);
             cell.setNextRenderer(new RoundedCellRenderer(cell, cmykGreen, true));

@@ -51,7 +51,7 @@ public class Listing_16_04_EmbedFontPostFacto extends GenericTest {
     public void createPdf(String dest) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
-        PdfFont font = PdfFontFactory.createFont(FONT, "", false);
+        PdfFont font = PdfFontFactory.createFont(FONT, "", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         font.setSubset(false);
         doc.add(new Paragraph("iText in Action").setFont(font).setFontSize(60));
         doc.close();

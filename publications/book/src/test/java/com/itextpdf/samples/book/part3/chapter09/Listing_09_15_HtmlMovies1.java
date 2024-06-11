@@ -133,7 +133,7 @@ public class Listing_09_15_HtmlMovies1 extends GenericTest {
             list = new com.itextpdf.layout.element.List().setListSymbol("").setSymbolIndent(10);
             listItem = new ListItem();
             try {
-                font = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, true);
+                font = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
             } catch (IOException e) {
                 e.printStackTrace();
             }

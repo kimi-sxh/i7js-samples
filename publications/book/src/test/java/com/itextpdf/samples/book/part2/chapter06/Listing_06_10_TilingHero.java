@@ -53,7 +53,7 @@ public class Listing_06_10_TilingHero extends GenericTest {
             x = -pageSize.getWidth() * (i % 4);
             y = pageSize.getHeight() * (i / 4 - 3);
             new PdfCanvas(pdfDoc.getLastPage())
-                    .addXObject(page, 4, 0, 0, 4, x, y);
+                    .addXObjectWithTransformationMatrix(page, 4, 0, 0, 4, x, y);
             if (15 != i) {
                 doc.add(new AreaBreak());
             }

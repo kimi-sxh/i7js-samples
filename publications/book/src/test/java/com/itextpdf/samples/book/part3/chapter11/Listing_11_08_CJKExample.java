@@ -55,7 +55,7 @@ public class Listing_11_08_CJKExample extends GenericTest {
         Document doc = new Document(pdfDoc);
         PdfFont font;
         for (int i = 0; i < 3; i++) {
-            font = PdfFontFactory.createFont(MOVIES[i][0], MOVIES[i][1], false);
+            font = PdfFontFactory.createFont(MOVIES[i][0], MOVIES[i][1], PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
             doc.add(new Paragraph(font.getFontProgram().getFontNames().getFontName()).setFont(font));
             for (int j = 2; j < 5; j++)
                 doc.add(new Paragraph(MOVIES[i][j]).setFont(font));

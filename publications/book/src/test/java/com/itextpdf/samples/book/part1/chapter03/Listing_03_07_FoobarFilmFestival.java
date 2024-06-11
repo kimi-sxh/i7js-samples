@@ -7,9 +7,9 @@
 
 package com.itextpdf.samples.book.part1.chapter03;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -20,8 +20,8 @@ import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -46,7 +46,7 @@ public class Listing_03_07_FoobarFilmFestival extends GenericTest {
 
         String foobar = "Foobar Film Festival";
         // Measuring a String in Helvetica
-        PdfFont helvetica = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont helvetica = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         float width_helv = helvetica.getWidth(foobar, 12);
         Text c = new Text(foobar + ": " + width_helv).setFont(helvetica);
         doc.add(new Paragraph(c));
@@ -103,7 +103,7 @@ public class Listing_03_07_FoobarFilmFestival extends GenericTest {
                 .restoreState();
         // Adding text with Canvas.showTextAligned()
         canvas.setFontAndSize(helvetica, 12);
-        new Canvas(canvas, pdfDoc, pdfDoc.getFirstPage().getPageSize())
+        new Canvas(canvas, pdfDoc.getFirstPage().getPageSize())
                 .showTextAligned(foobar, 400, 788, TextAlignment.LEFT)
                 .showTextAligned(foobar, 400, 752, TextAlignment.RIGHT)
                 .showTextAligned(foobar, 400, 716, TextAlignment.CENTER)
@@ -156,7 +156,7 @@ public class Listing_03_07_FoobarFilmFestival extends GenericTest {
         c = new Text(foobar).setFont(freeSans);
         c.setTextRenderingMode(PdfCanvasConstants.TextRenderingMode.STROKE)
                 .setStrokeWidth(0.1f)
-                .setStrokeColor(Color.RED);
+                .setStrokeColor(ColorConstants.RED);
         phrase = new Paragraph(c);
         doc.showTextAligned(phrase, 400, 464, 1, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
         c = new Text(foobar).setFont(freeSans);

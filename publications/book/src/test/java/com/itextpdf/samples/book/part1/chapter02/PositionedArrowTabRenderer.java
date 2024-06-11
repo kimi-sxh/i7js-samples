@@ -7,8 +7,8 @@
 
 package com.itextpdf.samples.book.part1.chapter02;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -17,8 +17,8 @@ import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Tab;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.TabRenderer;
 
@@ -34,7 +34,7 @@ public class PositionedArrowTabRenderer extends TabRenderer {
         super(tab);
         this.isLeft = isLeft;
         try {
-            zapfdingbats = PdfFontFactory.createFont(FontConstants.ZAPFDINGBATS, PdfEncodings.WINANSI, false);
+            zapfdingbats = PdfFontFactory.createFont(StandardFonts.ZAPFDINGBATS, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         } catch (IOException ioe) {
             zapfdingbats = null;
         }
@@ -47,10 +47,10 @@ public class PositionedArrowTabRenderer extends TabRenderer {
         Paragraph p = new Paragraph(new String(new char[]{220}));
         p.setFont(zapfdingbats);
         if (isLeft) {
-            new Canvas(drawContext.getCanvas(), drawContext.getDocument(), rect)
+            new Canvas(drawContext.getCanvas(), rect)
                     .showTextAligned(p, pageSize.getLeft()-15, rect.getBottom()+8, TextAlignment.CENTER, VerticalAlignment.MIDDLE);
         } else {
-            new Canvas(drawContext.getCanvas(), drawContext.getDocument(), rect)
+            new Canvas(drawContext.getCanvas(), rect)
                     .showTextAligned(p, pageSize.getRight()+15, rect.getBottom()+8, drawContext.getDocument().getNumberOfPages(), TextAlignment.CENTER, VerticalAlignment.MIDDLE, (float) Math.PI);
         }
     }

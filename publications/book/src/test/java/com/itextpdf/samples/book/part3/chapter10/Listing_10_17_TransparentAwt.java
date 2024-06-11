@@ -8,11 +8,11 @@
 package com.itextpdf.samples.book.part3.chapter10;
 
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -70,7 +70,7 @@ public class Listing_10_17_TransparentAwt extends GenericTest {
     protected class PageBackgroundsEventHandler implements IEventHandler {
         protected Color color;
 
-        public PageBackgroundsEventHandler(Color color) {
+        public PageBackgroundsEventHandler(DeviceGray color) {
             this.color = color;
         }
 

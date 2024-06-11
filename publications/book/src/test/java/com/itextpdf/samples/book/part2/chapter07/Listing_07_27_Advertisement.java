@@ -9,14 +9,15 @@ package com.itextpdf.samples.book.part2.chapter07;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
+import com.itextpdf.kernel.pdf.annot.PdfWidgetAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
-import com.itextpdf.kernel.pdf.tagutils.IAccessibleElement;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfXObject;
@@ -26,11 +27,12 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.AbstractRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
+import com.itextpdf.layout.tagging.IAccessibleElement;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
@@ -75,12 +77,12 @@ public class Listing_07_27_Advertisement extends GenericTest {
 
         CustomButton button = new CustomButton("click", "Close this advertisement", pdfDoc, rect);
         button.setImage(new PdfImageXObject(ImageDataFactory.create(IMAGE)));
-        button.setButtonBackgroundColor(Color.RED);
-        button.setBorderColor(Color.RED);
+        button.setButtonBackgroundColor(ColorConstants.RED);
+        button.setBorderColor(ColorConstants.RED);
         button.setFontSize(10);
         doc.add(new Paragraph().add(button));
 
-        PdfAnnotation menubar = button.getButton().getWidgets().get(0);
+        PdfWidgetAnnotation menubar = button.getButton().getWidgets().get(0);
         String js = "var f1 = getField('click'); f1.display = display.hidden;"
                 + "var f2 = getField('advertisement'); f2.display = display.hidden;";
         menubar.setAction(PdfAction.createJavaScript(js));
@@ -88,13 +90,13 @@ public class Listing_07_27_Advertisement extends GenericTest {
         // Create the advertisement annotation for the content
         rect = new Rectangle(400, 550, 545-400, 222);
         button = new CustomButton("advertisement", "Buy the book iText in Action 2nd edition", pdfDoc, rect);
-        button.setButtonBackgroundColor(Color.WHITE);
-        button.setBorderColor(Color.RED);
+        button.setButtonBackgroundColor(ColorConstants.WHITE);
+        button.setBorderColor(ColorConstants.RED);
         button.setImage(adDoc.getPage(1).copyAsFormXObject(pdfDoc));
         button.setFontSize(8);
         doc.add(new Paragraph().add(button));
 
-        PdfAnnotation advertisement = button.getButton().getWidgets().get(0);
+        PdfWidgetAnnotation advertisement = button.getButton().getWidgets().get(0);
         advertisement.setAction(PdfAction.createURI("http://www.1t3xt.com/docs/book.php"));
         // Close the pdf document
         pdfDoc.close();
@@ -107,8 +109,8 @@ public class Listing_07_27_Advertisement extends GenericTest {
         protected String caption;
         protected PdfXObject image;
         protected Rectangle rect;
-        protected Color borderColor = Color.BLACK;
-        protected Color buttonBackgroundColor = Color.WHITE;
+        protected Color borderColor = ColorConstants.BLACK;
+        protected Color buttonBackgroundColor = ColorConstants.WHITE;
         protected int fontSize = 12;
 
         public CustomButton(String name, String caption, PdfDocument document, Rectangle rect) {
@@ -125,12 +127,10 @@ public class Listing_07_27_Advertisement extends GenericTest {
             return new CustomButtonRenderer(this);
         }
 
-        @Override
         public PdfName getRole() {
             return role;
         }
 
-        @Override
         public void setRole(PdfName role) {
             this.role = role;
         }
@@ -222,7 +222,7 @@ public class Listing_07_27_Advertisement extends GenericTest {
 
             Paragraph paragraph = new Paragraph(modelButton.getCaption()).setFontSize(modelButton.getFontSize()).setMargin(0).setMultipliedLeading(1);
 
-            new Canvas(canvas, drawContext.getDocument(), new Rectangle(0, 0, width, height)).
+            new Canvas(canvas, new Rectangle(0, 0, width, height)).
                     showTextAligned(paragraph, 1, 1, TextAlignment.LEFT, VerticalAlignment.BOTTOM);
 
             PdfXObject obj = modelButton.getImage();
@@ -236,9 +236,10 @@ public class Listing_07_27_Advertisement extends GenericTest {
             }
 
             if (obj instanceof PdfFormXObject) {
-                canvas.addXObject(obj, width / obj.getWidth(), 0, 0, height / obj.getHeight(), .5f, .5f);
+                canvas.addXObjectWithTransformationMatrix(obj, width / obj.getWidth(), 0, 0, height / obj.getHeight(), .5f, .5f);
             } else {
-                canvas.addXObject(obj, 0 + occupiedArea.getBBox().getWidth() - imageWidth, 0, imageWidth);
+                //TODO 还不确定先注释
+//                canvas.addXObject(obj, 0 + occupiedArea.getBBox().getWidth() - imageWidth, 0, imageWidth);
             }
 
 

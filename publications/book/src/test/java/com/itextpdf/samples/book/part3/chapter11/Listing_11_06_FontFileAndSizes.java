@@ -58,19 +58,19 @@ public class Listing_11_06_FontFileAndSizes extends GenericTest {
         PdfFont font;
         PdfDocument pdfDoc;
         pdfDoc = new PdfDocument(new PdfWriter(RESULT[0]));
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, false);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         writeAndClosePdf(pdfDoc, font, TEXT);
         pdfDoc = new PdfDocument(new PdfWriter(RESULT[1]));
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         writeAndClosePdf(pdfDoc, font, TEXT);
         pdfDoc = new PdfDocument(new PdfWriter(RESULT[2]));
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         writeAndClosePdf(pdfDoc, font, OOOO);
         pdfDoc = new PdfDocument(new PdfWriter(RESULT[3]));
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         writeAndClosePdf(pdfDoc, font, TEXT);
         pdfDoc = new PdfDocument(new PdfWriter(RESULT[4]));
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         font.setSubset(false);
         writeAndClosePdf(pdfDoc, font, TEXT);
     }

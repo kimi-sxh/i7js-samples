@@ -9,6 +9,7 @@ package com.itextpdf.samples.book.part3.chapter12;
 
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.IExternalDigest;
@@ -66,7 +67,8 @@ public class Listing_12_19_SignatureExternalHash extends SignatureTest {
 
         // reader and signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
 
         // appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();

@@ -7,7 +7,7 @@
 
 package com.itextpdf.samples.book.part1.chapter05;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -16,8 +16,9 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.TableRenderer;
@@ -69,53 +70,53 @@ public class Listing_05_01_AlternatingBackground extends GenericTest {
 
     public Table getTable(DatabaseConnection connection, Date day) throws UnsupportedEncodingException, SQLException {
         Table table = new Table(new float[]{2, 1, 2, 5, 1});
-        table.setWidthPercent(100);
+        table.setWidth(100);
 
         table.addHeaderCell(new Cell(1, 5)
-                .add(day.toString())
+                .add(new Paragraph(day.toString()))
                 .setPadding(3)
-                .setBackgroundColor(Color.RED)
+                .setBackgroundColor(ColorConstants.RED)
                 .setTextAlignment(TextAlignment.CENTER));
 
         table.addHeaderCell(new Cell()
-                .add("Location")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Location"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addHeaderCell(new Cell()
-                .add("Time")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Time"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addHeaderCell(new Cell()
-                .add("Run Length")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Run Length"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addHeaderCell(new Cell()
-                .add("Title")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Title"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addHeaderCell(new Cell()
-                .add("Year")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Year"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addFooterCell(new Cell()
-                .add("Location")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Location"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addFooterCell(new Cell()
-                .add("Time")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Time"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addFooterCell(new Cell()
-                .add("Run Length")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Run Length"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addFooterCell(new Cell()
-                .add("Title")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Title"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         table.addFooterCell(new Cell()
-                .add("Year")
-                .setBackgroundColor(Color.ORANGE)
+                .add(new Paragraph("Year"))
+                .setBackgroundColor(ColorConstants.ORANGE)
                 .setTextAlignment(TextAlignment.LEFT));
         List<Screening> screenings = PojoFactory.getScreenings(connection, day);
         Movie movie;
@@ -165,10 +166,10 @@ class AlternatingBackgroundTableRenderer extends TableRenderer {
             PdfCanvas canvas = drawContext.getCanvas();
             canvas.saveState();
             if (isOdd) {
-                canvas.setFillColor(Color.WHITE);
+                canvas.setFillColor(ColorConstants.WHITE);
                 isOdd = false;
             } else {
-                canvas.setFillColor(Color.YELLOW);
+                canvas.setFillColor(ColorConstants.YELLOW);
                 isOdd = true;
             }
             canvas.rectangle(rect);

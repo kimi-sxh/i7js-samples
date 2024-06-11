@@ -9,10 +9,11 @@ package com.itextpdf.samples.book.part3.chapter10;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
-import com.itextpdf.kernel.color.DeviceRgb;
-import com.itextpdf.kernel.color.PatternColor;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceGray;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.colors.PatternColor;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfArray;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -21,6 +22,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfPatternCanvas;
 import com.itextpdf.kernel.pdf.colorspace.PdfDeviceCs;
 import com.itextpdf.kernel.pdf.colorspace.PdfPattern;
 import com.itextpdf.kernel.pdf.colorspace.PdfSpecialCs;
+import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -76,7 +78,8 @@ public class Listing_10_03_TilingPatternColor extends GenericTest {
         ImageData img = ImageDataFactory.create(IMG_SRC);
         PdfPattern.Tiling img_pattern = new PdfPattern.Tiling(20, 20, 20, 20);
         img_pattern.setMatrix(new PdfArray(new float[]{-0.5f, 0f, 0f, 0.5f, 0f, 0f}));
-        new PdfPatternCanvas(img_pattern, pdfDoc).addImage(img, 0, 0, 20, false);
+        Rectangle rectangle = new Rectangle(20,20/img.getWidth() * img.getHeight());
+        new PdfPatternCanvas(img_pattern, pdfDoc).addXObjectFittedIntoRectangle(new PdfImageXObject(img), rectangle);
 
         PdfSpecialCs.UncoloredTilingPattern uncoloredRGBCS
                 = new PdfSpecialCs.UncoloredTilingPattern(new PdfDeviceCs.Rgb());

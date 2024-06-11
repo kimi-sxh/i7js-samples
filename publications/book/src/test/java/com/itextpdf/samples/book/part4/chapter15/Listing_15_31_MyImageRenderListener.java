@@ -47,7 +47,7 @@ public class Listing_15_31_MyImageRenderListener implements IEventListener {
                     os.write(imageByte);
                     os.flush();
                     os.close();
-                } catch (com.itextpdf.io.IOException | IOException e) {
+                } catch (com.itextpdf.io.exceptions.IOException | IOException e) {
                     System.out.println(e.getMessage());
                 }
                 break;

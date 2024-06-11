@@ -56,7 +56,7 @@ public class Listing_15_16_StructuredContent extends GenericTest {
         // See TaggingSamples for more information
         TagTreePointer autoTaggingPointer = pdfDoc.getTagStructureContext().getAutoTaggingPointer();
         // create a new tag, which will be a kid of the root element, and move to it
-        autoTaggingPointer.addTag(new PdfName("chapter"));
+        autoTaggingPointer.addTag("chapter");
 
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
         List<PdfName> roles = new ArrayList<PdfName>();

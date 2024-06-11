@@ -9,7 +9,7 @@ package com.itextpdf.samples.book.part3.chapter12;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
@@ -82,14 +82,14 @@ public class Listing_12_13_SignatureField extends SignatureTest {
             mkDictionary = new PdfDictionary();
         }
         PdfArray black = new PdfArray();
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[0]));
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[1]));
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[2]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[0]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[1]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[2]));
         mkDictionary.put(PdfName.BC, black);
         PdfArray white = new PdfArray();
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[0]));
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[1]));
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[2]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[0]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[1]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[2]));
         mkDictionary.put(PdfName.BG, white);
         field.getWidgets().get(0).setAppearanceCharacteristics(mkDictionary);
 
@@ -116,7 +116,8 @@ public class Listing_12_13_SignatureField extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // reader and signer
         PdfReader reader = new PdfReader(ORIGINAL);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         signer.setFieldName("mySig");

@@ -7,9 +7,9 @@
 
 package com.itextpdf.samples.book.part3.chapter10;
 
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
@@ -18,7 +18,7 @@ import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfTransparencyGroup;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 
@@ -81,21 +81,21 @@ public class Listing_10_06_Transparency1 extends GenericTest {
             canvas.resetFillColorRgb();
             // ColumnText ct = new ColumnText(canvas);
             Paragraph p = new Paragraph("Ungrouped objects\nObject opacity = 1.0");
-            new Canvas(canvas, pdfDoc, new Rectangle(gap, 0, 200, 500))
+            new Canvas(canvas, new Rectangle(gap, 0, 200, 500))
                     .add(p.setTextAlignment(TextAlignment.CENTER).setFontSize(18));
 
             p = new Paragraph("Ungrouped objects\nObject opacity = 0.5");
-            new Canvas(canvas, pdfDoc, new Rectangle(200 + 2 * gap, 0, 200, 500))
+            new Canvas(canvas,  new Rectangle(200 + 2 * gap, 0, 200, 500))
                     .add(p.setTextAlignment(TextAlignment.CENTER).setFontSize(18));
 
             p = new Paragraph(
                     "Transparency group\nObject opacity = 1.0\nGroup opacity = 0.5\nBlend mode = Normal");
-            new Canvas(canvas, pdfDoc, new Rectangle(gap, 0, 200, 500 - 200 - gap))
+            new Canvas(canvas,  new Rectangle(gap, 0, 200, 500 - 200 - gap))
                     .add(p.setTextAlignment(TextAlignment.CENTER).setFontSize(18));
 
             p = new Paragraph(
                     "Transparency group\nObject opacity = 0.5\nGroup opacity = 1.0\nBlend mode = HardLight");
-            new Canvas(canvas, pdfDoc, new Rectangle(200 + 2 * gap, 0, 200, 500 - 200 - gap))
+            new Canvas(canvas, new Rectangle(200 + 2 * gap, 0, 200, 500 - 200 - gap))
                     .add(p.setTextAlignment(TextAlignment.CENTER).setFontSize(18));
 
             pdfDoc.close();
@@ -113,7 +113,7 @@ public class Listing_10_06_Transparency1 extends GenericTest {
      * @throws Exception
      */
     public static void pictureBackdrop(float x, float y, PdfCanvas canvas) {
-        canvas.setStrokeColor(Color.DARK_GRAY)
+        canvas.setStrokeColor(ColorConstants.DARK_GRAY)
                 .setFillColor(new DeviceGray(0.8f))
                 .rectangle(x, y, 100, 200)
                 .fill()
@@ -131,13 +131,13 @@ public class Listing_10_06_Transparency1 extends GenericTest {
      * @throws Exception
      */
     public static void pictureCircles(float x, float y, PdfCanvas canvas) {
-        canvas.setFillColor(Color.RED)
+        canvas.setFillColor(ColorConstants.RED)
                 .circle(x + 70, y + 70, 50)
                 .fill()
-                .setFillColor(Color.YELLOW)
+                .setFillColor(ColorConstants.YELLOW)
                 .circle(x + 100, y + 130, 50)
                 .fill()
-                .setFillColor(Color.BLUE)
+                .setFillColor(ColorConstants.BLUE)
                 .circle(x + 130, y + 70, 50)
                 .fill();
     }

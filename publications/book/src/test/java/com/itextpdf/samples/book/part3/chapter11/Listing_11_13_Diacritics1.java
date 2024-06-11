@@ -9,20 +9,21 @@ package com.itextpdf.samples.book.part3.chapter11;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.awt.*;
 import java.io.IOException;
 
 @Category(SampleTest.class)
@@ -49,14 +50,14 @@ public class Listing_11_13_Diacritics1 extends GenericTest {
         PdfFont font;
         Image img = new Image(ImageDataFactory.create(POSTER));
         img.scale(0.5f, 0.5f);
-        img.setBorder(new SolidBorder(Color.LIGHT_GRAY, 18f));
+        img.setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 18f));
         img.setHorizontalAlignment(HorizontalAlignment.LEFT);
         doc.add(img);
         doc.add(new Paragraph(
                 "Movie title: Tears of the Black Tiger (Thailand)"));
         doc.add(new Paragraph("directed by Wisit Sasanatieng"));
         for (int i = 0; i < 2; i++) {
-            font = PdfFontFactory.createFont(FONTS[i], PdfEncodings.IDENTITY_H, true);
+            font = PdfFontFactory.createFont(FONTS[i], PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
             doc.add(new Paragraph("Font: " + font.getFontProgram().getFontNames().getFontName()));
             doc.add(new Paragraph(MOVIE).setFont(font).setFontSize(20));
         }

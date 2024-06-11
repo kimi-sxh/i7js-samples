@@ -15,8 +15,8 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.BaseDirection;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.BaseDirection;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 
@@ -52,7 +52,7 @@ public class Listing_11_18_Ligatures2 extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document document = new Document(pdfDoc);
 
-        PdfFont bf = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, true);
+        PdfFont bf = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph("Movie title: Lawrence of Arabia (UK)"));
         document.add(new Paragraph("directed by David Lean"));
         document.add(new Paragraph("Autodetect: " + MOVIE).setFont(bf).setFontSize(20));

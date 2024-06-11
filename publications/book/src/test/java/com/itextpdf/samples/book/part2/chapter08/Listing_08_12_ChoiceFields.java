@@ -10,15 +10,15 @@ package com.itextpdf.samples.book.part2.chapter08;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfChoiceFormField;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.Style;
-import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
@@ -175,7 +175,7 @@ public class Listing_08_12_ChoiceFields extends GenericTest {
                     langArray = new String[LANGUAGES.length];
                     System.arraycopy(LANGUAGES, 0, langArray, 0, LANGUAGES.length);
                     text = PdfFormField.createList(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langArray);
-                    text.setBorderColor(Color.GREEN);
+                    text.setBorderColor(ColorConstants.GREEN);
                     PdfDictionary borderDict = new PdfDictionary();
                     borderDict.put(PdfName.S, PdfName.D);
                     text.getWidgets().get(0).setBorderStyle(borderDict);
@@ -190,8 +190,8 @@ public class Listing_08_12_ChoiceFields extends GenericTest {
                         langAndExpArray[i][1] = LANGUAGES[i];
                     }
                     text = PdfFormField.createComboBox(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langAndExpArray);
-                    text.setBorderColor(Color.RED);
-                    text.setBackgroundColor(Color.GRAY);
+                    text.setBorderColor(ColorConstants.RED);
+                    text.setBackgroundColor(ColorConstants.GRAY);
 
                     text.setListSelected(new int[]{4});
                     break;

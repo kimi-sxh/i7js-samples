@@ -60,7 +60,7 @@ public class Listing_07_22_MoviePosters1 extends GenericTest {
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4));
         // Add the movie posters
         Image img;
-        PdfAnnotation linkAnnotation;
+        PdfLinkAnnotation linkAnnotation;
         // Annotation annotation;
         float x = 11.5f;
         float y = 769.7f;
@@ -78,14 +78,15 @@ public class Listing_07_22_MoviePosters1 extends GenericTest {
         for (int i = 0; i < 10; i++) {
             pdfCanvas.addXObject(xObject, 0, i * 84.2f);
         }
-        Canvas canvas = new Canvas(pdfCanvas, pdfDoc, pdfDoc.getLastPage().getPageSize());
+        Canvas canvas = new Canvas(pdfCanvas, pdfDoc.getLastPage().getPageSize());
         PdfArray border = new PdfArray(new float[]{0, 0, 0});
         for (Movie movie : PojoFactory.getMovies(connection)) {
             img = new Image(ImageDataFactory.create(String.format(RESOURCE, movie.getImdb())));
             img.scaleToFit(1000, 60);
             img.setFixedPosition(x + (45 - img.getImageScaledWidth()) / 2, y);
             linkAnnotation = new PdfLinkAnnotation(new Rectangle(x + (45 - img.getImageScaledWidth()) / 2, y,
-                    img.getImageScaledWidth(), img.getImageScaledHeight())).setBorder(border);
+                    img.getImageScaledWidth(), img.getImageScaledHeight()));
+            linkAnnotation.setBorder(border);
             linkAnnotation.setAction(PdfAction.createURI(String.format(IMDB, movie.getImdb())));
             pdfDoc.getLastPage().addAnnotation(linkAnnotation);
             canvas.add(img);

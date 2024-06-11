@@ -7,22 +7,21 @@
 
 package com.itextpdf.samples.book.part4.chapter14;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_14_10_TextMethods extends GenericTest {
@@ -51,12 +50,12 @@ public class Listing_14_10_TextMethods extends GenericTest {
                 .stroke();
         // draw text
         String text = "AWAY again ";
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         canvas.beginText()
                 .setFontAndSize(font, 12)
                 .setTextMatrix(50, 800)
                 .showText(text);
-        Canvas canvasModel = new Canvas(canvas, pdfDoc, pdfDoc.getDefaultPageSize());
+        Canvas canvasModel = new Canvas(canvas, pdfDoc.getDefaultPageSize());
         canvasModel.showTextAligned(text + " Center", 150, 760, TextAlignment.CENTER);
         canvasModel.showTextAligned(text + " Right", 150, 700, TextAlignment.RIGHT);
         canvasModel.showTextAligned(text + " Left", 150, 640, TextAlignment.LEFT);

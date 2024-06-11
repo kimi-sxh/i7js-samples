@@ -45,10 +45,10 @@ public class Listing_02_05_DirectorPhrases2 extends GenericTest {
         try {
             // create a font that will be embedded
             timesbd = PdfFontFactory.createFont(
-                    /*"c:/windows/fonts/timesbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
+                    /*"c:/windows/fonts/timesbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
             // create a font that will be embedded
             times = PdfFontFactory.createFont(
-                    /*"c:/windows/fonts/times.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
+                    /*"c:/windows/fonts/times.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);

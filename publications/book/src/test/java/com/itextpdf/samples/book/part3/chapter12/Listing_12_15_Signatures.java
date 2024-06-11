@@ -13,6 +13,7 @@ import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.SignatureTest;
@@ -76,7 +77,8 @@ public class Listing_12_15_Signatures extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // reader and signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setImage(ImageDataFactory.create(RESOURCE));
@@ -103,7 +105,8 @@ public class Listing_12_15_Signatures extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // reader and signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason("I'm approving this.");
@@ -138,11 +141,11 @@ public class Listing_12_15_Signatures extends SignatureTest {
             out.println("Signature name: " + name);
             out.println("Signature covers whole document: " + signUtil.signatureCoversWholeDocument(name));
             out.println("Document revision: " + signUtil.getRevision(name) + " of " + signUtil.getTotalRevisions());
-            PdfPKCS7 pk = signUtil.verifySignature(name);
+            PdfPKCS7 pk = signUtil.readSignatureData(name);
             Calendar cal = pk.getSignDate();
             Certificate[] pkc = pk.getCertificates();
             out.println("Subject: " + CertificateInfo.getSubjectFields(pk.getSigningCertificate()));
-            out.println("Revision modified: " + !pk.verify());
+            out.println("Revision modified: " + !pk.verifySignatureIntegrityAndAuthenticity());
             List<VerificationException> errors = CertificateVerification.verifyCertificates(pkc, ks, null, cal);
             if (errors.size() == 0) {
                 out.println("Certificates verified against the KeyStore");

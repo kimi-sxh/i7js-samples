@@ -11,8 +11,9 @@ import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfTextFormField;
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -25,8 +26,8 @@ import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -110,7 +111,7 @@ public class Listing_07_29_Calculator extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc, new PageSize(360, 360));
         pdfDoc.getCatalog().setOpenAction(PdfAction.createJavaScript(readFileToString(RESOURCE).replace("\r\n", "\n")));
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         // step 4
         // add the keys for the digits
         for (int i = 0; i < 10; i++) {
@@ -163,9 +164,9 @@ public class Listing_07_29_Calculator extends GenericTest {
         PdfButtonFormField pushButton = PdfFormField.createPushButton(pdfDoc, rect, "btn_" + btn, "btn_" + btn);
         pushButton.setFieldName("btn_" + btn);
         pushButton.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_PUSH);
-        pushButton.getWidgets().get(0).setNormalAppearance(createAppearance(pdfDoc, btn, Color.GRAY, w, h, font));
-        pushButton.getWidgets().get(0).setRolloverAppearance(createAppearance(pdfDoc, btn, Color.RED, w, h, font));
-        pushButton.getWidgets().get(0).setDownAppearance(createAppearance(pdfDoc, btn, Color.BLUE, w, h, font));
+        pushButton.getWidgets().get(0).setNormalAppearance(createAppearance(pdfDoc, btn, ColorConstants.GRAY, w, h, font));
+        pushButton.getWidgets().get(0).setRolloverAppearance(createAppearance(pdfDoc, btn, ColorConstants.RED, w, h, font));
+        pushButton.getWidgets().get(0).setDownAppearance(createAppearance(pdfDoc, btn, ColorConstants.BLUE, w, h, font));
         pushButton.getWidgets().get(0).setAdditionalAction(PdfName.U, PdfAction.createJavaScript(script));
         pushButton.getWidgets().get(0).setAdditionalAction(PdfName.E,
                 PdfAction.createJavaScript("this.showMove('" + btn + "');"));

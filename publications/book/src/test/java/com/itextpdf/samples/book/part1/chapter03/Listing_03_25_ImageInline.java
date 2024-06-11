@@ -37,7 +37,7 @@ public class Listing_03_25_ImageInline extends GenericTest {
 
         ImageData image = ImageDataFactory.create(RESOURCE);
         new PdfCanvas(pdfDoc.addNewPage(new PageSize(postcard))).
-                addImage(image, (postcard.getWidth() - image.getWidth()) / 2, (postcard.getHeight() - image.getHeight()) / 2, true);
+                addImageWithTransformationMatrix(image, image.getWidth(), 0.0F, 0.0F, image.getHeight(),(postcard.getWidth() - image.getWidth()) / 2, (postcard.getHeight() - image.getHeight()) / 2, true);
 
         //Close document
         pdfDoc.close();

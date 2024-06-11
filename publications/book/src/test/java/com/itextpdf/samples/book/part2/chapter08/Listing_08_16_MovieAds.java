@@ -11,28 +11,18 @@ import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfTextFormField;
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
-import com.itextpdf.kernel.color.DeviceRgb;
-import com.itextpdf.kernel.color.WebColors;
+import com.itextpdf.kernel.colors.*;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.pdf.PdfArray;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfName;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.kernel.pdf.PdfResources;
-import com.itextpdf.kernel.pdf.PdfStream;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
-import com.itextpdf.kernel.pdf.tagutils.IAccessibleElement;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.layout.Canvas;
@@ -44,12 +34,13 @@ import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.AbstractRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
 import com.itextpdf.layout.renderer.ParagraphRenderer;
+import com.itextpdf.layout.tagging.IAccessibleElement;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
@@ -57,11 +48,10 @@ import com.lowagie.database.HsqldbConnection;
 import com.lowagie.filmfestival.Director;
 import com.lowagie.filmfestival.Movie;
 import com.lowagie.filmfestival.PojoFactory;
+import org.junit.experimental.categories.Category;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_08_16_MovieAds extends GenericTest {
@@ -116,7 +106,7 @@ public class Listing_08_16_MovieAds extends GenericTest {
                 millimetersToPoints(7) - millimetersToPoints(0)), YEAR, "");
         screening.setJustification(PdfFormField.ALIGN_CENTER);
         screening.setBackgroundColor(new DeviceGray(0.4f));
-        screening.setColor(Color.LIGHT_GRAY);
+        screening.setColor(ColorConstants.LIGHT_GRAY);
         form.addField(screening);
 
         pdfDoc.close();
@@ -147,7 +137,7 @@ public class Listing_08_16_MovieAds extends GenericTest {
         button.setButtonBackgroundColor(color);
         form.removeField(POSTER);
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-        new Canvas(canvas, pdfDoc, rect)
+        new Canvas(canvas, rect)
                 .add(new Paragraph().add(button));
         // write the text using the appropriate font size
         rect = form.getField(TEXT).getWidgets().get(0).getRectangle().toRectangle();
@@ -179,9 +169,9 @@ public class Listing_08_16_MovieAds extends GenericTest {
         PdfFont bold = null;
         PdfFont italic = null;
         try {
-            normal = PdfFontFactory.createFont(FontConstants.HELVETICA, "", false, true);
-            bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD, "", false, true);
-            italic = PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE, "", false, true);
+            normal = PdfFontFactory.createFont(StandardFonts.HELVETICA, "", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED, true);
+            bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD, "", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED,  true);
+            italic = PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE, "", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED,  true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -262,8 +252,8 @@ public class Listing_08_16_MovieAds extends GenericTest {
         protected String caption;
         protected com.itextpdf.io.image.ImageData image;
         protected Rectangle rect;
-        protected Color borderColor = Color.BLACK;
-        protected Color buttonBackgroundColor = Color.WHITE;
+        protected Color borderColor = ColorConstants.BLACK;
+        protected Color buttonBackgroundColor = ColorConstants.WHITE;
 
         public CustomButton(PdfButtonFormField button) {
             this.button = button;
@@ -274,17 +264,14 @@ public class Listing_08_16_MovieAds extends GenericTest {
             return new CustomButtonRenderer(this);
         }
 
-        @Override
         public PdfName getRole() {
             return role;
         }
 
-        @Override
         public void setRole(PdfName role) {
             this.role = role;
         }
 
-        @Override
         public AccessibilityProperties getAccessibilityProperties() {
             return null;
         }
@@ -365,7 +352,7 @@ public class Listing_08_16_MovieAds extends GenericTest {
 
             Paragraph paragraph = new Paragraph(modelButton.getCaption()).setFontSize(10).setMargin(0).setMultipliedLeading(1);
 
-            new Canvas(canvas, drawContext.getDocument(), new Rectangle(0, 0, width, height)).
+            new Canvas(canvas, new Rectangle(0, 0, width, height)).
                     showTextAligned(paragraph, 1, 1, TextAlignment.LEFT, VerticalAlignment.BOTTOM);
 
             PdfImageXObject imageXObject = new PdfImageXObject(modelButton.getImage());
@@ -378,8 +365,12 @@ public class Listing_08_16_MovieAds extends GenericTest {
             if (imageHeight > rect.getHeight()) {
                 imageWidth = imageWidth * (rect.getHeight() / imageHeight);
             }
-
-            canvas.addXObject(imageXObject, 0.5f + (rect.getWidth() - imageWidth) / 2, 0.5f, imageWidth - 1);
+            PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
+            if (bbox == null)
+                throw new PdfException("PdfFormXObject has invalid BBox.");
+            float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
+            float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
+            canvas.addXObjectWithTransformationMatrix(imageXObject, imageWidth - 1, 0f, 0f, (imageWidth - 1) / formWidth * formHeight, 0.5f + (rect.getWidth() - imageWidth) / 2, 0.5f);
 
             PdfButtonFormField button = modelButton.getButton();
             button.getWidgets().get(0).setNormalAppearance(xObject.getPdfObject());

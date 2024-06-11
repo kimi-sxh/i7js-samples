@@ -9,8 +9,8 @@ package com.itextpdf.samples.book.part1.chapter04;
 
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -18,9 +18,9 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.property.TabAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TabAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -75,8 +75,8 @@ public class Listing_04_21_PdfCalendar extends GenericTest {
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4).rotate());
 
         // fonts
-        normal = PdfFontFactory.createFont(/*"c://windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
-        bold = PdfFontFactory.createFont(/*"c://windows/fonts/arialbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI, true);
+        normal = PdfFontFactory.createFont(/*"c://windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI);
+        bold = PdfFontFactory.createFont(/*"c://windows/fonts/arialbd.ttf"*/"./src/test/resources/font/FreeSans.ttf", PdfEncodings.WINANSI);
 
         // collections
         specialDays.load(new FileInputStream(String.format(SPECIAL, YEAR)));
@@ -100,7 +100,7 @@ public class Listing_04_21_PdfCalendar extends GenericTest {
             // add empty cells
             while (position != calendar.get(Calendar.DAY_OF_WEEK)) {
                 position = (position % 7) + 1;
-                table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(Color.WHITE));
+                table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.WHITE));
             }
             // add cells for each day
             while (day <= daysInMonth) {
@@ -111,7 +111,7 @@ public class Listing_04_21_PdfCalendar extends GenericTest {
             // add empty cells
             while (position != 2) {
                 position = (position % 7) + 1;
-                table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(Color.WHITE));
+                table.addCell(new Cell().add(new Paragraph("")).setBackgroundColor(ColorConstants.WHITE));
             }
             doc.add(table.setFixedPosition(169, 18, 504));
             if (11 != month) {
@@ -161,7 +161,7 @@ public class Listing_04_21_PdfCalendar extends GenericTest {
      */
     public Cell getMonthCell(Calendar calendar, Locale locale) {
         Cell cell = new Cell(1, 7);
-        cell.setBackgroundColor(Color.WHITE);
+        cell.setBackgroundColor(ColorConstants.WHITE);
         Paragraph p = new Paragraph(String.format(locale, "%1$tB %1$tY", calendar)).setFont(bold).setFontSize(14);
         p.setTextAlignment(TextAlignment.CENTER);
         cell.add(p);
@@ -180,11 +180,11 @@ public class Listing_04_21_PdfCalendar extends GenericTest {
         cell.setPadding(3);
         // set the background color, based on the type of day
         if (isSunday(calendar)) {
-            cell.setBackgroundColor(Color.GRAY);
+            cell.setBackgroundColor(ColorConstants.GRAY);
         } else if (isSpecialDay(calendar)) {
-            cell.setBackgroundColor(Color.LIGHT_GRAY);
+            cell.setBackgroundColor(ColorConstants.LIGHT_GRAY);
         } else {
-            cell.setBackgroundColor(Color.WHITE);
+            cell.setBackgroundColor(ColorConstants.WHITE);
         }
         // set the content in the language of the locale
         Text text = new Text(String.format(locale, "%1$ta", calendar)).setFont(normal).setFontSize(8);

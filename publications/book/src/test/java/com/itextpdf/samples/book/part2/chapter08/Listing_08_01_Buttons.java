@@ -10,20 +10,21 @@ package com.itextpdf.samples.book.part2.chapter08;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceGray;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.action.PdfAction;
-import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
+import com.itextpdf.kernel.pdf.annot.PdfWidgetAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
-import com.itextpdf.kernel.pdf.tagutils.IAccessibleElement;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.layout.Canvas;
@@ -34,11 +35,12 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.AbstractRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
+import com.itextpdf.layout.tagging.IAccessibleElement;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -90,15 +92,15 @@ public class Listing_08_01_Buttons extends GenericTest {
         Document doc = new Document(pdfDoc);
         pdfDoc.getCatalog().setOpenAction(PdfAction.createJavaScript(readFileToString(RESOURCE).replace("\r\n", "\n")));
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         Rectangle rect;
         PdfButtonFormField radioGroup = PdfFormField.createRadioGroup(pdfDoc, "language", "");
         PdfFormField radio;
         for (int i = 0; i < LANGUAGES.length; i++) {
             rect = new Rectangle(40, 806 - i * 40, 60 - 40, 806 - 788);
             radio = PdfFormField.createRadioButton(pdfDoc, rect, radioGroup, LANGUAGES[i]);
-            radio.setBorderColor(Color.DARK_GRAY);
-            radio.setBackgroundColor(Color.LIGHT_GRAY);
+            radio.setBorderColor(ColorConstants.DARK_GRAY);
+            radio.setBackgroundColor(ColorConstants.LIGHT_GRAY);
             radio.setCheckType(PdfFormField.TYPE_CIRCLE);
             canvas
                     .beginText()
@@ -155,12 +157,12 @@ public class Listing_08_01_Buttons extends GenericTest {
         Button button = new Button("Buttons", "Push me", pdfDoc, rect);
         button.setImage(ImageDataFactory.create(IMAGE));
         button.setButtonBackgroundColor(new DeviceGray(0.75f));
-        button.setBorderColor(Color.DARK_GRAY);
+        button.setBorderColor(ColorConstants.DARK_GRAY);
         button.setFontSize(12);
 
         doc.add(new Paragraph().add(button));
 
-        PdfAnnotation ann = button.getButton().getWidgets().get(0);
+        PdfWidgetAnnotation ann = button.getButton().getWidgets().get(0);
         ann.setAction(PdfAction.createJavaScript("this.showButtonState()"));
 
         doc.close();
@@ -192,8 +194,8 @@ public class Listing_08_01_Buttons extends GenericTest {
         protected String caption;
         protected ImageData image;
         protected Rectangle rect;
-        protected Color borderColor = Color.BLACK;
-        protected Color buttonBackgroundColor = Color.WHITE;
+        protected Color borderColor = ColorConstants.BLACK;
+        protected Color buttonBackgroundColor = ColorConstants.WHITE;
 
         public Button(String name, String caption, PdfDocument document, Rectangle rect) {
             button = PdfFormField.createButton(document, new Rectangle(0, 0), 0);
@@ -209,12 +211,10 @@ public class Listing_08_01_Buttons extends GenericTest {
             return new ButtonRenderer(this);
         }
 
-        @Override
         public PdfName getRole() {
             return role;
         }
 
-        @Override
         public void setRole(PdfName role) {
             this.role = role;
         }
@@ -298,7 +298,7 @@ public class Listing_08_01_Buttons extends GenericTest {
 
             Paragraph paragraph = new Paragraph(modelButton.getCaption()).setFontSize(10).setMargin(0).setMultipliedLeading(1);
 
-            new Canvas(canvas, drawContext.getDocument(), new Rectangle(0, 0, width, height)).
+            new Canvas(canvas, new Rectangle(0, 0, width, height)).
                     showTextAligned(paragraph, 20, 3, TextAlignment.LEFT, VerticalAlignment.BOTTOM);
 
             ImageData image = modelButton.getImage();
@@ -312,7 +312,12 @@ public class Listing_08_01_Buttons extends GenericTest {
                 if (image.getHeight() > modelButton.rect.getHeight()) {
                     imageWidth = image.getWidth() * (modelButton.rect.getHeight() / image.getHeight()) * 2/3;
                 }
-                canvas.addXObject(imageXObject, 3, 3, imageWidth);
+                PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
+                if (bbox == null)
+                    throw new PdfException("PdfFormXObject has invalid BBox.");
+                float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
+                float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
+                canvas.addXObjectWithTransformationMatrix(imageXObject, imageWidth, 0, 0, imageWidth / formWidth * formHeight, 3, 3);
                 xObject.getResources().addImage(imageXObject);
             }
 

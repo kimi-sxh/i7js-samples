@@ -41,10 +41,10 @@ public class Listing_11_14_Diacritics2 extends GenericTest {
         Document doc = new Document(pdfDoc);
         doc.add(new Paragraph("Movie title: In Bed With Santa (Sweden)"));
         doc.add(new Paragraph("directed by Kjell Sundvall"));
-        PdfFont f = PdfFontFactory.createFont(FONTS[0], PdfEncodings.CP1252, true);
+        PdfFont f = PdfFontFactory.createFont(FONTS[0], PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         f.getGlyph('\u00a8').setXAdvance((short)-450);
         doc.add(new Paragraph(MOVIE).setFont(f));
-        f = PdfFontFactory.createFont(FONTS[1], PdfEncodings.CP1252, true);
+        f = PdfFontFactory.createFont(FONTS[1], PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         f.getGlyph('\u00a8').setXAdvance((short)-600);
         doc.add(new Paragraph(MOVIE).setFont(f));
         doc.close();

@@ -31,7 +31,7 @@ public class Listing_11_17_Ligatures1 extends GenericTest {
         Document document = new Document(pdfDoc);
 
         PdfFont font = PdfFontFactory.createFont(/*"c:/windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf",
-                PdfEncodings.CP1252, true);
+                PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph("Movie title: Love at First Hiccough (Denmark)").setFont(font));
         document.add(new Paragraph("directed by Tomas Villum Jensen").setFont(font));
         document.add(new Paragraph("K\u00e6rlighed ved f\u00f8rste hik").setFont(font));

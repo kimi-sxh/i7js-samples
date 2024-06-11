@@ -50,7 +50,7 @@ public class Listing_13_01_PdfA extends GenericTest {
                 new PdfOutputIntent("Custom", "", "http://www.color.org", "sRGB IEC61966-2.1", is));
         pdfADocument.addNewPage();
 
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.CP1252, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Document doc = new Document(pdfADocument).add(new Paragraph("Hello World").setFont(font));
         doc.close();
     }

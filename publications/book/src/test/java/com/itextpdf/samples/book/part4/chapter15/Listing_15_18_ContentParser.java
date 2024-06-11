@@ -13,7 +13,7 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -34,7 +34,7 @@ public class Listing_15_18_ContentParser extends DefaultHandler {
         this.roles = roles;
 
         font = PdfFontFactory.createFont(/*"c:/windows/fonts/arial.ttf"*/"./src/test/resources/font/FreeSans.ttf",
-                PdfEncodings.WINANSI, true);
+                PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
     }
 
     public void characters(char[] ch, int start, int length)
@@ -65,7 +65,8 @@ public class Listing_15_18_ContentParser extends DefaultHandler {
         buf = new StringBuffer();
         if (s.length() > 0) {
             Paragraph p = new Paragraph(s).setFont(font);
-            p.setRole(role);
+            //TODO 先注释
+//            p.setRole(role);
             p.setTextAlignment(TextAlignment.JUSTIFIED);
             doc.add(p);
         }

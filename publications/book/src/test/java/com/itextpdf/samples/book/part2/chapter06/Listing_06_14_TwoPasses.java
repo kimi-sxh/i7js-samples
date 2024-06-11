@@ -7,7 +7,7 @@
 
 package com.itextpdf.samples.book.part2.chapter06;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -20,13 +20,13 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
-import com.itextpdf.layout.border.Border;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
@@ -75,9 +75,9 @@ public class Listing_06_14_TwoPasses extends GenericTest {
                 .setBorderBottom(new SolidBorder(1));
         table.setBorder(Border.NO_BORDER);
         table.addCell(new Cell()
-                .add("FOOBAR FILMFESTIVAL").addStyle(style));
+                .add(new Paragraph("FOOBAR FILMFESTIVAL")).addStyle(style));
         table.addCell(new Cell()
-                .add(String.format("Page %d of %d", x, y)).addStyle(style));
+                .add(new Paragraph(String.format("Page %d of %d", x, y))).addStyle(style));
         return table;
     }
 
@@ -92,9 +92,9 @@ public class Listing_06_14_TwoPasses extends GenericTest {
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4));
         doc.setMargins(54, 36, 36, 36);
 
-        bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-        italic = PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE);
-        normal = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+        italic = PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE);
+        normal = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
         Statement stm = connection.createStatement();
         ResultSet rs = stm.executeQuery(
@@ -132,7 +132,7 @@ public class Listing_06_14_TwoPasses extends GenericTest {
         // Loop over the pages and add a header to each page
         int n = pdfDoc.getNumberOfPages();
         for (int i = 1; i <= n; i++) {
-            new Canvas(new PdfCanvas(pdfDoc.getPage(i)), pdfDoc,
+            new Canvas(new PdfCanvas(pdfDoc.getPage(i)),
                     new Rectangle(34, 803, 100, 30)).add(getHeaderTable(i, n));
         }
 

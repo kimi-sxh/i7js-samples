@@ -7,33 +7,27 @@
 
 package com.itextpdf.samples.book.part4.chapter15;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.source.PdfTokenizer;
 import com.itextpdf.io.source.RandomAccessFileOrArray;
 import com.itextpdf.io.source.RandomAccessSourceFactory;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.pdf.canvas.parser.listener.IEventListener;
-import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.IEventListener;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-
 import org.junit.experimental.categories.Category;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.sql.SQLException;
 
 @Category(SampleTest.class)
 public class Listing_15_20_ParsingHelloWorld extends GenericTest {
@@ -57,7 +51,7 @@ public class Listing_15_20_ParsingHelloWorld extends GenericTest {
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
         canvas.beginText();
-        canvas.setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12);
+        canvas.setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12);
         canvas.moveText(88.66f, 367);
         canvas.showText("ld");
         canvas.moveText(-22f, 0);
@@ -71,7 +65,7 @@ public class Listing_15_20_ParsingHelloWorld extends GenericTest {
         PdfFormXObject xObject = new PdfFormXObject(new Rectangle(250, 25));
         PdfCanvas xObjectCanvas = new PdfCanvas(xObject, pdfDoc);
         xObjectCanvas.beginText();
-        xObjectCanvas.setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12);
+        xObjectCanvas.setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12);
         xObjectCanvas.moveText(0, 7);
         xObjectCanvas.showText("Hello People");
         xObjectCanvas.endText();

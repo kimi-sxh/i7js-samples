@@ -9,7 +9,7 @@ package com.itextpdf.samples.book.part1.chapter03;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.DeviceGray;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
@@ -86,7 +86,7 @@ public class Listing_03_26_MoviePosters extends GenericTest {
             ImageData image = ImageDataFactory.create(String.format(RESOURCE, movie.getImdb()));
             PdfImageXObject img = new PdfImageXObject(image);
             float scaleY = 60 / img.getHeight();
-            canvas.addImage(image, img.getWidth() * scaleY, 0, 0, 60, x + (45 - image.getWidth() * scaleY) / 2, y, false);
+            canvas.addImageWithTransformationMatrix(image, img.getWidth() * scaleY, 0, 0, 60, x + (45 - image.getWidth() * scaleY) / 2, y, false);
             x += 48;
             if (x > 578) {
                 x = 11.5f;
@@ -97,7 +97,7 @@ public class Listing_03_26_MoviePosters extends GenericTest {
 
         canvas = new PdfCanvas(page = pdfDoc.addNewPage());
         // Add the template using a different CTM
-        canvas.addXObject(xObj, 0.8f, 0, 0.35f, 0.65f, 0, 600);
+        canvas.addXObjectWithTransformationMatrix(xObj, 0.8f, 0, 0.35f, 0.65f, 0, 600);
 
         Document document = new Document(pdfDoc);
 

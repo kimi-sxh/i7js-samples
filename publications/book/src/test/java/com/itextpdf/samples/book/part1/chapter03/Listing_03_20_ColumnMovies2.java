@@ -7,7 +7,7 @@
 
 package com.itextpdf.samples.book.part1.chapter03;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -18,7 +18,7 @@ import com.itextpdf.layout.ColumnDocumentRenderer;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.samples.book.part1.chapter02.StarSeparator;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -66,9 +66,9 @@ public class Listing_03_20_ColumnMovies2 extends GenericTest {
     }
 
     public void addContent(Document doc, Movie movie) throws IOException {
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-        PdfFont italic = PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE);
-        PdfFont normal = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+        PdfFont italic = PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE);
+        PdfFont normal = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
         Div div = new Div().setKeepTogether(true);
         Paragraph p = new Paragraph(movie.getTitle()).setFont(bold).

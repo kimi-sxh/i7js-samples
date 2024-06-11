@@ -7,9 +7,9 @@
 
 package com.itextpdf.samples.book.part2.chapter06;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -25,7 +25,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -76,11 +76,11 @@ public class Listing_06_06_Layers extends GenericTest {
         PdfDocument resultDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(resultDoc, new PageSize(PageSize.A5).rotate());
 
-        PdfFont font = PdfFontFactory.createFont(FontConstants.ZAPFDINGBATS, true);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.ZAPFDINGBATS);
         PdfCanvas canvas = new PdfCanvas(resultDoc.addNewPage());
         for (int i = 1; i <= srcDoc.getNumberOfPages(); i++) {
             PdfFormXObject layer = srcDoc.getPage(i).copyAsFormXObject(resultDoc);
-            canvas.addXObject(layer, 1f, 0, 0.4f, 0.4f, 72, 50 * i);
+            canvas.addXObjectWithTransformationMatrix(layer, 1f, 0, 0.4f, 0.4f, 72, 50 * i);
             canvas.beginText();
             canvas.setFontAndSize(font, 20);
             canvas.moveText(496, 150 + 50 * i);
@@ -127,7 +127,7 @@ public class Listing_06_06_Layers extends GenericTest {
         under = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
         drawRectangle(under, postCard.getWidth(), postCard.getHeight());
         Paragraph p = new Paragraph("Foobar Film Festival")
-                .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA))
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                 .setFontSize(22)
                 .setHorizontalAlignment(HorizontalAlignment.CENTER);
         doc.add(p);
@@ -148,7 +148,7 @@ public class Listing_06_06_Layers extends GenericTest {
         over.setLineWidth(1.5f);
         over.setStrokeColor(new DeviceRgb(0xFF, 0x00, 0x00));
         over.setFillColor(new DeviceRgb(0xFF, 0xFF, 0xFF));
-        over.setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 36);
+        over.setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 36);
         over.setTextMatrix(cosinus, sinus, -sinus, cosinus, 50, 324);
         over.showText("SOLD OUT");
         over.setTextMatrix(0, 0);

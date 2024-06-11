@@ -9,6 +9,7 @@ package com.itextpdf.samples.book.part4.chapter15;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.TagTreePointer;
@@ -61,7 +62,7 @@ public class Listing_15_11_ObjectData extends GenericTest {
 
         TagTreePointer tagPointer = new TagTreePointer(pdfDoc);
         tagPointer.setPageForTagging(pdfDoc.addNewPage());
-        tagPointer.addTag(new PdfName("Directors"));
+        tagPointer.addTag("Directors");
 
         Statement stm = connection.createStatement();
         ResultSet rs = stm.executeQuery(SELECTDIRECTORS);
@@ -87,7 +88,8 @@ public class Listing_15_11_ObjectData extends GenericTest {
             property3.put(PdfName.V, new PdfNumber(rs.getInt("c")));
             properties.add(property3);
             userproperties.put(PdfName.P, properties);
-            tagPointer.addTag(new PdfName("director" + id)).getProperties().addAttributes(userproperties);
+            //TODO 先注释
+//            tagPointer.addTag("director" + id).getProperties().addAttributes(userproperties);
             tagPointer.moveToParent();
         }
 
@@ -106,9 +108,11 @@ public class Listing_15_11_ObjectData extends GenericTest {
             img = ImageDataFactory.create(String.format(RESOURCE, entry.getKey().getImdb()));
             Image image = new Image(img);
             tagPointer.moveToKid(entry.getValue() - 1);
-            tagPointer.addTag(image.getRole());
+            //TODO 先注释
+            //tagPointer.addTag(image.getRole());
             canvas.openTag(tagPointer.getTagReference());
-            canvas.addImage(img, x + (45 - 30) / 2, y, 30, false);
+            Rectangle rectangle = new Rectangle(x + (45 - 30) / 2, y,30,30/image.getImageWidth()*image.getImageHeight());
+            canvas.addImageFittedIntoRectangle(img, rectangle, false);
             canvas.closeTag();
             tagPointer.moveToParent();
             tagPointer.moveToParent();

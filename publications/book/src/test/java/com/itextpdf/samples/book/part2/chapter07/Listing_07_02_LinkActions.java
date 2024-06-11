@@ -88,7 +88,7 @@ public class Listing_07_02_LinkActions extends GenericTest {
                 add(".");
         doc.add(p);
 
-        pdfDoc.addNamedDestination("top", PdfExplicitDestination.createXYZ(1, 36, 842, 1).getPdfObject());
+        pdfDoc.addNamedDestination("top", PdfExplicitDestination.createXYZ(pdfDoc.getPage(1), 36, 842, 1).getPdfObject());
 
         //Close document
         doc.close();

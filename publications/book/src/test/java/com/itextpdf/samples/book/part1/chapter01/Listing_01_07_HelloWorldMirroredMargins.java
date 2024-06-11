@@ -14,7 +14,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -38,7 +38,7 @@ public class Listing_01_07_HelloWorldMirroredMargins extends GenericTest {
 
         //Initialize document
         PdfDocument pdfDoc = new PdfDocument(writer);
-        PageSize customPageSize = PageSize.A5.clone();
+        PageSize customPageSize = new PageSize(PageSize.A5.clone());
 
         Document doc = new Document(pdfDoc, customPageSize);
         doc.setMargins(108, 72, 180, 36);

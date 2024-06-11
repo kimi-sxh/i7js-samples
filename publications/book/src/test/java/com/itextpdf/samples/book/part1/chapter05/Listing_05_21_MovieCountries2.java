@@ -7,33 +7,33 @@
 
 package com.itextpdf.samples.book.part1.chapter05;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.color.DeviceGray;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
-import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.Property;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
+import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
 import com.lowagie.database.HsqldbConnection;
 import com.lowagie.filmfestival.Movie;
 import com.lowagie.filmfestival.MovieComparator;
 import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
+import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -41,8 +41,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class Listing_05_21_MovieCountries2 extends Listing_05_20_MovieCountries1 {
@@ -70,9 +68,9 @@ public class Listing_05_21_MovieCountries2 extends Listing_05_20_MovieCountries1
         PdfCanvas canvas = new PdfCanvas(template, pdfDoc);
 
 
-        bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-        italic = PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE);
-        normal = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+        italic = PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE);
+        normal = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
         Statement stm = connection.createStatement();
         ResultSet rs = stm.executeQuery(
@@ -99,7 +97,7 @@ public class Listing_05_21_MovieCountries2 extends Listing_05_20_MovieCountries1
 
         canvas.beginText();
         try {
-            canvas.setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12);
+            canvas.setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,13 +118,13 @@ public class Listing_05_21_MovieCountries2 extends Listing_05_20_MovieCountries1
             PdfPage page = docEvent.getPage();
             PdfFont font = null;
             try {
-                font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+                font = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             PdfCanvas canvas =
                     new PdfCanvas(page.newContentStreamBefore(), page.getResources(), docEvent.getDocument());
-            new Canvas(canvas, docEvent.getDocument(), docEvent.getDocument().getLastPage().getPageSize())
+            new Canvas(canvas, docEvent.getDocument().getLastPage().getPageSize())
                     .setFontColor(new DeviceGray(0.75f))
                     .setFontSize(52)
                     .setFont(font)

@@ -7,9 +7,9 @@
 
 package com.itextpdf.samples.book.part4.chapter14;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceGray;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -37,7 +37,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
         //Initialize document
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
 
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
         String text = "AWAY again";
@@ -63,7 +63,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
                         newlineShowText(text).
                 setTextRise(15).
                 setFontAndSize(font, 12).
-                setFillColor(Color.RED).
+                setFillColor(ColorConstants.RED).
                 showText("2").
                 setFillColor(DeviceGray.BLACK).
                 // line 6
@@ -84,7 +84,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
         canvas.showText(textArray).
                 endText();
 
-        canvas.setFillColor(Color.BLUE).
+        canvas.setFillColor(ColorConstants.BLUE).
                 beginText().
                 setTextMatrix(360, 770).
                 setTextRenderingMode(PdfCanvasConstants.TextRenderingMode.FILL).

@@ -9,6 +9,7 @@ package com.itextpdf.samples.book.part3.chapter12;
 
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.IExternalDigest;
@@ -84,7 +85,8 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(SRC);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
         PdfSignatureAppearance sap = signer.getSignatureAppearance();
         sap.setReason("I'm approving this.");

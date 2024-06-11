@@ -9,12 +9,13 @@ package com.itextpdf.samples.book.part2.chapter08;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
-import com.itextpdf.kernel.pdf.tagutils.IAccessibleElement;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.layout.Canvas;
@@ -26,11 +27,12 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.AbstractRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
+import com.itextpdf.layout.tagging.IAccessibleElement;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
@@ -84,8 +86,8 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
         protected String caption;
         protected ImageData image;
         protected Rectangle rect;
-        protected Color borderColor = Color.BLACK;
-        protected Color buttonBackgroundColor = Color.WHITE;
+        protected Color borderColor = ColorConstants.BLACK;
+        protected Color buttonBackgroundColor = ColorConstants.WHITE;
 
         public CustomButton(PdfButtonFormField button) {
             this.button = button;
@@ -96,17 +98,14 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
             return new CustomButtonRenderer(this);
         }
 
-        @Override
         public PdfName getRole() {
             return role;
         }
 
-        @Override
         public void setRole(PdfName role) {
             this.role = role;
         }
 
-        @Override
         public AccessibilityProperties getAccessibilityProperties() {
             return null;
         }
@@ -186,7 +185,7 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
 
             Paragraph paragraph = new Paragraph(modelButton.getCaption()).setFontSize(10).setMargin(0).setMultipliedLeading(1);
 
-            new Canvas(canvas, drawContext.getDocument(), new Rectangle(0, 0, width, height)).
+            new Canvas(canvas, new Rectangle(0, 0, width, height)).
                     showTextAligned(paragraph, 1, 1, TextAlignment.LEFT, VerticalAlignment.BOTTOM);
 
             PdfImageXObject imageXObject = new PdfImageXObject(modelButton.getImage());
@@ -196,8 +195,12 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
             } else if (imageXObject.getHeight() > rect.getHeight()) {
                 imageWidth = imageWidth * (rect.getHeight() / imageXObject.getHeight());
             }
-
-            canvas.addXObject(imageXObject, 0.5f, 0.5f, imageWidth - 1);
+            PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
+            if (bbox == null)
+                throw new PdfException("PdfFormXObject has invalid BBox.");
+            float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
+            float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
+            canvas.addXObjectWithTransformationMatrix(imageXObject, imageWidth - 1, 0f, 0f, (imageWidth - 1) / formWidth * formHeight, 0.5f, 0.5f);
 
 
             PdfButtonFormField button = modelButton.getButton();

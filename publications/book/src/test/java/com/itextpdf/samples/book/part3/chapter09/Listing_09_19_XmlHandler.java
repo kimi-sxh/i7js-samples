@@ -7,19 +7,17 @@
 
 package com.itextpdf.samples.book.part3.chapter09;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
-
-import java.util.EmptyStackException;
-import java.util.Stack;
-
-import org.junit.Ignore;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 public class Listing_09_19_XmlHandler extends DefaultHandler {
     /**
@@ -89,7 +87,7 @@ public class Listing_09_19_XmlHandler extends DefaultHandler {
             } else if ("movie".equals(qName)) {
                 flushStack();
                 Div p = new Div();
-                p.setFont(PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD));
+                p.setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
                 stack.push(p);
                 year = attributes.getValue("year");
                 duration = attributes.getValue("duration");

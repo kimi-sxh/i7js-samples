@@ -16,9 +16,11 @@ package com.itextpdf.samples.signatures.chapter02;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.SignatureFormFieldBuilder;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
@@ -87,7 +89,8 @@ public class C2_10_SequentialSignatures extends SignatureTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfFormField field = PdfFormField.createSignature(drawContext.getDocument(), getOccupiedAreaBBox());
+            PdfFormField field = new SignatureFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createSignature();
             field.setFieldName(name);
             field.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT);
             field.getWidgets().get(0).setFlags(PdfAnnotation.PRINT);
@@ -105,7 +108,8 @@ public class C2_10_SequentialSignatures extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         signer.getDocument().setFlushUnusedObjects(true);
         // Setting signer options
         signer.setFieldName(name);

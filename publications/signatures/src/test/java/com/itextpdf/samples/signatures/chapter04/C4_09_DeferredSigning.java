@@ -11,6 +11,7 @@ import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.DigestAlgorithms;
@@ -64,15 +65,15 @@ public class C4_09_DeferredSigning extends SignatureTest {
         public byte[] sign(InputStream is) throws GeneralSecurityException {
             try {
                 PrivateKeySignature signature = new PrivateKeySignature(pk, "SHA256", "BC");
-                String hashAlgorithm = signature.getHashAlgorithm();
+                String digestAlgorithm = signature.getDigestAlgorithmName();
                 BouncyCastleDigest digest = new BouncyCastleDigest();
-                PdfPKCS7 sgn = new PdfPKCS7(null, chain, hashAlgorithm, null, digest, false);
-                byte hash[] = DigestAlgorithms.digest(is, digest.getMessageDigest(hashAlgorithm));
+                PdfPKCS7 sgn = new PdfPKCS7(null, chain, digestAlgorithm, null, digest, false);
+                byte hash[] = DigestAlgorithms.digest(is, digest.getMessageDigest(digestAlgorithm));
                 Calendar cal = Calendar.getInstance();
-                byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, null, null, PdfSigner.CryptoStandard.CMS);
+                byte[] sh = sgn.getAuthenticatedAttributeBytes(hash, PdfSigner.CryptoStandard.CMS, null, null);
                 byte[] extSignature = signature.sign(sh);
-                sgn.setExternalDigest(extSignature, null, signature.getEncryptionAlgorithm());
-                return sgn.getEncodedPKCS7(hash, null, null, null, PdfSigner.CryptoStandard.CMS);
+                sgn.setExternalSignatureValue(extSignature, null, signature.getSignatureAlgorithmName());
+                return sgn.getEncodedPKCS7(hash, PdfSigner.CryptoStandard.CMS, null, null, null);
             }
             catch (IOException ioe) {
                 throw new RuntimeException(ioe);
@@ -85,7 +86,8 @@ public class C4_09_DeferredSigning extends SignatureTest {
 
     public void emptySignature(String src, String dest, String fieldname, Certificate[] chain) throws IOException, GeneralSecurityException {
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance
                 .setPageRect(new Rectangle(36, 748, 200, 100))
@@ -99,7 +101,8 @@ public class C4_09_DeferredSigning extends SignatureTest {
     public void createSignature(String src, String dest, String fieldname, PrivateKey pk, Certificate[] chain) throws IOException, GeneralSecurityException {
         PdfReader reader = new PdfReader(src);
         FileOutputStream os = new FileOutputStream(dest);
-        PdfSigner signer = new PdfSigner(reader, os, false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, os, stampingProperties);
         IExternalSignatureContainer external = new MyExternalSignatureContainer(pk, chain);
         signer.signDeferred(signer.getDocument(), fieldname, os, external);
     }

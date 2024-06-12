@@ -16,6 +16,7 @@ package com.itextpdf.samples.signatures.chapter02;
 
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.DigestAlgorithms;
@@ -59,7 +60,8 @@ public class C2_01_SignHelloWorld extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
                 .setReason(reason)

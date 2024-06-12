@@ -14,22 +14,21 @@
  */
 package com.itextpdf.samples.signatures.chapter02;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.SignatureTest;
-import com.itextpdf.signatures.BouncyCastleDigest;
-import com.itextpdf.signatures.DigestAlgorithms;
-import com.itextpdf.signatures.IExternalDigest;
-import com.itextpdf.signatures.IExternalSignature;
-import com.itextpdf.signatures.PdfSignatureAppearance;
-import com.itextpdf.signatures.PdfSigner;
-import com.itextpdf.signatures.PrivateKeySignature;
+import com.itextpdf.signatures.*;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,9 +43,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import static org.junit.Assert.fail;
 
 @Category(SampleTest.class)
@@ -64,7 +60,8 @@ public class C2_05_CustomAppearance extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
                 .setReason(reason)
@@ -77,7 +74,7 @@ public class C2_05_CustomAppearance extends SignatureTest {
         float width = n0.getBBox().toRectangle().getWidth();
         float height = n0.getBBox().toRectangle().getHeight();
         PdfCanvas canvas = new PdfCanvas(n0, signer.getDocument());
-        canvas.setFillColor(Color.LIGHT_GRAY);
+        canvas.setFillColor(ColorConstants.LIGHT_GRAY);
         canvas.rectangle(x, y, width, height);
         canvas.fill();
         // Creating the appearance for layer 2

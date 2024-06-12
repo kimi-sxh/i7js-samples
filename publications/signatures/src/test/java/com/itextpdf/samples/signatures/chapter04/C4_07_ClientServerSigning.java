@@ -14,16 +14,12 @@
  */
 package com.itextpdf.samples.signatures.chapter04;
 
-import com.itextpdf.kernel.PdfException;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
-import com.itextpdf.signatures.BouncyCastleDigest;
-import com.itextpdf.signatures.DigestAlgorithms;
-import com.itextpdf.signatures.IExternalDigest;
-import com.itextpdf.signatures.IExternalSignature;
-import com.itextpdf.signatures.PdfSignatureAppearance;
-import com.itextpdf.signatures.PdfSigner;
+import com.itextpdf.signatures.*;
 import com.itextpdf.test.annotations.type.SampleTest;
 
 import java.io.*;
@@ -54,12 +50,19 @@ public class C4_07_ClientServerSigning extends SignatureTest {
     public class ServerSignature implements IExternalSignature {
         public static final String SIGN = "http://demo.itextsupport.com/SigningApp/signbytes";
 
-        public String getHashAlgorithm() {
+        @Override
+        public String getDigestAlgorithmName() {
             return DigestAlgorithms.SHA256;
         }
 
-        public String getEncryptionAlgorithm() {
+        @Override
+        public String getSignatureAlgorithmName() {
             return "RSA";
+        }
+
+        @Override
+        public ISignatureMechanismParams getSignatureMechanismParameters() {
+            return null;
         }
 
         public byte[] sign(byte[] message) throws GeneralSecurityException {
@@ -95,7 +98,8 @@ public class C4_07_ClientServerSigning extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
                 .setReason(reason)

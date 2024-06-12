@@ -16,6 +16,8 @@ package com.itextpdf.samples.signatures.chapter02;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.SignatureFormFieldBuilder;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -103,7 +105,8 @@ public class C2_11_SignatureWorkflow extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         /// Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Setting signer options
         signer.setFieldName(name);
         // TODO DEVSIX-488
@@ -131,7 +134,8 @@ public class C2_11_SignatureWorkflow extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Setting signer options
         signer.setFieldName(name);
         // Creating the signature
@@ -149,7 +153,8 @@ public class C2_11_SignatureWorkflow extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         PdfAcroForm form = PdfAcroForm.getAcroForm(signer.getDocument(), true);
         form.getField(fname).setValue(value);
         form.getField(fname).setReadOnly(true);
@@ -187,7 +192,8 @@ public class C2_11_SignatureWorkflow extends SignatureTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfFormField field = PdfFormField.createText(drawContext.getDocument(), getOccupiedAreaBBox(), name);
+            PdfFormField field = new TextFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createText();
             PdfAcroForm.getAcroForm(drawContext.getDocument(), true).addField(field);
         }
     }
@@ -204,7 +210,8 @@ public class C2_11_SignatureWorkflow extends SignatureTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfFormField field = PdfFormField.createSignature(drawContext.getDocument(), getOccupiedAreaBBox());
+            PdfFormField field = new SignatureFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createSignature();
             field.setFieldName(name);
             field.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT);
             field.getWidgets().get(0).setFlags(PdfAnnotation.PRINT);

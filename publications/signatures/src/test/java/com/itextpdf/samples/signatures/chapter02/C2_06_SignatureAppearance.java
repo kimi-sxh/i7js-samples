@@ -14,17 +14,18 @@
  */
 package com.itextpdf.samples.signatures.chapter02;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.property.BaseDirection;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.BaseDirection;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.*;
@@ -60,7 +61,8 @@ public class C2_06_SignatureAppearance extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);
@@ -69,7 +71,7 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         signer.setFieldName(name);
         // Custom text and custom font
         appearance.setLayer2Text("This document was signed by Bruno Specimen");
-        appearance.setLayer2Font(PdfFontFactory.createFont(FontConstants.TIMES_ROMAN));
+        appearance.setLayer2Font(PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN));
         // Creating the signature
         IExternalSignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
         IExternalDigest digest = new BouncyCastleDigest();
@@ -83,7 +85,8 @@ public class C2_06_SignatureAppearance extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);
@@ -95,7 +98,7 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         // Custom text, custom font, and right-to-left writing
         Text text = new Text("\u0644\u0648\u0631\u0627\u0646\u0633 \u0627\u0644\u0639\u0631\u0628");
         text.setFont(PdfFontFactory.createFont(/*"C:/windows/fonts/arialuni.ttf"*/
-                "./src/test/resources/font/NotoNaskhArabic-Regular.ttf", PdfEncodings.IDENTITY_H, true));
+                "./src/test/resources/font/NotoNaskhArabic-Regular.ttf", PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED));
         text.setBaseDirection(BaseDirection.RIGHT_TO_LEFT);
         new Canvas(n2, signer.getDocument()).add(new Paragraph(text).setTextAlignment(TextAlignment.RIGHT));
         // Creating the signature
@@ -111,7 +114,8 @@ public class C2_06_SignatureAppearance extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);
@@ -135,7 +139,8 @@ public class C2_06_SignatureAppearance extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);

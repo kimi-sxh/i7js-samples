@@ -14,6 +14,7 @@
  */
 package com.itextpdf.samples.signatures.chapter05;
 
+import com.itextpdf.bouncycastle.asn1.tsp.TSTInfoBC;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
@@ -23,6 +24,7 @@ import com.itextpdf.signatures.PdfPKCS7;
 import com.itextpdf.signatures.SignaturePermissions;
 import com.itextpdf.signatures.SignatureUtil;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.bouncycastle.asn1.tsp.TSTInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.tsp.TimeStampToken;
 import org.junit.Assert;
@@ -194,8 +196,8 @@ public class C5_02_SignatureInfo extends C5_01_SignatureIntegrity {
         }
 
         PdfPKCS7 pkcs7 = super.verifySignature(signUtil, name);
-        System.out.println("Digest algorithm: " + pkcs7.getHashAlgorithm());
-        System.out.println("Encryption algorithm: " + pkcs7.getEncryptionAlgorithm());
+        System.out.println("Digest algorithm: " + pkcs7.getDigestAlgorithmName());
+        System.out.println("Encryption algorithm: " + pkcs7.getSignatureAlgorithmName());
         System.out.println("Filter subtype: " + pkcs7.getFilterSubtype());
         X509Certificate cert = (X509Certificate) pkcs7.getSigningCertificate();
         System.out.println("Name of the signer: " + CertificateInfo.getSubjectFields(cert).getField("CN"));
@@ -205,8 +207,8 @@ public class C5_02_SignatureInfo extends C5_01_SignatureIntegrity {
         System.out.println("Signed on: " + date_format.format(pkcs7.getSignDate().getTime()));
         if (pkcs7.getTimeStampDate() != null) {
             System.out.println("TimeStamp: " + date_format.format(pkcs7.getTimeStampDate().getTime()));
-            TimeStampToken ts = pkcs7.getTimeStampToken();
-            System.out.println("TimeStamp service: " + ts.getTimeStampInfo().getTsa());
+            TSTInfo ts = ((TSTInfoBC) pkcs7.getTimeStampTokenInfo()).getTstInfo();
+            System.out.println("TimeStamp service: " + ts.getTsa());
             System.out.println("Timestamp verified? " + pkcs7.verifyTimestampImprint());
         }
         System.out.println("Location: " + pkcs7.getLocation());

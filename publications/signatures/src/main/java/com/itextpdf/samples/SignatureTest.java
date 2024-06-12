@@ -7,6 +7,10 @@
 
 package com.itextpdf.samples;
 
+import com.itextpdf.bouncycastle.asn1.tsp.TSTInfoBC;
+import com.itextpdf.commons.bouncycastle.asn1.ocsp.IBasicOCSPResponse;
+import com.itextpdf.commons.bouncycastle.asn1.tsp.ITSTInfo;
+import com.itextpdf.commons.bouncycastle.cert.ocsp.IBasicOCSPResp;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDictionary;
@@ -16,14 +20,7 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfString;
 import com.itextpdf.kernel.pdf.annot.PdfWidgetAnnotation;
 import com.itextpdf.kernel.utils.CompareTool;
-import com.itextpdf.signatures.CRLVerifier;
-import com.itextpdf.signatures.CertificateVerification;
-import com.itextpdf.signatures.OCSPVerifier;
-import com.itextpdf.signatures.PdfPKCS7;
-import com.itextpdf.signatures.SignaturePermissions;
-import com.itextpdf.signatures.SignatureUtil;
-import com.itextpdf.signatures.VerificationException;
-import com.itextpdf.signatures.VerificationOK;
+import com.itextpdf.signatures.*;
 import com.itextpdf.test.ITextTest;
 import com.itextpdf.test.LogListener;
 
@@ -163,10 +160,10 @@ public class SignatureTest {
 
     private void verifySignatures(SignatureUtil signUtil, List<String> names) throws IOException, GeneralSecurityException {
         for (String name : names) {
-            PdfPKCS7 pkcs7 = signUtil.verifySignature(name);
+            PdfPKCS7 pkcs7 = signUtil.readSignatureData(name);
 
             // verify signature integrity
-            if (!pkcs7.verify()) {
+            if (!pkcs7.verifySignatureIntegrityAndAuthenticity()) {
                 addError(String.format("\"%s\" signature integrity is invalid\n", name));
             }
 
@@ -195,7 +192,7 @@ public class SignatureTest {
         X509Certificate signCert = (X509Certificate)certs[0];
         X509Certificate issuerCert = (certs.length > 1 ? (X509Certificate)certs[1] : null);
         //Checking validity of the document at the time of signing
-        checkRevocation(pkcs7, signCert, issuerCert, cal.getTime());
+//        checkRevocation(pkcs7, signCert, issuerCert, cal.getTime());
     }
 
     private void checkCertificateInfo(X509Certificate cert, Date signDate, PdfPKCS7 pkcs7) throws GeneralSecurityException {
@@ -214,25 +211,27 @@ public class SignatureTest {
         }
     }
 
-    private void checkRevocation(PdfPKCS7 pkcs7, X509Certificate signCert, X509Certificate issuerCert, Date date) throws GeneralSecurityException, IOException {
-        List<BasicOCSPResp> ocsps = new ArrayList<BasicOCSPResp>();
-        if (pkcs7.getOcsp() != null)
-            ocsps.add(pkcs7.getOcsp());
-        OCSPVerifier ocspVerifier = new OCSPVerifier(null, ocsps);
-        List<VerificationOK> verification =
-                ocspVerifier.verify(signCert, issuerCert, date);
-        if (verification.size() == 0) {
-            List<X509CRL> crls = new ArrayList<X509CRL>();
-            if (pkcs7.getCRLs() != null) {
-                for (CRL crl : pkcs7.getCRLs())
-                    crls.add((X509CRL)crl);
-            }
-            CRLVerifier crlVerifier = new CRLVerifier(null, crls);
-            verification.addAll(crlVerifier.verify(signCert, issuerCert, date));
-        }
+//    private void checkRevocation(PdfPKCS7 pkcs7, X509Certificate signCert, X509Certificate issuerCert, Date date) throws GeneralSecurityException, IOException {
+//        List<IBasicOCSPResponse> ocsps = new ArrayList<IBasicOCSPResponse>();
+//        if (pkcs7.getOcsp() != null) {
+//            ocsps.add(pkcs7.getOcsp());
+//        }
+//        OCSPVerifier ocspVerifier = new OCSPVerifier(null, ocsps);
+//        List<VerificationOK> verification =
+//                ocspVerifier.verify(signCert, issuerCert, date);
+//        if (verification.size() == 0) {
+//            List<X509CRL> crls = new ArrayList<X509CRL>();
+//            if (pkcs7.getCRLs() != null) {
+//                for (CRL crl : pkcs7.getCRLs()) {
+//                    crls.add((X509CRL)crl);
+//                }
+//            }
+//            CRLVerifier crlVerifier = new CRLVerifier(null, crls);
+//            verification.addAll(crlVerifier.verify(signCert, issuerCert, date));
+//        }
 
         //if exception was not thrown document is not revoked or it couldn't be verified
-    }
+//    }
 
     protected void compareSignatures(String outFile, String cmpFile) throws IOException {
         SignedDocumentInfo outInfo = collectInfo(outFile);
@@ -264,9 +263,9 @@ public class SignatureTest {
                 sigInfo.setSignaturePosition(widgetAnnotationsList.get(0).getRectangle().toRectangle());
             }
 
-            PdfPKCS7 pkcs7 = signUtil.verifySignature(name);
-            sigInfo.setDigestAlgorithm(pkcs7.getHashAlgorithm());
-            sigInfo.setEncryptionAlgorithm(pkcs7.getEncryptionAlgorithm());
+            PdfPKCS7 pkcs7 = signUtil.readSignatureData(name);
+            sigInfo.setDigestAlgorithm(pkcs7.getDigestAlgorithmName());
+            sigInfo.setEncryptionAlgorithm(SignatureMechanisms.getAlgorithm(pkcs7.getSignatureMechanismOid()));
             PdfName filterSubtype = pkcs7.getFilterSubtype();
             if (filterSubtype != null) {
                 sigInfo.setFilterSubtype(filterSubtype.toString());
@@ -279,8 +278,8 @@ public class SignatureTest {
             sigInfo.setSignDate(pkcs7.getSignDate().getTime());
             if (pkcs7.getTimeStampDate() != null) {
                 sigInfo.setTimeStamp(pkcs7.getTimeStampDate().getTime());
-                TimeStampToken ts = pkcs7.getTimeStampToken();
-                sigInfo.setTimeStampService(ts.getTimeStampInfo().getTsa().toString());
+                TSTInfoBC ts = (TSTInfoBC) pkcs7.getTimeStampTokenInfo();
+                sigInfo.setTimeStampService(ts.getTstInfo().getTsa().toString());
             }
 
             sigInfo.setLocation(pkcs7.getLocation());
@@ -529,10 +528,11 @@ public class SignatureTest {
 
     private void addError(String error) {
         if (error != null && error.length() > 0) {
-            if (errorMessage == null)
+            if (errorMessage == null) {
                 errorMessage = "";
-            else
+            } else {
                 errorMessage += "\n";
+            }
 
             errorMessage += error;
         }

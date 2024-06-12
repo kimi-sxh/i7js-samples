@@ -14,6 +14,7 @@
  */
 package com.itextpdf.samples.signatures.chapter03;
 
+import com.itextpdf.commons.bouncycastle.tsp.ITimeStampTokenInfo;
 import com.itextpdf.signatures.DigestAlgorithms;
 import com.itextpdf.signatures.IOcspClient;
 import com.itextpdf.signatures.OcspClientBouncyCastle;
@@ -64,9 +65,11 @@ public class C3_10_SignWithTSAEvent extends C3_01_SignWithCAcert {
         IOcspClient ocspClient = new OcspClientBouncyCastle(null);
         TSAClientBouncyCastle tsaClient = new TSAClientBouncyCastle(tsaUrl, tsaUser, tsaPass);
         tsaClient.setTSAInfo(new ITSAInfoBouncyCastle() {
-            public void inspectTimeStampTokenInfo(TimeStampTokenInfo info) {
+            @Override
+            public void inspectTimeStampTokenInfo(ITimeStampTokenInfo info) {
                 System.out.println(info.getGenTime());
             }
+
         });
         C3_09_SignWithTSA app = new C3_09_SignWithTSA();
         app.sign(SRC, DEST, chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Test", "Ghent",

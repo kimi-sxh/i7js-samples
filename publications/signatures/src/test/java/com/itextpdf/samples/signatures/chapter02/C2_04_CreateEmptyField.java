@@ -17,7 +17,8 @@ package com.itextpdf.samples.signatures.chapter02;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfSignatureFormField;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.forms.fields.SignatureFormFieldBuilder;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
@@ -26,7 +27,7 @@ import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.DigestAlgorithms;
 import com.itextpdf.signatures.PdfSigner;
@@ -64,10 +65,10 @@ public class C2_04_CreateEmptyField extends SignatureTest {
         Document doc = new Document(pdfDoc);
         doc.add(new Paragraph("Hello World!"));
         // create a signature form field
-        PdfFormField field = PdfFormField.createSignature(pdfDoc, new Rectangle(72, 632, 200, 100));
-        field.setFieldName(SIGNAME);
+        PdfFormField field = new SignatureFormFieldBuilder(pdfDoc, SIGNAME)
+                .setWidgetRectangle(new Rectangle(72, 632, 200, 100)).createSignature();
+        field.getFirstFormAnnotation().setPage(1);
         // set the widget properties
-        field.setPage(1);
         field.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT).setFlags(PdfAnnotation.PRINT);
 
         PdfDictionary mkDictionary = field.getWidgets().get(0).getAppearanceCharacteristics();
@@ -75,15 +76,15 @@ public class C2_04_CreateEmptyField extends SignatureTest {
             mkDictionary = new PdfDictionary();
         }
         PdfArray black = new PdfArray();
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[0]));
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[1]));
-        black.add(new PdfNumber(Color.BLACK.getColorValue()[2]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[0]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[1]));
+        black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[2]));
         mkDictionary.put(PdfName.BC, black);
 
         PdfArray white = new PdfArray();
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[0]));
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[1]));
-        black.add(new PdfNumber(Color.WHITE.getColorValue()[2]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[0]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[1]));
+        black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[2]));
         mkDictionary.put(PdfName.BG, white);
 
         field.getWidgets().get(0).setAppearanceCharacteristics(mkDictionary);
@@ -95,12 +96,12 @@ public class C2_04_CreateEmptyField extends SignatureTest {
         PdfFormXObject xObject = new PdfFormXObject(rect);
         PdfCanvas canvas = new PdfCanvas(xObject, pdfDoc);
         canvas
-                .setStrokeColor(Color.BLUE)
-                .setFillColor(Color.LIGHT_GRAY)
+                .setStrokeColor(ColorConstants.BLUE)
+                .setFillColor(ColorConstants.LIGHT_GRAY)
                 .rectangle(0.5f, 0.5f, 199.5f, 99.5f)
                 .fillStroke()
-                .setFillColor(Color.BLUE);
-        new Canvas(canvas, pdfDoc, rect).showTextAligned("SIGN HERE", 100, 50,
+                .setFillColor(ColorConstants.BLUE);
+        new Canvas(canvas, rect).showTextAligned("SIGN HERE", 100, 50,
                 TextAlignment.CENTER, (float) Math.toRadians(25));
         // TODO Acrobat does not render new appearance (Foxit however does)
         field.getWidgets().get(0).setNormalAppearance(xObject.getPdfObject());
@@ -110,8 +111,9 @@ public class C2_04_CreateEmptyField extends SignatureTest {
 
     public void addField(String src, String dest) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
-        // create a signature form field
-        PdfSignatureFormField field = PdfFormField.createSignature(pdfDoc, new Rectangle(72, 632, 200, 100));
+        // Create a signature form field
+        PdfSignatureFormField field = new SignatureFormFieldBuilder(pdfDoc, SIGNAME)
+                .setWidgetRectangle(new Rectangle(72, 632, 200, 100)).createSignature();
         field.setFieldName(SIGNAME);
         // set the widget properties
         field.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_OUTLINE).setFlags(PdfAnnotation.PRINT);

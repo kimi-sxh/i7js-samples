@@ -15,8 +15,10 @@
 package com.itextpdf.samples.signatures.chapter02;
 
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.PdfSigFieldLockDictionary;
+import com.itextpdf.forms.PdfSigFieldLock;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.SignatureFormFieldBuilder;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfName;
@@ -85,15 +87,15 @@ public class C2_12_LockFields extends SignatureTest {
         table.addCell(createSignatureFieldCell("sig1", null));
         table.addCell("For approval by Bob");
         table.addCell(createTextFieldCell("approved_bob"));
-        PdfSigFieldLockDictionary lock = new PdfSigFieldLockDictionary().setFieldLock(PdfSigFieldLockDictionary.LockAction.INCLUDE, "sig1", "approved_bob", "sig2");
+        PdfSigFieldLock lock = new PdfSigFieldLock().setFieldLock(PdfSigFieldLock.LockAction.INCLUDE, "sig1", "approved_bob", "sig2");
         table.addCell(createSignatureFieldCell("sig2", lock));
         table.addCell("For approval by Carol");
         table.addCell(createTextFieldCell("approved_carol"));
-        lock = new PdfSigFieldLockDictionary().setFieldLock(PdfSigFieldLockDictionary.LockAction.EXCLUDE, "approved_dave", "sig4");
+        lock = new PdfSigFieldLock().setFieldLock(PdfSigFieldLock.LockAction.EXCLUDE, "approved_dave", "sig4");
         table.addCell(createSignatureFieldCell("sig3", lock));
         table.addCell("For approval by Dave");
         table.addCell(createTextFieldCell("approved_dave"));
-        lock = new PdfSigFieldLockDictionary().setDocumentPermissions(PdfSigFieldLockDictionary.LockPermissions.NO_CHANGES_ALLOWED);
+        lock = new PdfSigFieldLock().setDocumentPermissions(PdfSigFieldLock.LockPermissions.NO_CHANGES_ALLOWED);
         table.addCell(createSignatureFieldCell("sig4", lock));
         doc.add(table);
         doc.close();
@@ -107,7 +109,8 @@ public class C2_12_LockFields extends SignatureTest {
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         Certificate[] chain = ks.getCertificateChain(alias);
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         signer.setFieldName(name);
         // TODO DEVSIX-488
         signer.setCertificationLevel(PdfSigner.CERTIFIED_FORM_FILLING);
@@ -127,7 +130,8 @@ public class C2_12_LockFields extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         PdfAcroForm form = PdfAcroForm.getAcroForm(signer.getDocument(), true);
         form.getField(fname).setValue(value);
         form.getField(name).setReadOnly(true);
@@ -156,7 +160,8 @@ public class C2_12_LockFields extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), true);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Setting signer options
         signer.setFieldName(name);
         // Creating the signature
@@ -172,7 +177,7 @@ public class C2_12_LockFields extends SignatureTest {
         return cell;
     }
 
-    protected Cell createSignatureFieldCell(String name, PdfSigFieldLockDictionary lock) throws IOException {
+    protected Cell createSignatureFieldCell(String name, PdfSigFieldLock lock) throws IOException {
         Cell cell = new Cell();
         cell.setHeight(50);
         cell.setNextRenderer(new SignatureFieldCellRenderer(cell, name, lock));
@@ -191,7 +196,8 @@ public class C2_12_LockFields extends SignatureTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfFormField field = PdfFormField.createText(drawContext.getDocument(), getOccupiedAreaBBox(), name);
+            PdfFormField field = new TextFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createText();
             PdfAcroForm.getAcroForm(drawContext.getDocument(), true).addField(field);
         }
     }
@@ -199,9 +205,9 @@ public class C2_12_LockFields extends SignatureTest {
 
     class SignatureFieldCellRenderer extends CellRenderer {
         public String name;
-        public PdfSigFieldLockDictionary lock;
+        public PdfSigFieldLock lock;
 
-        public SignatureFieldCellRenderer(Cell modelElement, String name, PdfSigFieldLockDictionary lock) {
+        public SignatureFieldCellRenderer(Cell modelElement, String name, PdfSigFieldLock lock) {
             super(modelElement);
             this.name = name;
             this.lock = lock;
@@ -210,7 +216,8 @@ public class C2_12_LockFields extends SignatureTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfFormField field = PdfFormField.createSignature(drawContext.getDocument(), getOccupiedAreaBBox());
+            PdfFormField field = new SignatureFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createSignature();
             field.setFieldName(name);
             if (lock != null) {
                 field.put(PdfName.Lock, lock.makeIndirect(drawContext.getDocument()).getPdfObject());

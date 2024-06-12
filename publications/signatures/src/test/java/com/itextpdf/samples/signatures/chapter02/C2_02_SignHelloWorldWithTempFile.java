@@ -16,6 +16,7 @@ package com.itextpdf.samples.signatures.chapter02;
 
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.*;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -54,7 +55,8 @@ public class C2_02_SignHelloWorldWithTempFile extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), tmp, false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), tmp, stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
                 .setReason(reason)

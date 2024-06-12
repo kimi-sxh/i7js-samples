@@ -25,7 +25,7 @@ import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfTextAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.DigestAlgorithms;
@@ -70,7 +70,8 @@ public class C2_09_SignatureTypes extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);
@@ -91,7 +92,7 @@ public class C2_09_SignatureTypes extends SignatureTest {
     public void addText(String src, String dest) throws IOException {
         PdfReader reader = new PdfReader(src);
         PdfDocument pdfDoc = new PdfDocument(reader, new PdfWriter(dest), new StampingProperties().useAppendMode());
-        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()), pdfDoc, pdfDoc.getFirstPage().getPageSize())
+        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()),pdfDoc.getFirstPage().getPageSize())
                 .showTextAligned("TOP SECRET", 36, 820, TextAlignment.LEFT);
         pdfDoc.close();
     }
@@ -101,9 +102,9 @@ public class C2_09_SignatureTypes extends SignatureTest {
         PdfDocument pdfDoc = new PdfDocument(reader, new PdfWriter(dest), new StampingProperties().useAppendMode());
         PdfAnnotation comment = new PdfTextAnnotation(new Rectangle(200, 800, 50, 20))
                 .setIconName(new PdfName("Comment"))
+                .setOpen(true)
                 .setTitle(new PdfString("Finally Signed!"))
-                .setContents("Bruno Specimen has finally signed the document")
-                .setOpen(true);
+                .setContents("Bruno Specimen has finally signed the document");
         pdfDoc.getFirstPage().addAnnotation(comment);
         pdfDoc.close();
     }
@@ -113,9 +114,9 @@ public class C2_09_SignatureTypes extends SignatureTest {
         PdfDocument pdfDoc = new PdfDocument(reader, new PdfWriter(dest));
         PdfAnnotation comment = new PdfTextAnnotation(new Rectangle(200, 800, 50, 20))
                 .setIconName(new PdfName("Comment"))
+                .setOpen(true)
                 .setTitle(new PdfString("Finally Signed!"))
-                .setContents("Bruno Specimen has finally signed the document")
-                .setOpen(true);
+                .setContents("Bruno Specimen has finally signed the document");
         pdfDoc.getFirstPage().addAnnotation(comment);
         pdfDoc.close();
     }
@@ -127,7 +128,8 @@ public class C2_09_SignatureTypes extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), false);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);

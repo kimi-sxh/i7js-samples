@@ -11,7 +11,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C01E02_Text_Paragraph_Cardo {
     
     public static final String DEST = "results/chapter01/text_paragraph_cardo.pdf";
@@ -42,9 +40,9 @@ public class C01E02_Text_Paragraph_Cardo {
         Document document = new Document(pdf);
         
         // Add content
-        PdfFont font = PdfFontFactory.createFont(REGULAR, true);
-        PdfFont bold = PdfFontFactory.createFont(BOLD, true);
-        PdfFont italic = PdfFontFactory.createFont(ITALIC, true);
+        PdfFont font = PdfFontFactory.createFont(REGULAR, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont bold = PdfFontFactory.createFont(BOLD, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont italic = PdfFontFactory.createFont(ITALIC, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Text title = new Text("The Strange Case of Dr. Jekyll and Mr. Hyde").setFont(bold);
         Text author = new Text("Robert Louis Stevenson").setFont(font);
         Paragraph p = new Paragraph().setFont(italic).add(title).add(" by ").add(author);

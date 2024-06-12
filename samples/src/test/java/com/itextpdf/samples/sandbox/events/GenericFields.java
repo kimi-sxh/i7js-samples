@@ -12,13 +12,16 @@
 package com.itextpdf.samples.sandbox.events;
 
 import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.renderer.DrawContext;
+import com.itextpdf.layout.renderer.IRenderer;
 import com.itextpdf.layout.renderer.TextRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -27,6 +30,7 @@ import java.io.File;
 
 import org.junit.experimental.categories.Category;
 
+//参见：https://kb.itextpdf.com/itext/creating-form-fields#Creatingformfields-genericfields
 @Category(SampleTest.class)
 public class GenericFields extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/events/generic_fields.pdf";
@@ -68,10 +72,20 @@ public class GenericFields extends GenericTest {
             this.fieldName = fieldName;
         }
 
+        // If a renderer overflows on the next area, iText uses #getNextRenderer() method to create a new renderer for the overflow part.
+        // If #getNextRenderer() isn't overridden, the default method will be used and thus the default rather than the custom
+        // renderer will be created
+        @Override
+        public IRenderer getNextRenderer() {
+            return new FieldTextRenderer((Text) modelElement, fieldName);
+        }
+
         @Override
         public void draw(DrawContext drawContext) {
-            PdfTextFormField field = PdfTextFormField.createText(drawContext.getDocument(), getOccupiedAreaBBox(), fieldName);
-            PdfAcroForm.getAcroForm(drawContext.getDocument(), true).addField(field);
+            PdfTextFormField field = new TextFormFieldBuilder(drawContext.getDocument(), fieldName)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createText();
+            PdfFormCreator.getAcroForm(drawContext.getDocument(), true)
+                    .addField(field);
         }
     }
 }

@@ -11,9 +11,9 @@
  */
 package com.itextpdf.samples.sandbox.columntext;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
@@ -23,10 +23,9 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class WriteOnFirstPage extends GenericTest {
@@ -53,7 +52,7 @@ public class WriteOnFirstPage extends GenericTest {
 
         templateCanvas
                 .beginText()
-                .setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12)
+                .setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12)
                 .showText(String.format("There are %s pages in this document", pdfDoc.getNumberOfPages()))
                 .endText()
                 .stroke();

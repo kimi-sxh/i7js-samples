@@ -12,6 +12,7 @@
 package com.itextpdf.samples.sandbox.annotations;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.navigation.PdfDestination;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
@@ -48,7 +49,8 @@ public class XYZDestination extends GenericTest {
         Paragraph c;
         for (int i = 0; i < 10; ) {
             i++;
-            d = PdfExplicitDestination.createXYZ(i, 36, 806, 0);
+            PdfPage pdfPage = pdfDoc.addNewPage(i);
+            d = PdfExplicitDestination.createXYZ(pdfPage, 36, 806, 0);
             c = new Paragraph(new Link("Goto page " + i, d));
             doc.add(c);
         }

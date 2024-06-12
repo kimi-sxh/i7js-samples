@@ -21,6 +21,7 @@ import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.hyphenation.Hyphenation;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
 import com.itextpdf.layout.hyphenation.Hyphenator;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -46,7 +47,7 @@ public class HyphenationExample extends GenericTest {
         Document doc = new Document(pdfDoc);
         doc.setMargins(0, 0, 0, 0);
         Table table = new Table(1);
-        table.setWidthPercent(10);
+        table.setWidth(UnitValue.createPercentValue(10));
         Text text = new Text("Leistungsscheinziffer");
         text.setHyphenation(new HyphenationConfig("de", "DE", 2, 2));
         table.addCell(new Cell().add(new Paragraph(text)));

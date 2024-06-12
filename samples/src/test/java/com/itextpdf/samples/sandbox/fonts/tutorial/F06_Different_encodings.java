@@ -39,9 +39,9 @@ public class F06_Different_encodings extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
 
-        PdfFont french = PdfFontFactory.createFont(FONT, "WINANSI", true);
-        PdfFont czech = PdfFontFactory.createFont(FONT, "Cp1250", true);
-        PdfFont russian = PdfFontFactory.createFont(FONT, "Cp1251", true);
+        PdfFont french = PdfFontFactory.createFont(FONT, "WINANSI", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont czech = PdfFontFactory.createFont(FONT, "Cp1250", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont russian = PdfFontFactory.createFont(FONT, "Cp1251", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         doc.add(new Paragraph("Vous \u00eates d'o\u00f9?").setFont(french));
         doc.add(new Paragraph("\u00c0 tout \u00e0 l'heure. \u00c0 bient\u00f4t.").setFont(french));

@@ -11,10 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.merge;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfOutline;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -47,7 +44,8 @@ public class InsertAndAdaptOutlines extends GenericTest {
 
         PdfOutline outlines = pdfDoc.getOutlines(false);
         PdfOutline outline = outlines.getAllChildren().get(0).addOutline("Hello", 3);
-        outline.addDestination(PdfExplicitDestination.createFit(4));
+        PdfPage pdfPage = pdfDoc.addNewPage(4);
+        outline.addDestination(PdfExplicitDestination.createFit(pdfPage));
         pdfDoc.close();
     }
 }

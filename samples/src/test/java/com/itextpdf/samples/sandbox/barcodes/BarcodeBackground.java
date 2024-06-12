@@ -12,17 +12,16 @@
 package com.itextpdf.samples.sandbox.barcodes;
 
 import com.itextpdf.barcodes.Barcode128;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class BarcodeBackground extends GenericTest {
@@ -41,17 +40,17 @@ public class BarcodeBackground extends GenericTest {
         Barcode128 code128 = new Barcode128(pdfDoc);
         code128.setCode("12345XX789XXX");
         code128.setCodeType(Barcode128.CODE128);
-        PdfFormXObject xObject = code128.createFormXObject(Color.BLACK, Color.BLACK, pdfDoc);
+        PdfFormXObject xObject = code128.createFormXObject(ColorConstants.BLACK, ColorConstants.BLACK, pdfDoc);
         float x = 36;
         float y = 750;
         float w = xObject.getWidth();
         float h = xObject.getHeight();
         canvas.saveState();
-        canvas.setFillColor(Color.LIGHT_GRAY);
+        canvas.setFillColor(ColorConstants.LIGHT_GRAY);
         canvas.rectangle(x, y, w, h);
         canvas.fill();
         canvas.restoreState();
-        canvas.addXObject(xObject, 36, 750);
+        canvas.addXObjectAt(xObject, 36, 750);
         pdfDoc.close();
     }
 }

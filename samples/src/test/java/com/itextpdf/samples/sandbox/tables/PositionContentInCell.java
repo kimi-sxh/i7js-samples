@@ -13,7 +13,10 @@
 package com.itextpdf.samples.sandbox.tables;
 
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfName;
+import com.itextpdf.kernel.pdf.PdfStream;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
@@ -21,15 +24,14 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.Leading;
-import com.itextpdf.layout.property.Property;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.Leading;
+import com.itextpdf.layout.properties.Property;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -100,14 +102,16 @@ public class PositionContentInCell extends GenericTest {
             super.draw(drawContext);
             img.scaleToFit(getOccupiedAreaBBox().getWidth(), getOccupiedAreaBBox().getHeight());
 
-            drawContext.getCanvas().addXObject(img.getXObject(),
+            float width = img.getImageWidth() * (float) img.getProperty(Property.HORIZONTAL_SCALING);
+            float formWidth = img.getImageWidth();
+            float formHeight = img.getImageHeight();
+            drawContext.getCanvas().addXObjectWithTransformationMatrix(img.getXObject(),width, 0.0F, 0.0F, width / formWidth * formHeight,
                     getOccupiedAreaBBox().getX() +
                             (getOccupiedAreaBBox().getWidth()
                                     - img.getImageWidth() * (float) img.getProperty(Property.HORIZONTAL_SCALING)) / 2,
                     getOccupiedAreaBBox().getY() +
                             (getOccupiedAreaBBox().getHeight()
-                                    - img.getImageHeight() * (float) img.getProperty(Property.VERTICAL_SCALING)) / 2,
-                    img.getImageWidth() * (float) img.getProperty(Property.HORIZONTAL_SCALING));
+                                    - img.getImageHeight() * (float) img.getProperty(Property.VERTICAL_SCALING)) / 2);
             drawContext.getCanvas().stroke();
 
             Paragraph p = new Paragraph(content);
@@ -143,7 +147,7 @@ public class PositionContentInCell extends GenericTest {
                     y = 0;
                     alignment = TextAlignment.CENTER;
             }
-            new Canvas(drawContext.getCanvas(), drawContext.getDocument(), getOccupiedAreaBBox()).showTextAligned(p, x, y, alignment);
+            new Canvas(drawContext.getCanvas(),getOccupiedAreaBBox()).showTextAligned(p, x, y, alignment);
         }
     }
 }

@@ -13,7 +13,7 @@
 package com.itextpdf.samples.sandbox.images;
 
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -23,13 +23,12 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -95,7 +94,7 @@ public class WatermarkedImages2 extends GenericTest {
             super.draw(drawContext);
             Paragraph p = new Paragraph(content).setFontColor(DeviceRgb.WHITE);
             Rectangle rect = getOccupiedAreaBBox();
-            new Canvas(drawContext.getCanvas(), drawContext.getDocument(), getOccupiedAreaBBox())
+            new Canvas(drawContext.getCanvas(), getOccupiedAreaBBox())
                     .showTextAligned(p, (rect.getLeft() + rect.getRight()) / 2, (rect.getBottom() + rect.getTop()) / 2,
                             getOccupiedArea().getPageNumber(), TextAlignment.CENTER, VerticalAlignment.MIDDLE, (float) Math.PI / 6);
         }

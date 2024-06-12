@@ -15,14 +15,12 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.pdfa.PdfADocument;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 
-@WrapToTest
 public class C07E02_QuickBrownFox_PDFA_1b {
     public static final String DOG = "src/main/resources/img/dog.bmp";
     public static final String FOX = "src/main/resources/img/fox.bmp";
@@ -46,7 +44,7 @@ public class C07E02_QuickBrownFox_PDFA_1b {
         Document document = new Document(pdf);
 
         //Fonts need to be embedded
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Paragraph p = new Paragraph();
         p.setFont(font);
         p.add(new Text("The quick brown "));

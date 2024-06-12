@@ -15,7 +15,9 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 
@@ -39,14 +41,14 @@ public class SimpleRowColspan extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(new float[]{1, 2, 2, 2, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
 
         Cell cell;
-        cell = new Cell(2, 1).add("S/N");
+        cell = new Cell(2, 1).add(new Paragraph("S/N"));
         table.addCell(cell);
-        cell = new Cell(1, 3).add("Name");
+        cell = new Cell(1, 3).add(new Paragraph("Name"));
         table.addCell(cell);
-        cell = new Cell(2, 1).add("Age");
+        cell = new Cell(2, 1).add(new Paragraph("Age"));
         table.addCell(cell);
         table.addCell("SURNAME");
         table.addCell("FIRST NAME");

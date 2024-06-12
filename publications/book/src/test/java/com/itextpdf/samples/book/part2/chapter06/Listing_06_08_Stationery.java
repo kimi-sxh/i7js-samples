@@ -29,6 +29,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -119,7 +120,7 @@ public class Listing_06_08_Stationery extends GenericTest {
 
         bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 
-        Table table = new Table(1).setWidth(80).setHorizontalAlignment(HorizontalAlignment.CENTER);
+        Table table = new Table(1).setWidth(UnitValue.createPercentValue(80)).setHorizontalAlignment(HorizontalAlignment.CENTER);
         Style style = new Style().setTextAlignment(TextAlignment.CENTER);
         table.addCell(new Cell()
                 .addStyle(style)

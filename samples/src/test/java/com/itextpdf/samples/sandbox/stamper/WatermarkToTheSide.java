@@ -16,10 +16,9 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -52,9 +51,9 @@ public class WatermarkToTheSide extends GenericTest {
             // getting the canvas covering the existing content
             canvas = new PdfCanvas(pdfDoc.getPage(p));
             // adding some lines to the left
-            new Canvas(canvas, pdfDoc, pageSize)
+            new Canvas(canvas, pageSize)
                     .showTextAligned("This is some extra text added to the left of the page", x + 18, y, TextAlignment.CENTER, (float) Math.toRadians(90));
-            new Canvas(canvas, pdfDoc, pageSize)
+            new Canvas(canvas, pageSize)
                     .showTextAligned("This is some more text added to the left of the page", x + 34, y, TextAlignment.CENTER, (float) Math.toRadians(90));
             // !!!IMPORTANT
             // Notice, that in itext7 we do not consider the rotation while adding via Document or Canvas

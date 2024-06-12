@@ -5,7 +5,7 @@
 package com.itextpdf.highlevel.chapter05;
 
 import com.itextpdf.highlevel.util.CsvTo2DList;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -13,10 +13,10 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.TableRenderer;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * @author iText
  */
-@WrapToTest
 public class C05E13_JekyllHydeTableV6 {
     
     public static final String SRC = "src/main/resources/data/jekyll_hyde.csv";
@@ -50,7 +49,7 @@ public class C05E13_JekyllHydeTableV6 {
         int nRows = resultSet.size();
         table.setNextRenderer(new AlternatingBackgroundTableRenderer(
             table, new Table.RowRange(0, nRows - 1)));
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         for (String field : header) {
             table.addHeaderCell(field);
         }
@@ -95,10 +94,10 @@ class AlternatingBackgroundTableRenderer extends TableRenderer {
             PdfCanvas canvas = drawContext.getCanvas();
             canvas.saveState();
             if (isOdd) {
-                canvas.setFillColor(Color.LIGHT_GRAY);
+                canvas.setFillColor(ColorConstants.LIGHT_GRAY);
                 isOdd = false;
             } else {
-                canvas.setFillColor(Color.YELLOW);
+                canvas.setFillColor(ColorConstants.YELLOW);
                 isOdd = true;
             }
             canvas.rectangle(rect);

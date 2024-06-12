@@ -4,7 +4,7 @@
  */
 package com.itextpdf.highlevel.chapter02;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -13,9 +13,8 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +24,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C02E13_JekyllHydeV9 {
     public static final String SRC = "src/main/resources/txt/jekyll_hyde.txt";
     public static final String DEST = "results/chapter02/jekyll_hyde_v9.pdf";
@@ -42,8 +40,8 @@ public class C02E13_JekyllHydeV9 {
         
         // Initialize document
         Document document = new Document(pdf, PageSize.A4, false);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         document.setTextAlignment(TextAlignment.JUSTIFIED)
             .setHyphenation(new HyphenationConfig("en", "uk", 3, 3))
             .setFont(font)

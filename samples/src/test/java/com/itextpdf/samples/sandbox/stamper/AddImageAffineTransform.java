@@ -49,7 +49,7 @@ public class AddImageAffineTransform extends GenericTest {
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
         float[] matrix = new float[6];
         at.getMatrix(matrix);
-        canvas.addImage(image, matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
+        canvas.addImageWithTransformationMatrix(image, matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
         pdfDoc.close();
     }
 }

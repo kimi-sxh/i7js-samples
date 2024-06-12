@@ -11,6 +11,9 @@
  */
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.fields.CheckBoxFormFieldBuilder;
+import com.itextpdf.forms.fields.PdfFormCreator;
+import com.itextpdf.forms.fields.properties.CheckBoxType;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -30,6 +33,7 @@ import java.io.FileOutputStream;
 
 import org.junit.experimental.categories.Category;
 
+//参见：https://kb.itextpdf.com/itext/create-fields-in-a-table#Createfieldsinatable-checkboxcell2
 @Category(SampleTest.class)
 public class CheckboxCell2 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/checkbox_cell2.pdf";
@@ -73,37 +77,44 @@ public class CheckboxCell2 extends GenericTest {
         @Override
         public void draw(DrawContext drawContext) {
             Rectangle position = getOccupiedAreaBBox();
+            PdfAcroForm form = PdfFormCreator.getAcroForm(drawContext.getDocument(), true);
+
             // define the coordinates of the middle
             float x = (position.getLeft() + position.getRight()) / 2;
             float y = (position.getTop() + position.getBottom()) / 2;
             // define the position of a check box that measures 20 by 20
             Rectangle rect = new Rectangle(x - 10, y - 10, 20, 20);
-            // define the check box
-            PdfButtonFormField checkBox = PdfFormField.createCheckBox(drawContext.getDocument(), rect, name, "Yes");
+
+            // The 4th parameter is the initial value of checkbox: 'Yes' - checked, 'Off' - unchecked
+            // By default, checkbox value type is cross.
+            PdfButtonFormField checkBox = new CheckBoxFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(rect).createCheckBox();
+            checkBox.setValue("Yes");
+
             switch (i) {
                 case 0:
-                    checkBox.setCheckType(PdfFormField.TYPE_CHECK);
+                    checkBox.setCheckType(CheckBoxType.CHECK);
                     // Use this method if you changed any field parameters and didn't use setValue
                     checkBox.regenerateField();
                     break;
                 case 1:
-                    checkBox.setCheckType(PdfFormField.TYPE_CIRCLE);
+                    checkBox.setCheckType(CheckBoxType.CIRCLE);
                     checkBox.regenerateField();
                     break;
                 case 2:
-                    checkBox.setCheckType(PdfFormField.TYPE_CROSS);
+                    checkBox.setCheckType(CheckBoxType.CROSS);
                     checkBox.regenerateField();
                     break;
                 case 3:
-                    checkBox.setCheckType(PdfFormField.TYPE_DIAMOND);
+                    checkBox.setCheckType(CheckBoxType.DIAMOND);
                     checkBox.regenerateField();
                     break;
                 case 4:
-                    checkBox.setCheckType(PdfFormField.TYPE_SQUARE);
+                    checkBox.setCheckType(CheckBoxType.SQUARE);
                     checkBox.regenerateField();
                     break;
                 case 5:
-                    checkBox.setCheckType(PdfFormField.TYPE_STAR);
+                    checkBox.setCheckType(CheckBoxType.STAR);
                     checkBox.regenerateField();
                     break;
             }

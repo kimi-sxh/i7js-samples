@@ -45,9 +45,9 @@ public class AddRotatedTemplate extends GenericTest {
         new Canvas(formXObject, pdfDoc).add(new Paragraph("Some long text that needs to be distributed over several lines."));
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-        canvas.addXObject(formXObject, 36, 600);
+        canvas.addXObjectAt(formXObject, 36, 600);
         double angle = Math.PI / 4;
-        canvas.addXObject(formXObject,
+        canvas.addXObjectWithTransformationMatrix(formXObject,
                 (float) Math.cos(angle), -(float) Math.sin(angle),
                 (float) Math.cos(angle), (float) Math.sin(angle),
                 150, 600);

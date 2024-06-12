@@ -14,15 +14,15 @@ package com.itextpdf.samples.sandbox.tables;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TabAlignment;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TabAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -48,7 +48,7 @@ public class CellWithGlue extends GenericTest {
 
         table = new Table(2);
         table.setHorizontalAlignment(HorizontalAlignment.LEFT);
-        table.setWidthPercent(60);
+        table.setWidth(UnitValue.createPercentValue(60));
         table.setMarginBottom(20);
         cell = new Cell().add(new Paragraph("Received Rs (in Words):"));
         cell.setBorder(Border.NO_BORDER);
@@ -65,12 +65,12 @@ public class CellWithGlue extends GenericTest {
         table.addCell(cell);
         doc.add(table);
 
-        table.setWidthPercent(50);
+        table.setWidth(UnitValue.createPercentValue(50));
         doc.add(table);
 
         table = new Table(1);
         table.setHorizontalAlignment(HorizontalAlignment.LEFT);
-        table.setWidthPercent(50);
+        table.setWidth(UnitValue.createPercentValue(50));
         Paragraph p = new Paragraph();
         p.add(new Text("Received Rs (In Words):"));
         p.addTabStops(new TabStop(1000, TabAlignment.RIGHT));

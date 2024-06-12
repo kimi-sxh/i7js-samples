@@ -4,8 +4,8 @@
  */
 package com.itextpdf.highlevel.chapter01;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -14,7 +14,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C01E10_ReusingStyles {
     
     public static final String DEST = "results/chapter01/style_example.pdf";
@@ -36,12 +34,12 @@ public class C01E10_ReusingStyles {
         PdfDocument pdf = new PdfDocument(new PdfWriter(dest));
         Document document = new Document(pdf);
         Style normal = new Style();
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
         normal.setFont(font).setFontSize(14);
         Style code = new Style();
-        PdfFont monospace = PdfFontFactory.createFont(FontConstants.COURIER);
-        code.setFont(monospace).setFontColor(Color.RED)
-                .setBackgroundColor(Color.LIGHT_GRAY);
+        PdfFont monospace = PdfFontFactory.createFont(StandardFonts.COURIER);
+        code.setFont(monospace).setFontColor(ColorConstants.RED)
+                .setBackgroundColor(ColorConstants.LIGHT_GRAY);
         Paragraph p = new Paragraph();
         p.add(new Text("The Strange Case of ").addStyle(normal));
         p.add(new Text("Dr. Jekyll").addStyle(code));

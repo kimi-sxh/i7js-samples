@@ -68,7 +68,7 @@ public class MergeAndAddFont extends GenericTest {
     public void createPdf(String filename, String text, boolean embedded, boolean subset) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(filename));
         Document doc = new Document(pdfDoc);
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, embedded);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, embedded?PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED:PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         font.setSubset(subset);
         doc.add(new Paragraph(text).setFont(font));
         doc.close();

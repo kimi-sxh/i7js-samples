@@ -65,14 +65,14 @@ public class Listing_03_26_MoviePosters extends GenericTest {
         //Add XObjects to page canvas
         PdfCanvas canvas = new PdfCanvas(page);
         for (int i = 0; i < 10; i++) {
-            canvas.addXObject(xObj, 0, i * 84.2f);
+            canvas.addXObjectAt(xObj, 0, i * 84.2f);
         }
         canvas.release();
 
         //Add XObjects to page canvas
         canvas = new PdfCanvas(page = pdfDoc.addNewPage());
         for (int i = 0; i < 10; i++) {
-            canvas.addXObject(xObj, 0, i * 84.2f);
+            canvas.addXObjectAt(xObj, 0, i * 84.2f);
         }
 
         // Get the movies from the database

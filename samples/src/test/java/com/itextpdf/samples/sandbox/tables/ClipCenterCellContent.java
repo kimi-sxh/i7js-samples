@@ -24,12 +24,12 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -50,6 +50,7 @@ public class ClipCenterCellContent extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(5);
+        table.setWidth(UnitValue.createPercentValue(100));
         Cell cell;
         for (int r = 'A'; r <= 'Z'; r++) {
             for (int c = 1; c <= 5; c++) {
@@ -92,11 +93,11 @@ public class ClipCenterCellContent extends GenericTest {
 
             PdfFormXObject xObject = new PdfFormXObject(new Rectangle(getOccupiedAreaBBox().getWidth(),
                     getOccupiedAreaBBox().getHeight()));
-            Canvas layoutCanvas = new Canvas(new PdfCanvas(xObject, drawContext.getDocument()), drawContext.getDocument(),
+            Canvas layoutCanvas = new Canvas(new PdfCanvas(xObject, drawContext.getDocument()),
                     new Rectangle(0, offset, getOccupiedAreaBBox().getWidth(), spaceneeded));
             layoutCanvas.add(content);
 
-            drawContext.getCanvas().addXObject(xObject, occupiedArea.getBBox().getLeft(), occupiedArea.getBBox().getBottom());
+            drawContext.getCanvas().addXObjectAt(xObject, occupiedArea.getBBox().getLeft(), occupiedArea.getBBox().getBottom());
         }
     }
 }

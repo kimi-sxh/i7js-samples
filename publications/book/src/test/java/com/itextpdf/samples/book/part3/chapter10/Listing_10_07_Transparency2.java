@@ -56,7 +56,7 @@ public class Listing_10_07_Transparency2 extends GenericTest {
             group.setIsolated(true);
             group.setKnockout(true);
             tp.setGroup(group);
-            canvas.addXObject(tp, gap, 500);
+            canvas.addXObjectAt(tp, gap, 500);
 
             tp = new PdfFormXObject(new Rectangle(200, 200));
             xObjectCanvas = new PdfCanvas(tp, pdfDoc);
@@ -65,7 +65,7 @@ public class Listing_10_07_Transparency2 extends GenericTest {
             group.setIsolated(true);
             group.setKnockout(false);
             tp.setGroup(group);
-            canvas.addXObject(tp, 200 + 2 * gap, 500);
+            canvas.addXObjectAt(tp, 200 + 2 * gap, 500);
 
             tp = new PdfFormXObject(new Rectangle(200, 200));
             xObjectCanvas = new PdfCanvas(tp, pdfDoc);
@@ -74,7 +74,7 @@ public class Listing_10_07_Transparency2 extends GenericTest {
             group.setIsolated(false);
             group.setKnockout(true);
             tp.setGroup(group);
-            canvas.addXObject(tp, gap, 500 - 200 - gap);
+            canvas.addXObjectAt(tp, gap, 500 - 200 - gap);
 
             tp = new PdfFormXObject(new Rectangle(200, 200));
             xObjectCanvas = new PdfCanvas(tp, pdfDoc);
@@ -83,7 +83,7 @@ public class Listing_10_07_Transparency2 extends GenericTest {
             group.setIsolated(false);
             group.setKnockout(false);
             tp.setGroup(group);
-            canvas.addXObject(tp, 200 + 2 * gap, 500 - 200 - gap);
+            canvas.addXObjectAt(tp, 200 + 2 * gap, 500 - 200 - gap);
 
             pdfDoc.close();
         } catch (IOException ioe) {

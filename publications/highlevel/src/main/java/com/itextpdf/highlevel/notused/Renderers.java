@@ -12,7 +12,7 @@ import com.itextpdf.layout.ColumnDocumentRenderer;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.AreaBreakType;
+import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 
 import java.io.File;
@@ -60,8 +60,9 @@ public class Renderers {
         document.setRenderer(new ColumnDocumentRenderer(document, columns)); 
         document.add(new AreaBreak(AreaBreakType.LAST_PAGE));
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) {
             document.add(p);
+        }
         document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
         
         document.setRenderer(new DocumentRenderer(document)); 

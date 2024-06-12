@@ -44,7 +44,7 @@ public class BackgroundImage extends GenericTest {
         PageSize pageSize = new PageSize(PageSize.A4).rotate();
         Document doc = new Document(pdfDoc, pageSize);
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
-        canvas.addImage(ImageDataFactory.create(IMAGE), pageSize, false);
+        canvas.addImageWithTransformationMatrix(ImageDataFactory.create(IMAGE), pageSize.getWidth(), 0.0F, 0.0F, pageSize.getHeight(), pageSize.getX(), pageSize.getY(), false);
         doc.add(new Paragraph("Berlin!"));
         doc.close();
     }

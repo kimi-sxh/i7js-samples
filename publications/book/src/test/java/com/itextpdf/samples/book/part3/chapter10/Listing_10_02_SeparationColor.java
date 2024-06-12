@@ -8,13 +8,11 @@
 package com.itextpdf.samples.book.part3.chapter10;
 
 import com.itextpdf.kernel.colors.*;
-import com.itextpdf.kernel.pdf.PdfArray;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfNumber;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.colorspace.PdfSpecialCs;
-import com.itextpdf.kernel.pdf.function.PdfFunction;
+import com.itextpdf.kernel.pdf.function.PdfType2Function;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -75,7 +73,7 @@ public class Listing_10_02_SeparationColor extends GenericTest {
     private PdfSpecialCs.Separation createGrayColorSpace(float gray) {
         float[] c1 = new float[]{gray};
         float[] c0 = new float[]{1};
-        PdfFunction f = new PdfFunction.Type2(new PdfArray(new float[]{0, 1}), null, new PdfArray(c0), new PdfArray(c1), new PdfNumber(1));
+        PdfType2Function f = new PdfType2Function(new float[]{0, 1}, null, c0, c1, 1);
         PdfSpecialCs.Separation cs = new PdfSpecialCs.Separation("iTextSpotColorGray", new DeviceGray().getColorSpace(), f);
         return cs;
     }
@@ -83,7 +81,7 @@ public class Listing_10_02_SeparationColor extends GenericTest {
     private PdfSpecialCs.Separation createRgbColorSpace(float red, float green, float blue) {
         float[] c0 = new float[]{1, 1, 1};
         float[] c1 = new float[]{red, green, blue};
-        PdfFunction f = new PdfFunction.Type2(new PdfArray(new float[]{0, 1}), null, new PdfArray(c0), new PdfArray(c1), new PdfNumber(1));
+        PdfType2Function f = new PdfType2Function(new float[]{0, 1}, null, c0, c1, 1);
         PdfSpecialCs.Separation cs = new PdfSpecialCs.Separation("iTextSpotColorRGB", new DeviceRgb().getColorSpace(), f);
 
         return cs;
@@ -92,7 +90,7 @@ public class Listing_10_02_SeparationColor extends GenericTest {
     private PdfSpecialCs.Separation createCmykColorSpace(float c, float m, float y, float k) {
         float[] c0 = new float[]{0, 0, 0, 0};
         float[] c1 = new float[]{c, m, y, k};
-        PdfFunction f = new PdfFunction.Type2(new PdfArray(new float[]{0, 1}), null, new PdfArray(c0), new PdfArray(c1), new PdfNumber(1));
+        PdfType2Function f = new PdfType2Function(new float[]{0, 1}, null, c0, c1, 1);
         PdfSpecialCs.Separation cs = new PdfSpecialCs.Separation("iTextSpotColorCMYK", new DeviceCmyk(c, m, y, k).getColorSpace(), f);
 
         return cs;

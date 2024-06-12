@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.columntext;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfName;
@@ -107,7 +107,7 @@ public class SortingTable extends GenericTest {
         Cell cell = new Cell();
         cell.add(new Paragraph(String.format("row %s; column %s", i, j)));
         if (j == c) {
-            cell.setBackgroundColor(Color.LIGHT_GRAY);
+            cell.setBackgroundColor(ColorConstants.LIGHT_GRAY);
         }
         return cell;
     }

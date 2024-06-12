@@ -56,20 +56,20 @@ public class CutAndPaste extends GenericTest {
         canvas1.rectangle(toMove.getLeft(), toMove.getBottom(),
                 toMove.getWidth(), toMove.getHeight());
         canvas1.eoClip();
-        canvas1.newPath();
-        canvas1.addXObject(pageXObject, 0, 0);
+        canvas1.endPath();
+        canvas1.addXObjectAt(pageXObject, 0, 0);
 
         PdfFormXObject t_canvas2 = new PdfFormXObject(pageSize);
         PdfCanvas canvas2 = new PdfCanvas(t_canvas2, pdfDoc);
         canvas2.rectangle(toMove.getLeft(), toMove.getBottom(),
                 toMove.getWidth(), toMove.getHeight());
         canvas2.clip();
-        canvas2.newPath();
-        canvas2.addXObject(pageXObject, 0, 0);
+        canvas2.endPath();
+        canvas2.addXObjectAt(pageXObject, 0, 0);
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-        canvas.addXObject(t_canvas1, 0, 0);
-        canvas.addXObject(t_canvas2, -20, -2);
+        canvas.addXObjectAt(t_canvas1, 0, 0);
+        canvas.addXObjectAt(t_canvas2, -20, -2);
 
         srcDoc.close();
         pdfDoc.close();

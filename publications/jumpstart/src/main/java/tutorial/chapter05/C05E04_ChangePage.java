@@ -3,11 +3,13 @@
  */
 package tutorial.chapter05;
 
-import com.itextpdf.kernel.color.*;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +17,6 @@ import java.io.IOException;
 /**
  * Simple changing page properties example.
  */
-@WrapToTest
 public class C05E04_ChangePage {
 
     public static final String SRC = "src/main/resources/pdf/ufo.pdf";
@@ -43,7 +44,7 @@ public class C05E04_ChangePage {
             page.setMediaBox(newMediaBox);
             // add border
             PdfCanvas over = new PdfCanvas(page);
-            over.setStrokeColor(Color.GRAY);
+            over.setStrokeColor(ColorConstants.GRAY);
             over.rectangle(mediaBox.getLeft(), mediaBox.getBottom(), mediaBox.getWidth(), mediaBox.getHeight());
             over.stroke();
             // change rotation of the even pages

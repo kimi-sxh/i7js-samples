@@ -39,7 +39,7 @@ public class ChangeFieldPosition extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
 
-        Map<String, PdfFormField> fields = form.getFormFields();
+        Map<String, PdfFormField> fields = form.getAllFormFields();
         PdfFormField field = fields.get("timezone2");
         PdfWidgetAnnotation widgetAnnotation = field.getWidgets().get(0);
         PdfArray annotationRect = widgetAnnotation.getRectangle();

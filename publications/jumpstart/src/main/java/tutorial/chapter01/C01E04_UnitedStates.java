@@ -3,7 +3,7 @@
  */
 package tutorial.chapter01;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -13,7 +13,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.UnitValue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,6 @@ import java.util.StringTokenizer;
 /**
  * Simple table example.
  */
-@WrapToTest
 public class C01E04_UnitedStates {
     public static final String DATA = "src/main/resources/data/united_states.csv";
         
@@ -47,10 +46,10 @@ public class C01E04_UnitedStates {
         Document document = new Document(pdf, PageSize.A4.rotate());
         document.setMargins(20, 20, 20, 20);
                 
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         Table table = new Table(new float[]{4, 1, 3, 4, 3, 3, 3, 3, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
         process(table, line, bold, true);

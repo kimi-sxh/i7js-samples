@@ -50,7 +50,7 @@ public class Listing_14_07_TransformationMatrix2 extends GenericTest {
         PdfPage curPage = srcDoc.getPage(1);
         PdfFormXObject xObject = curPage.copyAsFormXObject(pdfDoc);
         // add it at different positions using different transformations
-        canvas.addXObject(xObject, 0, 0)
+        canvas.addXObjectAt(xObject, 0, 0)
                 .addXObjectWithTransformationMatrix(xObject, 0.5f, 0, 0, 0.5f, -595, 0)
                 .addXObjectWithTransformationMatrix(xObject, 0.5f, 0, 0, 0.5f, -297.5f, 297.5f)
                 .addXObjectWithTransformationMatrix(xObject, 1, 0, 0.4f, 1, -750, -650)

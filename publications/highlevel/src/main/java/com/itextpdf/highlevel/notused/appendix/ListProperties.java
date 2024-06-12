@@ -4,8 +4,8 @@
  */
 package com.itextpdf.highlevel.notused.appendix;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -13,12 +13,13 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,26 +42,26 @@ public class ListProperties {
 
         // Initialize document
         Document document = new Document(pdf);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
         Style style = new Style();
-        style.setBackgroundColor(Color.YELLOW).setTextAlignment(TextAlignment.CENTER);
+        style.setBackgroundColor(ColorConstants.YELLOW).setTextAlignment(TextAlignment.CENTER);
         document.add(createNewList().addStyle(style).setWidth(300).setHorizontalAlignment(HorizontalAlignment.CENTER).setDestination("Top"));
-        document.add(createNewList().setRotationAngle(Math.PI / 18).setFont(font).setFontSize(8).setFontColor(Color.RED));
+        document.add(createNewList().setRotationAngle(Math.PI / 18).setFont(font).setFontSize(8).setFontColor(ColorConstants.RED));
         document.add(createNewList().setHyphenation(new HyphenationConfig("en", "uk", 3, 3)).setBorder(new SolidBorder(0.5f)).setKeepWithNext(true));
         document.add(createNewList().setKeepTogether(true).setHeight(200));
-        document.add(createNewList().setWidthPercent(50));
+        document.add(createNewList().setWidth(UnitValue.createPercentValue(50)));
         document.add(createNewList().setRelativePosition(10, 10, 50, 10));
         document.add(createNewList());
         document.add(new AreaBreak());
         document.add(createNewList().setFixedPosition(100, 400, 350).setAction(PdfAction.createGoTo("Top")));
-        document.add(createNewList().setBackgroundColor(Color.YELLOW).setMarginBottom(10));
-        document.add(createNewList().setBackgroundColor(Color.LIGHT_GRAY).setPaddingLeft(20).setPaddingRight(50));
-        document.add(createNewList().setBackgroundColor(Color.YELLOW));
-        document.add(createNewList().setBackgroundColor(Color.LIGHT_GRAY));
-        document.add(createNewList().setBackgroundColor(Color.YELLOW));
-        document.add(createNewList().setBackgroundColor(Color.LIGHT_GRAY).setMargin(50).setPadding(30));
-        document.add(createNewList().setBackgroundColor(Color.YELLOW));
-        document.add(createNewList().setBackgroundColor(Color.LIGHT_GRAY));
+        document.add(createNewList().setBackgroundColor(ColorConstants.YELLOW).setMarginBottom(10));
+        document.add(createNewList().setBackgroundColor(ColorConstants.LIGHT_GRAY).setPaddingLeft(20).setPaddingRight(50));
+        document.add(createNewList().setBackgroundColor(ColorConstants.YELLOW));
+        document.add(createNewList().setBackgroundColor(ColorConstants.LIGHT_GRAY));
+        document.add(createNewList().setBackgroundColor(ColorConstants.YELLOW));
+        document.add(createNewList().setBackgroundColor(ColorConstants.LIGHT_GRAY).setMargin(50).setPadding(30));
+        document.add(createNewList().setBackgroundColor(ColorConstants.YELLOW));
+        document.add(createNewList().setBackgroundColor(ColorConstants.LIGHT_GRAY));
         document.close();
     }
     

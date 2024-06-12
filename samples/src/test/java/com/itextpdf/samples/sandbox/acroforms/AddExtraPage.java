@@ -12,7 +12,7 @@
 package com.itextpdf.samples.sandbox.acroforms;
 
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -29,11 +29,11 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
+//参见：https://kb.itextpdf.com/itext/how-to-continue-field-output-on-a-second-page
 @Category(SampleTest.class)
 public class AddExtraPage extends GenericTest {
     public static String DEST = "./target/test/resources/sandbox/acroforms/add_extra_page.pdf";
@@ -61,7 +61,7 @@ public class AddExtraPage extends GenericTest {
         // the easiest way to add a Text object to Paragraph
         p.add("Hello ");
         // use add(Text) if you want to specify some Text characteristics, for example, font size
-        p.add(new Text("World").setFont(PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD)));
+        p.add(new Text("World").setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD)));
 
         for (int i = 1; i < 101; i++) {
             doc.add(new Paragraph("Hello " + i));
@@ -84,7 +84,7 @@ public class AddExtraPage extends GenericTest {
             PdfDocument pdfDoc = ((PdfDocumentEvent) event).getDocument();
             // Add the background
             new PdfCanvas(((PdfDocumentEvent) event).getPage().newContentStreamBefore(), ((PdfDocumentEvent) event).getPage().getResources(), pdfDoc)
-                    .addXObject(background, 0, 0);
+                    .addXObjectAt(background, 0, 0);
         }
     }
 }

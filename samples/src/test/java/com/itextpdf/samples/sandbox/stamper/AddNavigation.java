@@ -42,20 +42,22 @@ public class AddNavigation extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
         int[] borders = {0, 0, 1};
-        PdfDestination d1 = PdfExplicitDestination.createFit(10);
+        PdfPage pdfPage = pdfDoc.addNewPage(10);
+        PdfDestination d1 = PdfExplicitDestination.createFit(pdfPage);
         Rectangle rect = new Rectangle(0, 806, 595, 36);
         PdfAnnotation a10 = new PdfLinkAnnotation(rect)
+                .setAction(PdfAction.createGoTo(d1))
                 .setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT)
                 .setPage(pdfDoc.getPage(10))
-                .setAction(PdfAction.createGoTo(d1))
                 .setBorder(new PdfArray(borders))
                 .setColor(new PdfArray(new float[]{0, 1, 0}));
         pdfDoc.getPage(1).addAnnotation(a10);
-        PdfDestination d2 = PdfExplicitDestination.createFit(1);
+        PdfPage firstPdfPage = pdfDoc.addNewPage(1);
+        PdfDestination d2 = PdfExplicitDestination.createFit(firstPdfPage);
         PdfAnnotation a1 = new PdfLinkAnnotation(rect)
+                .setAction(PdfAction.createGoTo(d2))
                 .setHighlightMode(PdfAnnotation.HIGHLIGHT_PUSH)
                 .setPage(pdfDoc.getPage(1))
-                .setAction(PdfAction.createGoTo(d2))
                 .setBorder(new PdfArray(borders))
                 .setColor(new PdfArray(new float[]{0, 1, 0}));
         pdfDoc.getPage(10).addAnnotation(a1);

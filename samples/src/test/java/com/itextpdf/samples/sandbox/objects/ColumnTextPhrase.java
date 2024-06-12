@@ -11,8 +11,8 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -24,7 +24,6 @@ import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -44,13 +43,13 @@ public class ColumnTextPhrase extends GenericTest {
     public void manipulatePdf(String dest) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(dest));
 
-        PdfFont f = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont f = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         Paragraph pz = new Paragraph("Hello World!").setFont(f).setFixedLeading(20);
-        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()), pdfDoc, new Rectangle(120, 48, 80, 480))
+        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()), new Rectangle(120, 48, 80, 480))
                 .add(pz);
-        f = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD, PdfEncodings.CP1252, true);
+        f = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD, PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         pz = new Paragraph("Hello World!").setFont(f).setFontSize(13);
-        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()), pdfDoc, new Rectangle(120, 48, 80, 580))
+        new Canvas(new PdfCanvas(pdfDoc.getFirstPage()), new Rectangle(120, 48, 80, 580))
                 .add(pz);
 
         pdfDoc.close();

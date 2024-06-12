@@ -13,8 +13,8 @@
  */
 package com.itextpdf.samples.sandbox.events;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -29,11 +29,11 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.BufferedReader;
@@ -71,11 +71,11 @@ public class Watermarking extends GenericTest {
         Document doc = new Document(pdfDoc);
         pdfDoc.addEventHandler(PdfDocumentEvent.END_PAGE, new WatermarkingEventHandler());
 
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 
         Table table = new Table(new float[]{4, 1, 3});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
 
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
@@ -99,13 +99,13 @@ public class Watermarking extends GenericTest {
             PdfPage page = docEvent.getPage();
             PdfFont font = null;
             try {
-                font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+                font = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
-            new Canvas(canvas, pdfDoc, page.getPageSize())
-                    .setFontColor(Color.LIGHT_GRAY)
+            new Canvas(canvas, page.getPageSize())
+                    .setFontColor(ColorConstants.LIGHT_GRAY)
                     .setFontSize(60)
                     .setFont(font)
                     .showTextAligned(new Paragraph("WATERMARK"), 298, 421, pdfDoc.getPageNumber(page),

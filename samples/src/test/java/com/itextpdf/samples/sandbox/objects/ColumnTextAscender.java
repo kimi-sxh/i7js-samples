@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -21,7 +21,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -44,7 +43,7 @@ public class ColumnTextAscender extends GenericTest {
         // for canvas usage one should create a page
         pdfDoc.addNewPage();
         for (Rectangle rect : areas) {
-            new PdfCanvas(pdfDoc.getFirstPage()).setLineWidth(0.5f).setStrokeColor(Color.RED).rectangle(rect).stroke();
+            new PdfCanvas(pdfDoc.getFirstPage()).setLineWidth(0.5f).setStrokeColor(ColorConstants.RED).rectangle(rect).stroke();
         }
         doc.setRenderer(new ColumnDocumentRenderer(doc, areas));
         addColumn(doc, false);

@@ -6,14 +6,13 @@ package com.itextpdf.highlevel.chapter03;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Image;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.awt.*;
 import java.io.File;
@@ -22,7 +21,6 @@ import java.io.IOException;
 /**
  * @author iText
  */
-@WrapToTest
 public class C03E18_ImageTypes {
     public static final String TEST1 = "src/main/resources/img/test/map.jp2";
     public static final String TEST2 = "src/main/resources/img/test/butterfly.bmp";
@@ -76,7 +74,7 @@ public class C03E18_ImageTypes {
         
         // GIF
         Image img5 = new Image(ImageDataFactory.create(TEST5));
-        img5.setBackgroundColor(Color.LIGHT_GRAY);
+        img5.setBackgroundColor(ColorConstants.LIGHT_GRAY);
         document.add(img5);
         
         // AWT

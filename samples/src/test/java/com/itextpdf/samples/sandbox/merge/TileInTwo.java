@@ -58,9 +58,9 @@ public class TileInTwo extends GenericTest {
         while (true) {
             PdfFormXObject page = srcDoc.getPage(i).copyAsFormXObject(resultDoc);
             canvas = new PdfCanvas(resultDoc.addNewPage());
-            canvas.addXObject(page, 0, -mediaBox.getHeight());
+            canvas.addXObjectAt(page, 0, -mediaBox.getHeight());
             canvas = new PdfCanvas(resultDoc.addNewPage());
-            canvas.addXObject(page, 0, 0);
+            canvas.addXObjectAt(page, 0, 0);
             if (++i > n) {
                 break;
             }

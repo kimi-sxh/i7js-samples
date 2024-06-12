@@ -41,7 +41,7 @@ public class TengwarQuenya1 extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
 
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Paragraph p = new Paragraph("\"A Hello World PDF document.").setFont(font);
         doc.add(p);
 

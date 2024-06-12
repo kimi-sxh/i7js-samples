@@ -3,20 +3,19 @@
  */
 package tutorial.chapter04;
 
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.test.annotations.WrapToTest;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
  * Simple filling out form example.
  */
-@WrapToTest
 public class C04E05_FlattenForm {
 
     public static final String SRC = "src/main/resources/pdf/job_application.pdf";

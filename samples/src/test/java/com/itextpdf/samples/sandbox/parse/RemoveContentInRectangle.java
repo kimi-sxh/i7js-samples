@@ -11,17 +11,17 @@
  */
 package com.itextpdf.samples.sandbox.parse;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.licensekey.LicenseKey;
+import com.itextpdf.pdfcleanup.CleanUpProperties;
 import com.itextpdf.pdfcleanup.PdfCleanUpLocation;
 import com.itextpdf.pdfcleanup.PdfCleanUpTool;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -47,9 +47,9 @@ public class RemoveContentInRectangle extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(dest));
 
         List<PdfCleanUpLocation> cleanUpLocations = new ArrayList<PdfCleanUpLocation>();
-        cleanUpLocations.add(new PdfCleanUpLocation(1, new Rectangle(97, 405, 383, 40), Color.GRAY));
+        cleanUpLocations.add(new PdfCleanUpLocation(1, new Rectangle(97, 405, 383, 40), ColorConstants.GRAY));
 
-        PdfCleanUpTool cleaner = new PdfCleanUpTool(pdfDoc, cleanUpLocations);
+        PdfCleanUpTool cleaner = new PdfCleanUpTool(pdfDoc, cleanUpLocations,new CleanUpProperties());
         cleaner.cleanUp();
 
         pdfDoc.close();

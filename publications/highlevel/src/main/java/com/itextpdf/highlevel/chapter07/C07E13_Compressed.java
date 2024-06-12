@@ -4,7 +4,7 @@
  */
 package com.itextpdf.highlevel.chapter07;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
@@ -22,16 +22,11 @@ import com.itextpdf.kernel.pdf.canvas.draw.DottedLine;
 import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Tab;
-import com.itextpdf.layout.element.TabStop;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.AreaBreakType;
-import com.itextpdf.layout.property.TabAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.AreaBreakType;
+import com.itextpdf.layout.properties.TabAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,7 +39,6 @@ import java.util.List;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C07E13_Compressed {
     public static final String SRC = "src/main/resources/txt/jekyll_hyde.txt";
     public static final String IMG = "src/main/resources/img/3132614.jpg";
@@ -65,7 +59,7 @@ public class C07E13_Compressed {
         pdf.addEventHandler(PdfDocumentEvent.START_PAGE, handler);
         // Initialize document
         Document document = new Document(pdf);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         document.setTextAlignment(TextAlignment.JUSTIFIED)
             .setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
 
@@ -142,7 +136,7 @@ public class C07E13_Compressed {
             Rectangle pageSize = page.getPageSize();
             PdfCanvas pdfCanvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdf);
             pdfCanvas.saveState().setExtGState(gState);
-            Canvas canvas = new Canvas(pdfCanvas, pdf, page.getPageSize());
+            Canvas canvas = new Canvas(pdfCanvas, page.getPageSize());
             canvas.add(img.scaleAbsolute(pageSize.getWidth(), pageSize.getHeight()));
             pdfCanvas.restoreState();
             pdfCanvas.release();

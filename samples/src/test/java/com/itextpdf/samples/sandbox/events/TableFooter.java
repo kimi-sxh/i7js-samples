@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.events;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -29,7 +29,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -54,10 +53,10 @@ public class TableFooter extends GenericTest {
         table.setWidth(523);
 
         Cell cell = new Cell().add(new Paragraph("This is a test doc"));
-        cell.setBackgroundColor(Color.ORANGE);
+        cell.setBackgroundColor(ColorConstants.ORANGE);
         table.addCell(cell);
         cell = new Cell().add(new Paragraph("This is a copyright notice"));
-        cell.setBackgroundColor(Color.LIGHT_GRAY);
+        cell.setBackgroundColor(ColorConstants.LIGHT_GRAY);
         table.addCell(cell);
 
         pdfDoc.addEventHandler(PdfDocumentEvent.END_PAGE, new TableFooterEventHandler(table));
@@ -87,7 +86,7 @@ public class TableFooter extends GenericTest {
             PdfDocument pdfDoc = docEvent.getDocument();
             PdfPage page = docEvent.getPage();
             PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
-            new Canvas(canvas, pdfDoc, new Rectangle(36, 20, page.getPageSize().getWidth() - 72, 50))
+            new Canvas(canvas, new Rectangle(36, 20, page.getPageSize().getWidth() - 72, 50))
                     .add(table);
         }
     }

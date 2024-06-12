@@ -11,7 +11,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C01E03_Text_Paragraph_NoCardo {
     
     public static final String DEST = "results/chapter01/text_paragraph_no_cardo.pdf";

@@ -11,22 +11,18 @@ import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfArray;
-import com.itextpdf.kernel.pdf.PdfDate;
-import com.itextpdf.kernel.pdf.PdfDictionary;
-import com.itextpdf.kernel.pdf.PdfName;
-import com.itextpdf.kernel.pdf.PdfOutputIntent;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.filespec.PdfFileSpec;
 import com.itextpdf.kernel.xmp.XMPException;
 import com.itextpdf.kernel.xmp.XMPMeta;
 import com.itextpdf.kernel.xmp.XMPMetaFactory;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.samples.sandbox.zugferd.data.InvoiceData;
@@ -41,7 +37,11 @@ import com.itextpdf.zugferd.ZugferdXMPUtil;
 import com.itextpdf.zugferd.exceptions.DataIncompleteException;
 import com.itextpdf.zugferd.exceptions.InvalidCodeException;
 import com.itextpdf.zugferd.profiles.IBasicProfile;
+import org.junit.experimental.categories.Category;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,11 +51,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.junit.experimental.categories.Category;
-import org.xml.sax.SAXException;
 
 /**
  * Reads invoice data from a test database and creates ZUGFeRD invoices
@@ -97,8 +92,8 @@ public class PdfInvoicesBasic extends GenericTest {
     }
 
     public void createPdf(Invoice invoice) throws ParserConfigurationException, SAXException, TransformerException, IOException, XMPException, ParseException, DataIncompleteException, InvalidCodeException {
-        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
-        fontb = PdfFontFactory.createFont(FONTB, PdfEncodings.WINANSI, true);
+        font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        fontb = PdfFontFactory.createFont(FONTB, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         String dest = String.format(DEST_PATTERN, invoice.getId());
         InvoiceData invoiceData = new InvoiceData();
@@ -124,7 +119,7 @@ public class PdfInvoicesBasic extends GenericTest {
 
         // Address seller / buyer
         Table table = new Table(2);
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         Cell seller = getPartyAddress("From:",
                 basic.getSellerName(),
                 basic.getSellerLineOne(),
@@ -151,7 +146,7 @@ public class PdfInvoicesBasic extends GenericTest {
 
         // line items
         table = new Table(new float[]{7, 2, 1, 2, 2, 2});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         table.setMarginTop(10);
         table.setMarginBottom(10);
         table.addCell(getCell("Item:", TextAlignment.LEFT, fontb, 12));
@@ -190,7 +185,7 @@ public class PdfInvoicesBasic extends GenericTest {
         // platform-independent newlines
         byte[] xml = new String(dom.toXML()).replace("\r\n", "\n").getBytes();
         PdfFileSpec fileSpec = PdfFileSpec.createEmbeddedFileSpec(pdfDoc, xml, "ZUGFeRD invoice", "ZUGFeRD-invoice.xml",
-                new PdfName("application/xml"), parameters, PdfName.Alternative, false);
+                new PdfName("application/xml"), parameters, PdfName.Alternative);
         pdfDoc.addFileAttachment("ZUGFeRD invoice", fileSpec);
         PdfArray array = new PdfArray();
         array.add(fileSpec.getPdfObject().getIndirectReference());
@@ -238,7 +233,7 @@ public class PdfInvoicesBasic extends GenericTest {
     public Table getTotalsTable(String tBase, String tTax, String tTotal, String tCurrency,
                                 String[] type, String[] percentage, String base[], String tax[], String currency[]) {
         Table table = new Table(new float[]{1, 1, 3, 3, 3, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         table.addCell(getCell("TAX", TextAlignment.LEFT, fontb, 12));
         table.addCell(getCell("%", TextAlignment.RIGHT, fontb, 12));
         table.addCell(getCell("Base amount:", TextAlignment.LEFT, fontb, 12));

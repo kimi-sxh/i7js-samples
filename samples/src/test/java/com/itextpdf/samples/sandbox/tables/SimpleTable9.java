@@ -17,6 +17,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 
@@ -41,7 +42,7 @@ public class SimpleTable9 extends GenericTest {
 
         doc.add(new Paragraph("With 3 columns:"));
         Table table = new Table(new float[]{1, 1, 8});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         table.setMarginTop(5);
         table.addCell("Col a");
         table.addCell("Col b");
@@ -58,16 +59,16 @@ public class SimpleTable9 extends GenericTest {
         table.addCell("Col b");
         table.addCell("Value a");
         table.addCell("Value b");
-        table.addCell(new Cell(1, 2).add("Value b"));
-        table.addCell(new Cell(1, 2).add("This is a long description for column c. " +
-                "It needs much more space hence we made sure that the third column is wider."));
+        table.addCell(new Cell(1, 2).add(new Paragraph("Value b")));
+        table.addCell(new Cell(1, 2).add(new Paragraph("This is a long description for column c. " +
+                "It needs much more space hence we made sure that the third column is wider.")));
         table.addCell("Col a");
         table.addCell("Col b");
         table.addCell("Value a");
         table.addCell("Value b");
-        table.addCell(new Cell(1, 2).add("Value b"));
-        table.addCell(new Cell(1, 2).add("This is a long description for column c. " +
-                "It needs much more space hence we made sure that the third column is wider."));
+        table.addCell(new Cell(1, 2).add(new Paragraph("Value b")));
+        table.addCell(new Cell(1, 2).add(new Paragraph("This is a long description for column c. " +
+                "It needs much more space hence we made sure that the third column is wider.")));
         doc.add(table);
 
         doc.close();

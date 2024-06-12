@@ -11,8 +11,8 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -20,10 +20,9 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.property.TabAlignment;
+import com.itextpdf.layout.properties.TabAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -44,7 +43,7 @@ public class UnderlineParagraphWithTwoParts extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         pdfDoc.addNewPage();
-        PdfFont font = PdfFontFactory.createFont(FontConstants.COURIER, PdfEncodings.WINANSI, false);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.COURIER, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
         float charWidth = font.getWidth(" ");
         int charactersPerLine = 101;
         float pageWidth = pdfDoc.getPage(1).getPageSize().getWidth() - doc.getLeftMargin() - doc.getRightMargin();

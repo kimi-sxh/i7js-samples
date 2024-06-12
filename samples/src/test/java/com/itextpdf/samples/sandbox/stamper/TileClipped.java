@@ -57,8 +57,8 @@ public class TileClipped extends GenericTest {
             y = rect.getHeight() * (i / 4 - 3) + margin;
             content.rectangle(margin, margin, rect.getWidth(), rect.getHeight());
             content.clip();
-            content.newPath();
-            content.addXObject(page, 4, 0, 0, 4, x, y);
+            content.endPath();
+            content.addXObjectWithTransformationMatrix(page, 4, 0, 0, 4, x, y);
             if (15 != i) {
                 content = new PdfCanvas(pdfDoc.addNewPage());
             }

@@ -42,7 +42,7 @@ public class LiberationSans extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         PdfFontFactory.register(FONT, "Greek-Regular");
-        PdfFont f = PdfFontFactory.createRegisteredFont("Greek-Regular", PdfEncodings.CP1253, true);
+        PdfFont f = PdfFontFactory.createRegisteredFont("Greek-Regular", PdfEncodings.CP1253, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         Paragraph p = new Paragraph("\u039d\u03cd\u03c6\u03b5\u03c2").setFont(f);
         doc.add(p);

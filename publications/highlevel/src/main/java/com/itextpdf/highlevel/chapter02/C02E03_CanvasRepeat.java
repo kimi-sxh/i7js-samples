@@ -5,7 +5,7 @@
  */
 package com.itextpdf.highlevel.chapter02;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -16,10 +16,9 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.Property;
+import com.itextpdf.layout.properties.Property;
 import com.itextpdf.layout.renderer.CanvasRenderer;
 import com.itextpdf.layout.renderer.IRenderer;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +27,6 @@ import java.io.IOException;
  *
  * @author iText
  */
-@WrapToTest
 public class C02E03_CanvasRepeat {
     
     class MyCanvasRenderer extends CanvasRenderer {
@@ -67,16 +65,17 @@ public class C02E03_CanvasRepeat {
         Rectangle rectangle = new Rectangle(36, 500, 100, 250);
         pdfCanvas.rectangle(rectangle);
         pdfCanvas.stroke();
-        Canvas canvas = new Canvas(pdfCanvas, pdf, rectangle);
+        Canvas canvas = new Canvas(pdfCanvas, rectangle);
         MyCanvasRenderer renderer = new MyCanvasRenderer(canvas);
         canvas.setRenderer(renderer);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.TIMES_BOLD);
         Text title = new Text("The Strange Case of Dr. Jekyll and Mr. Hyde").setFont(bold);
         Text author = new Text("Robert Louis Stevenson").setFont(font);
         Paragraph p = new Paragraph().add(title).add(" by ").add(author);
-        while (!renderer.isFull())
+        while (!renderer.isFull()) {
             canvas.add(p);
+        }
         
         //Close document
         pdf.close();

@@ -42,7 +42,7 @@ public class GetN2fromSig {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC));
 
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
-        Map<String, PdfFormField> fields = form.getFormFields();
+        Map<String, PdfFormField> fields = form.getAllFormFields();
 
         PdfFormField field = fields.get("Signature1");
         PdfDictionary widget = field.getWidgets().get(0).getPdfObject();

@@ -11,18 +11,17 @@
  */
 package com.itextpdf.samples.sandbox.stamper;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -45,7 +44,7 @@ public class StampHeader2 extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Paragraph header = new Paragraph("Copy")
-                .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA))
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                 .setFontSize(14);
         for (int i = 1; i <= pdfDoc.getNumberOfPages(); i++) {
             float x = pdfDoc.getPage(i).getPageSize().getWidth() / 2;

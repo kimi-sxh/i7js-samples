@@ -16,17 +16,17 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class DottedLineCell2 extends GenericTest {
@@ -47,22 +47,22 @@ public class DottedLineCell2 extends GenericTest {
 
         table = new Table(4);
         table.setMarginBottom(30);
-        cell = new Cell().add("left border");
+        cell = new Cell().add(new Paragraph("left border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{false, true, false, false}));
         table.addCell(cell);
-        cell = new Cell().add("right border");
+        cell = new Cell().add(new Paragraph("right border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{false, false, false, true}));
         table.addCell(cell);
-        cell = new Cell().add("top border");
+        cell = new Cell().add(new Paragraph("top border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{true, false, false, false}));
         table.addCell(cell);
-        cell = new Cell().add("bottom border");
+        cell = new Cell().add(new Paragraph("bottom border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{false, false, true, false}));
@@ -71,20 +71,20 @@ public class DottedLineCell2 extends GenericTest {
 
         table = new Table(4);
         table.setMarginBottom(30);
-        cell = new Cell().add("left and top border");
+        cell = new Cell().add(new Paragraph("left and top border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{true, true, false, false}));
         table.addCell(cell);
-        cell = new Cell().add("right and bottom border");
+        cell = new Cell().add(new Paragraph("right and bottom border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{false, false, true, true}));
         table.addCell(cell);
-        cell = new Cell().add("no border");
+        cell = new Cell().add(new Paragraph("no border"));
         cell.setBorder(Border.NO_BORDER);
         table.addCell(cell);
-        cell = new Cell().add("full border");
+        cell = new Cell().add(new Paragraph("full border"));
         cell.setBorder(Border.NO_BORDER);
         cell.setNextRenderer(new DottedLineCellRenderer(cell,
                 new boolean[]{true, true, true, true}));

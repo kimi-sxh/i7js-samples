@@ -12,7 +12,7 @@
 package com.itextpdf.samples.sandbox.objects;
 
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -21,7 +21,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -47,14 +46,14 @@ public class AddPointer extends GenericTest {
         doc.add(img);
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-        canvas.setStrokeColor(Color.RED)
+        canvas.setStrokeColor(ColorConstants.RED)
                 .setLineWidth(3)
                 .moveTo(220, 330)
                 .lineTo(240, 370)
                 .arc(200, 350, 240, 390, 0, (float) 180)
                 .lineTo(220, 330)
                 .closePathStroke()
-                .setFillColor(Color.RED)
+                .setFillColor(ColorConstants.RED)
                 .circle(220, 370, 10)
                 .fill();
 

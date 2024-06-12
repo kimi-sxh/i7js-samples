@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
@@ -20,7 +20,6 @@ import com.itextpdf.kernel.pdf.colorspace.PdfPattern;
 import com.itextpdf.kernel.pdf.colorspace.PdfShading;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -43,8 +42,8 @@ public class ShadedFill extends GenericTest {
         float x = 36;
         float y = 740;
         float side = 70;
-        PdfShading.Axial axial = new PdfShading.Axial(new PdfDeviceCs.Rgb(), x, y, Color.PINK.getColorValue(),
-                x + side, y, Color.BLUE.getColorValue());
+        PdfShading.Axial axial = new PdfShading.Axial(new PdfDeviceCs.Rgb(), x, y, ColorConstants.PINK.getColorValue(),
+                x + side, y, ColorConstants.BLUE.getColorValue());
         PdfPattern.Shading shading = new PdfPattern.Shading(axial);
         canvas.setFillColorShading(shading);
         canvas.moveTo(x, y);

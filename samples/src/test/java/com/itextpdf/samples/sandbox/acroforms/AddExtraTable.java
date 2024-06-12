@@ -20,17 +20,18 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutResult;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.util.Map;
 
+//参见：https://kb.itextpdf.com/itext/how-to-add-a-table-on-a-form-and-maybe-insert-a-ne
 @Category(SampleTest.class)
 public class AddExtraTable extends GenericTest {
-    public static String DEST = "./target/test/resources/sandbox/acroforms/add_extra_table.pdf";
+    public static String DEST = "./src/test/resources/sandbox/acroforms/add_extra_table.pdf";
     public static String SRC = "./src/test/resources/pdfs/form.pdf";
 
     public static void main(String[] args) throws Exception {
@@ -42,14 +43,14 @@ public class AddExtraTable extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
-        Map<String, PdfFormField> fields = form.getFormFields();
+        Map<String, PdfFormField> fields = form.getAllFormFields();
         fields.get("Name").setValue("Jeniffer");
         fields.get("Company").setValue("iText's next customer");
         fields.get("Country").setValue("No Man's Land");
         form.flattenFields();
 
         Table table = new Table(new float[]{1, 15});
-        table.setWidthPercent(80);
+        table.setWidth(UnitValue.createPercentValue(80));
         table.addHeaderCell("#");
         table.addHeaderCell("description");
         for (int i = 1; i <= 150; i++) {

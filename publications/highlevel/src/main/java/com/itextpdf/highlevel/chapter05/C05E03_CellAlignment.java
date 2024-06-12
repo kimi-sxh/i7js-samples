@@ -10,17 +10,17 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.VerticalAlignment;
+
 import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C05E03_CellAlignment {
     
     public static final String DEST = "results/chapter05/cell_alignment.pdf";
@@ -38,11 +38,11 @@ public class C05E03_CellAlignment {
         // Initialize document
         Document document = new Document(pdf);
         Table table = new Table(new float[]{2, 1, 1});
-        table.setWidthPercent(80);
+        table.setWidth(UnitValue.createPercentValue(80));
         table.setHorizontalAlignment(HorizontalAlignment.CENTER);
         table.setTextAlignment(TextAlignment.CENTER);
-        table.addCell(new Cell(1, 3).add("Cell with colspan 3"));
-        table.addCell(new Cell(2, 1).add("Cell with rowspan 2")
+        table.addCell(new Cell(1, 3).add(new Paragraph("Cell with colspan 3")));
+        table.addCell(new Cell(2, 1).add(new Paragraph("Cell with rowspan 2"))
             .setTextAlignment(TextAlignment.RIGHT));
         table.addCell("row 1; cell 1");
         table.addCell("row 1; cell 2");
@@ -53,10 +53,10 @@ public class C05E03_CellAlignment {
             .add(new Paragraph("Center"))
             .add(new Paragraph("Right").setTextAlignment(TextAlignment.RIGHT));
         table.addCell(cell);
-        cell = new Cell().add("Middle")
+        cell = new Cell().add(new Paragraph("Middle"))
             .setVerticalAlignment(VerticalAlignment.MIDDLE);
         table.addCell(cell);
-        cell = new Cell().add("Bottom")
+        cell = new Cell().add(new Paragraph("Bottom"))
             .setVerticalAlignment(VerticalAlignment.BOTTOM);
         table.addCell(cell);
         document.add(table);

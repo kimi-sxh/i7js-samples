@@ -46,7 +46,7 @@ public class RupeeSymbol extends GenericTest {
         PdfFont font1 = PdfFontFactory.createFont(FONT1, PdfEncodings.IDENTITY_H);
         PdfFont font2 = PdfFontFactory.createFont(FONT2, PdfEncodings.IDENTITY_H);
         PdfFont font3 = PdfFontFactory.createFont(FONT3, PdfEncodings.IDENTITY_H);
-        PdfFont font4 = PdfFontFactory.createFont(FONT3, PdfEncodings.WINANSI, true);
+        PdfFont font4 = PdfFontFactory.createFont(FONT3, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         doc.add(new Paragraph(RUPEE).setFont(font1));
         doc.add(new Paragraph(RUPEE).setFont(font2));

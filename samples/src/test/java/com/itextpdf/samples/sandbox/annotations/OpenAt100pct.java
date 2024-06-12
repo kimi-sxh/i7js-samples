@@ -13,6 +13,7 @@ package com.itextpdf.samples.sandbox.annotations;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
 import com.itextpdf.layout.Document;
@@ -39,7 +40,8 @@ public class OpenAt100pct extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc, new PageSize(612, 792));
         doc.add(new Paragraph("Hello World"));
-        pdfDoc.getCatalog().setOpenAction(PdfExplicitDestination.createXYZ(1, 0, 842, 1));
+        PdfPage pdfPage = pdfDoc.addNewPage(1);
+        pdfDoc.getCatalog().setOpenAction(PdfExplicitDestination.createXYZ(pdfPage, 0, 842, 1));
         doc.close();
     }
 }

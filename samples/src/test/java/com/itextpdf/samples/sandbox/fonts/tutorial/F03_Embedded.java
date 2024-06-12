@@ -39,7 +39,7 @@ public class F03_Embedded extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.CP1250, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.CP1250, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         doc.add(new Paragraph("Odkud jste?").setFont(font));
         doc.add(new Paragraph("Uvid\u00edme se za chvilku. M\u011bj se.").setFont(font));
         doc.add(new Paragraph("Dovolte, abych se p\u0159edstavil.").setFont(font));

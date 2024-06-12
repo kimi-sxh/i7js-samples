@@ -10,7 +10,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.splitting.DefaultSplitCharacters;
 import com.itextpdf.layout.splitting.ISplitCharacters;
 
@@ -43,8 +43,9 @@ public class DocumentLayoutMethods {
         p = new Paragraph("Testing layout methods");
         document.add(p);
         p = new Paragraph();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) {
             p.add("singing supercalifragilisticexpialidocious ");
+        }
         document.add(p);
         document.setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
         document.add(p);

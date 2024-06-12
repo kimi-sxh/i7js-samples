@@ -8,10 +8,7 @@
 package com.itextpdf.samples.sandbox.annotations;
 
 import com.itextpdf.kernel.geom.Rectangle;
-import com.itextpdf.kernel.pdf.PdfArray;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfLinkAnnotation;
@@ -39,9 +36,10 @@ public class AddLinkAnnotation extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
         Rectangle linkLocation = new Rectangle(523, 770, 36, 36);
         int[] borders = {0, 0, 1};
+        PdfPage pdfPage = pdfDoc.addNewPage(3);
         PdfAnnotation annotation = new PdfLinkAnnotation(linkLocation)
                 .setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT)
-                .setAction(PdfAction.createGoTo(PdfExplicitDestination.createFit(3)))
+                .setAction(PdfAction.createGoTo(PdfExplicitDestination.createFit(pdfPage)))
                 .setBorder(new PdfArray(borders));
         pdfDoc.getFirstPage().addAnnotation(annotation);
         pdfDoc.close();

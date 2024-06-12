@@ -16,20 +16,18 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class SmallTable extends GenericTest {
@@ -50,7 +48,7 @@ public class SmallTable extends GenericTest {
         Table table = new Table(new float[]{ 160, 120 });
 
         // first row
-        Cell cell = new Cell(1, 2).add("Some text here");
+        Cell cell = new Cell(1, 2).add(new Paragraph("Some text here"));
         // TODO DEVSIX-792
         cell.setHeight(30);
         cell.setBorder(Border.NO_BORDER);

@@ -14,14 +14,14 @@ package com.itextpdf.samples.sandbox.tables;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class SimpleTable11 extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(new float[]{1, 2, 1, 1, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         table.addCell(createCell("SKU", 2, 1, TextAlignment.LEFT));
         table.addCell(createCell("Description", 2, 1, TextAlignment.LEFT));
         table.addCell(createCell("Unit Price", 2, 1, TextAlignment.LEFT));

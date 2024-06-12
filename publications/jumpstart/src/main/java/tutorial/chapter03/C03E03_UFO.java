@@ -3,9 +3,10 @@
  */
 package tutorial.chapter03;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -18,14 +19,14 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.Property;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.Property;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.VerticalAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,7 +36,6 @@ import java.util.StringTokenizer;
 /**
  * Simple event handler example.
  */
-@WrapToTest
 public class C03E03_UFO {
 
     public static final String DATA = "src/main/resources/data/ufo.csv";
@@ -45,8 +45,8 @@ public class C03E03_UFO {
     static PdfFont helveticaBold = null;
 
     public static void main(String[] args) throws Exception {
-        helvetica = PdfFontFactory.createFont(FontConstants.HELVETICA);
-        helveticaBold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        helvetica = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        helveticaBold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         new C03E03_UFO().createPdf(DEST);
@@ -66,7 +66,7 @@ public class C03E03_UFO {
         document.add(p);
 
         Table table = new Table(new float[]{3, 5, 7, 4});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
 
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
@@ -85,9 +85,9 @@ public class C03E03_UFO {
         StringTokenizer tokenizer = new StringTokenizer(line, ";");
         while (tokenizer.hasMoreTokens()) {
             if (isHeader) {
-                table.addHeaderCell(new Cell().add(new Paragraph(tokenizer.nextToken()).setFont(font)).setFontSize(9).setBorder(new SolidBorder(Color.BLACK, 0.5f)));
+                table.addHeaderCell(new Cell().add(new Paragraph(tokenizer.nextToken()).setFont(font)).setFontSize(9).setBorder(new SolidBorder(ColorConstants.BLACK, 0.5f)));
             } else {
-                table.addCell(new Cell().add(new Paragraph(tokenizer.nextToken()).setFont(font)).setFontSize(9).setBorder(new SolidBorder(Color.BLACK, 0.5f)));
+                table.addCell(new Cell().add(new Paragraph(tokenizer.nextToken()).setFont(font)).setFontSize(9).setBorder(new SolidBorder(ColorConstants.BLACK, 0.5f)));
             }
         }
     }
@@ -95,6 +95,7 @@ public class C03E03_UFO {
 
     protected class MyEventHandler implements IEventHandler {
 
+        @Override
         public void handleEvent(Event event) {
             PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
             PdfDocument pdfDoc = docEvent.getDocument();
@@ -121,8 +122,8 @@ public class C03E03_UFO {
                     .endText();
 
             //Add watermark
-            Canvas canvas = new Canvas(pdfCanvas, pdfDoc, page.getPageSize());
-            canvas.setProperty(Property.FONT_COLOR, Color.WHITE);
+            Canvas canvas = new Canvas(pdfCanvas, page.getPageSize());
+            canvas.setProperty(Property.FONT_COLOR, ColorConstants.WHITE);
             canvas.setProperty(Property.FONT_SIZE, 60);
             canvas.setProperty(Property.FONT, helveticaBold);
             canvas.showTextAligned(new Paragraph("CONFIDENTIAL"), 298, 421, pdfDoc.getPageNumber(page),

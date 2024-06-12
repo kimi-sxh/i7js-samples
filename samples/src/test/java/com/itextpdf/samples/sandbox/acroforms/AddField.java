@@ -13,8 +13,10 @@ package com.itextpdf.samples.sandbox.acroforms;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
+import com.itextpdf.forms.fields.PdfFormAnnotation;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.forms.fields.PushButtonFormFieldBuilder;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -22,11 +24,12 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
 
+//参见：https://kb.itextpdf.com/itext/adding-fields-to-an-existing-form
+//添加表单域到已有的表单
 @Category(SampleTest.class)
 public class AddField extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/add_field.pdf";
@@ -43,13 +46,16 @@ public class AddField extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
 
-        PdfButtonFormField button = PdfFormField.createPushButton(pdfDoc, new Rectangle(36, 700, 36, 30), "post", "POST");
-        button.setBackgroundColor(Color.GRAY);
+        PdfButtonFormField button = new PushButtonFormFieldBuilder(pdfDoc, "post")
+                .setWidgetRectangle(new Rectangle(36, 700, 36, 30)).setCaption("POST").createPushButton();
+        button.getFirstFormAnnotation().setBackgroundColor(ColorConstants.GRAY);
         button.setValue("POST");
-        button.setAction(PdfAction.createSubmitForm("http://itextpdf.com:8180/book/request", null,
-                PdfAction.SUBMIT_HTML_FORMAT | PdfAction.SUBMIT_COORDINATES));
-        button.setVisibility(PdfFormField.VISIBLE_BUT_DOES_NOT_PRINT);
 
+        // The second parameter is optional, it declares which fields to include in the submission or which to exclude,
+        // depending on the setting of the Include/Exclude flag.
+        button.getFirstFormAnnotation().setAction(PdfAction.createSubmitForm("http://itextpdf.com:8180/book/request", null,
+                PdfAction.SUBMIT_HTML_FORMAT | PdfAction.SUBMIT_COORDINATES));
+        button.getFirstFormAnnotation().setVisibility(PdfFormAnnotation.VISIBLE_BUT_DOES_NOT_PRINT);
         form.addField(button);
 
         pdfDoc.close();

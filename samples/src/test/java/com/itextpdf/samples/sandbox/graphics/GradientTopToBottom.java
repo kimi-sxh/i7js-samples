@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.graphics;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -21,10 +21,9 @@ import com.itextpdf.kernel.pdf.colorspace.PdfPattern;
 import com.itextpdf.kernel.pdf.colorspace.PdfShading;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class GradientTopToBottom extends GenericTest {
@@ -42,8 +41,8 @@ public class GradientTopToBottom extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         pdfDoc.setDefaultPageSize(pageSize);
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
-        PdfShading.Axial axial = new PdfShading.Axial(new PdfDeviceCs.Rgb(), 0, pageSize.getHeight(), Color.WHITE.getColorValue(),
-                0, 0, Color.GREEN.getColorValue());
+        PdfShading.Axial axial = new PdfShading.Axial(new PdfDeviceCs.Rgb(), 0, pageSize.getHeight(), ColorConstants.WHITE.getColorValue(),
+                0, 0, ColorConstants.GREEN.getColorValue());
         PdfPattern.Shading pattern = new PdfPattern.Shading(axial);
         canvas.setFillColorShading(pattern);
         canvas.rectangle(0, 0, pageSize.getWidth(), pageSize.getHeight());

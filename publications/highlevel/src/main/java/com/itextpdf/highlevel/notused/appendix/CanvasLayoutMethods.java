@@ -14,7 +14,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.splitting.DefaultSplitCharacters;
 import com.itextpdf.layout.splitting.ISplitCharacters;
 
@@ -43,7 +43,7 @@ public class CanvasLayoutMethods {
         PdfPage page = pdf.addNewPage();
         PdfCanvas pdfCanvas = new PdfCanvas(page);
         Rectangle rectangle = new Rectangle(36, 36, 523, 770);
-        Canvas canvas = new Canvas(pdfCanvas, pdf, rectangle);
+        Canvas canvas = new Canvas(pdfCanvas, rectangle);
         Paragraph p;
         p = new Paragraph("Testing layout methods");
         canvas.add(p);
@@ -51,8 +51,9 @@ public class CanvasLayoutMethods {
         p = new Paragraph("Testing layout methods");
         canvas.add(p);
         p = new Paragraph();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) {
             p.add("singing supercalifragilisticexpialidocious ");
+        }
         canvas.add(p);
         canvas.setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
         canvas.add(p);

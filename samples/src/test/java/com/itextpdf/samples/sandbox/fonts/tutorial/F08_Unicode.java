@@ -39,7 +39,7 @@ public class F08_Unicode extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
 
-        PdfFont font = PdfFontFactory.createFont(FONT, "Identity-H", false);
+        PdfFont font = PdfFontFactory.createFont(FONT, "Identity-H", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
 
         doc.add(new Paragraph("Vous \u00eates d'o\u00f9?").setFont(font));
         doc.add(new Paragraph("\u00c0 tout \u00e0 l'heure. \u00c0 bient\u00f4t.").setFont(font));

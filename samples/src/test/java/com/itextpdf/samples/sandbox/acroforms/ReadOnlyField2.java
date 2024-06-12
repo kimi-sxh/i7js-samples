@@ -7,24 +7,24 @@
 
 package com.itextpdf.samples.sandbox.acroforms;
 
-import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.io.source.RandomAccessSourceFactory;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.ReaderProperties;
-import com.itextpdf.test.annotations.type.SampleTest;
-import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.forms.fields.PdfTextFormField;
 import com.itextpdf.samples.GenericTest;
+import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class ReadOnlyField2 extends GenericTest {
@@ -51,31 +51,38 @@ public class ReadOnlyField2 extends GenericTest {
     public byte[] createForm() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(baos));
+        PdfFont font = PdfFontFactory.createFont();
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
 
         Rectangle rect = new Rectangle(36, 770, 108, 36);
-        PdfTextFormField tf1 = PdfFormField.createText(pdfDoc, rect,
-                "text1", "text1", PdfFontFactory.createFont(), 18f);
-        tf1.setMultiline(true);
-        form.addField(tf1);
+        PdfTextFormField textField1 = new TextFormFieldBuilder(pdfDoc, "text1")
+                .setWidgetRectangle(rect).createText();
+        textField1.setValue("text1").setFont(font).setFontSize(18f);
+        // Being set as true, the field can contain multiple lines of text;
+        // if false, the field's text is restricted to a single line.
+        textField1.setMultiline(true);
+        form.addField(textField1);
 
         rect = new Rectangle(148, 770, 108, 36);
-        PdfTextFormField tf2 = PdfFormField.createText(pdfDoc, rect,
-                "text2", "text2", PdfFontFactory.createFont(), 18f);
-        tf2.setMultiline(true);
-        form.addField(tf2);
+        PdfTextFormField textField2 = new TextFormFieldBuilder(pdfDoc, "text2")
+                .setWidgetRectangle(rect).createText();
+        textField2.setValue("text2").setFont(font).setFontSize(18f);
+        textField2.setMultiline(true);
+        form.addField(textField2);
 
         rect = new Rectangle(36, 724, 108, 36);
-        PdfTextFormField tf3 = PdfFormField.createText(pdfDoc, rect,
-                "text3", "text3", PdfFontFactory.createFont(), 18f);
-        tf3.setMultiline(true);
-        form.addField(tf3);
+        PdfTextFormField textField3 = new TextFormFieldBuilder(pdfDoc, "text3")
+                .setWidgetRectangle(rect).createText();
+        textField3.setValue("text3").setFont(font).setFontSize(18f);
+        textField3.setMultiline(true);
+        form.addField(textField3);
 
         rect = new Rectangle(148, 727, 108, 33);
-        PdfTextFormField tf4 = PdfFormField.createText(pdfDoc, rect,
-                "text4", "text4", PdfFontFactory.createFont(), 18f);
-        tf4.setMultiline(true);
-        form.addField(tf4);
+        PdfTextFormField textField4 = new TextFormFieldBuilder(pdfDoc, "text4")
+                .setWidgetRectangle(rect).createText();
+        textField4.setValue("text4").setFont(font).setFontSize(18f);
+        textField4.setMultiline(true);
+        form.addField(textField4);
 
         pdfDoc.close();
         return baos.toByteArray();

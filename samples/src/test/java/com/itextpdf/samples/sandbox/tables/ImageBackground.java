@@ -11,11 +11,12 @@
  */
 package com.itextpdf.samples.sandbox.tables;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.DeviceGray;
+import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -27,7 +28,6 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public class ImageBackground extends GenericTest {
         Table table = new Table(1);
         table.setWidth(400);
         Cell cell = new Cell();
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         Paragraph p = new Paragraph("A cell with an image as background color.")
                 .setFont(font)
                 .setFontColor(DeviceGray.WHITE);
@@ -77,7 +77,8 @@ public class ImageBackground extends GenericTest {
         @Override
         public void draw(DrawContext drawContext) {
             img.scaleToFit(getOccupiedAreaBBox().getWidth(), getOccupiedAreaBBox().getHeight());
-            drawContext.getCanvas().addXObject(img.getXObject(), getOccupiedAreaBBox());
+            Rectangle bbox = getOccupiedAreaBBox();
+            drawContext.getCanvas().addXObjectWithTransformationMatrix(img.getXObject(), bbox.getWidth(),0.0F, 0.0F, bbox.getHeight(), bbox.getX(), bbox.getY());
             super.draw(drawContext);
         }
     }

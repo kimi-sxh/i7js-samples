@@ -136,17 +136,18 @@ public class Listing_04_23_ColumnTable extends GenericTest {
 
         @Override
         public LayoutArea updateCurrentArea(LayoutResult overflowResult) {
-//            if (nextAreaNumber % 2 == 0) {
-//                currentPageNumber = super.updateCurrentArea(overflowResult).getPageNumber();
-//
-//                addChild(getHeaderTable(date, currentPageNumber, bold).createRendererSubTree());
-//
-//                nextAreaNumber++;
-//                currentArea = new LayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 450));
-//            } else {
-//                nextAreaNumber++;
-//                currentArea = new LayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 450));
-//            }
+            int currentPageNumber = this.currentArea == null ? 0 : this.currentArea.getPageNumber();
+            if (nextAreaNumber % 2 == 0) {
+                currentPageNumber = super.updateCurrentArea(overflowResult).getPageNumber();
+
+                addChild(getHeaderTable(date, currentPageNumber, bold).createRendererSubTree());
+
+                nextAreaNumber++;
+                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 450));
+            } else {
+                nextAreaNumber++;
+                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 450));
+            }
             return currentArea;
         }
     }

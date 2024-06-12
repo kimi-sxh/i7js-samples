@@ -13,8 +13,8 @@ package com.itextpdf.samples.sandbox.tables;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.PatternColor;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.PatternColor;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfPatternCanvas;
@@ -22,10 +22,10 @@ import com.itextpdf.kernel.pdf.colorspace.PdfPattern;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -48,10 +48,10 @@ public class TiledBackgroundColor extends GenericTest {
         ImageData img = ImageDataFactory.create(IMG);
         Image image = new Image(img);
         PdfPattern.Tiling img_pattern = new PdfPattern.Tiling(image.getImageScaledWidth(), image.getImageScaledHeight());
-        new PdfPatternCanvas(img_pattern, pdfDoc).addImage(img, 0, 0, false);
+        new PdfPatternCanvas(img_pattern, pdfDoc).addImageAt(img, 0, 0, false);
         Color color = new PatternColor(img_pattern);
         Table table = new Table(2);
-        table.addCell(new Cell().add("Behold a cell with an image pattern:"));
+        table.addCell(new Cell().add(new Paragraph("Behold a cell with an image pattern:")));
         Cell cell = new Cell();
         cell.setHeight(60);
         cell.setBackgroundColor(color);

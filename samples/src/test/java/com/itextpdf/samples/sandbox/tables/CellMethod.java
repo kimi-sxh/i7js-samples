@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.tables;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -20,10 +20,9 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -54,7 +53,7 @@ public class CellMethod extends GenericTest {
         if (size < 0) {
             size = -size;
             cell.setFontSize(size);
-            cell.setFontColor(Color.RED);
+            cell.setFontColor(ColorConstants.RED);
         }
         return cell;
     }
@@ -73,9 +72,9 @@ public class CellMethod extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         setCompareRenders(true);
 
-        czechFont = PdfFontFactory.createFont(FONT, "Cp1250", true);
-        greekFont = PdfFontFactory.createFont(FONT, "Cp1253", true);
-        defaultFont = PdfFontFactory.createFont(FONT, null, true);
+        czechFont = PdfFontFactory.createFont(FONT, "Cp1250", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        greekFont = PdfFontFactory.createFont(FONT, "Cp1253", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        defaultFont = PdfFontFactory.createFont(FONT, null, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);

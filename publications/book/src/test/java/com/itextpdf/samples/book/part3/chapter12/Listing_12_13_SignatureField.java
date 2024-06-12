@@ -8,6 +8,8 @@ package com.itextpdf.samples.book.part3.chapter12;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.PdfSignatureFormField;
+import com.itextpdf.forms.fields.SignatureFormFieldBuilder;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -70,12 +72,12 @@ public class Listing_12_13_SignatureField extends SignatureTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(filename));
         Document doc = new Document(pdfDoc);
         doc.add(new Paragraph("Hello World!"));
-        PdfFormField field = PdfFormField.createSignature(pdfDoc, new Rectangle(72, 632, 200, 100));
+        PdfFormField field = new SignatureFormFieldBuilder(pdfDoc, "mySig")
+                .setWidgetRectangle(new Rectangle(72, 632, 200, 100)).createSignature();
+        field.getFirstFormAnnotation().setPage(1);
         field.getWidgets().get(0)
                 .setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT)
                 .setFlags(PdfAnnotation.PRINT);
-        field.setFieldName("mySig");
-        field.setPage(1);
 
         PdfDictionary mkDictionary = field.getWidgets().get(0).getAppearanceCharacteristics();
         if (null == mkDictionary) {

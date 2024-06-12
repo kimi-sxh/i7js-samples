@@ -69,9 +69,9 @@ public class C2E4_PdfA3a extends GenericTest {
         pdfDoc.getCatalog().setViewerPreferences(new PdfViewerPreferences().setDisplayDocTitle(true));
         pdfDoc.getCatalog().setLang(new PdfString("en-US"));
         PdfDocumentInfo info = pdfDoc.getDocumentInfo();
-        if (null == info) {
-            info = new PdfDocumentInfo(pdfDoc);
-        }
+//        if (null == info) {
+//            info = new PdfDocumentInfo(pdfDoc);
+//        }
         info.setTitle("Some title");
         //=====================
 
@@ -79,7 +79,7 @@ public class C2E4_PdfA3a extends GenericTest {
         Paragraph p = new Paragraph();
         //PDF/A-3a
         //Embed font
-        p.setFont(PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true)).setFontSize(20);
+        p.setFont(PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED)).setFontSize(20);
         Text text = new Text("The quick brown ");
         p.add(text);
         Image image = new Image(ImageDataFactory.create(FOX));

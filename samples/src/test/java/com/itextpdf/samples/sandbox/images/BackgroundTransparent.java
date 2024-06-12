@@ -22,7 +22,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -53,7 +52,7 @@ public class BackgroundTransparent extends GenericTest {
         PdfExtGState state = new PdfExtGState();
         state.setFillOpacity(0.6f);
         canvas.setExtGState(state);
-        canvas.addImage(image, 0, 0, pageSize.getWidth(), false);
+        canvas.addImageWithTransformationMatrix(image,pageSize.getWidth(),0,0,pageSize.getWidth(), 0, 0,  false);
         canvas.restoreState();
 
         doc.add(new Paragraph("Berlin!"));

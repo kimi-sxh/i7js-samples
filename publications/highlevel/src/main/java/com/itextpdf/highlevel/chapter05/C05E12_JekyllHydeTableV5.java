@@ -12,7 +12,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.UnitValue;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * @author iText
  */
-@WrapToTest
 public class C05E12_JekyllHydeTableV5 {
     
     public static final String SRC = "src/main/resources/data/jekyll_hyde.csv";
@@ -40,7 +39,7 @@ public class C05E12_JekyllHydeTableV5 {
         // Initialize document
         Document document = new Document(pdf, PageSize.A4.rotate());
         Table table = new Table(new float[]{3, 32});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         List<List<String>> resultSet = CsvTo2DList.convert(SRC, "|");
         resultSet.remove(0);
         table.addHeaderCell("imdb")

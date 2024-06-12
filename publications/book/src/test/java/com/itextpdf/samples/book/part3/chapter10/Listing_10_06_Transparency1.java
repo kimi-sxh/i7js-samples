@@ -63,7 +63,7 @@ public class Listing_10_06_Transparency1 extends GenericTest {
             tp.setGroup(transparencyGroup);
             pictureCircles(0, 0, xObjectCanvas);
             canvas.setExtGState(gs1);
-            canvas.addXObject(tp, gap, 500 - 200 - gap);
+            canvas.addXObjectAt(tp, gap, 500 - 200 - gap);
             canvas.restoreState();
 
             canvas.saveState();
@@ -75,7 +75,7 @@ public class Listing_10_06_Transparency1 extends GenericTest {
             gs2.setBlendMode(PdfExtGState.BM_HARD_LIGHT);
             xObjectCanvas.setExtGState(gs2);
             pictureCircles(0, 0, xObjectCanvas);
-            canvas.addXObject(tp, 200 + 2 * gap, 500 - 200 - gap);
+            canvas.addXObjectAt(tp, 200 + 2 * gap, 500 - 200 - gap);
             canvas.restoreState();
 
             canvas.resetFillColorRgb();

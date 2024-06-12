@@ -4,26 +4,25 @@
  */
 package com.itextpdf.highlevel.chapter04;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.CanvasArtifact;
-import com.itextpdf.kernel.pdf.tagutils.IAccessibleElement;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.Background;
-import com.itextpdf.layout.property.Property;
+import com.itextpdf.layout.properties.Background;
+import com.itextpdf.layout.properties.Property;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.ParagraphRenderer;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.tagging.IAccessibleElement;
+
 import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C04E06_CustomParagraph {
     
     class MyParagraphRenderer extends ParagraphRenderer {
@@ -82,12 +81,12 @@ public class C04E06_CustomParagraph {
         
         Paragraph p1 = new Paragraph(
             "The Strange Case of Dr. Jekyll and Mr. Hyde");
-        p1.setBackgroundColor(Color.ORANGE);
+        p1.setBackgroundColor(ColorConstants.ORANGE);
         document.add(p1);
         
         Paragraph p2 = new Paragraph(
             "The Strange Case of Dr. Jekyll and Mr. Hyde");
-        p2.setBackgroundColor(Color.ORANGE);
+        p2.setBackgroundColor(ColorConstants.ORANGE);
         p2.setNextRenderer(new MyParagraphRenderer(p2));
         document.add(p2);
         

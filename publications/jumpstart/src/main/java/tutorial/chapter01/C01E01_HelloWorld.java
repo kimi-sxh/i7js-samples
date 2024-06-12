@@ -7,7 +7,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.io.IOException;
 /**
  * Simple Hello World example.
  */
-@WrapToTest
 public class C01E01_HelloWorld {
     
     public static final String DEST = "results/chapter01/hello_world.pdf";

@@ -4,7 +4,7 @@
  */
 package com.itextpdf.highlevel.notused;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -17,8 +17,8 @@ import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.AreaBreakType;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.AreaBreakType;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,8 +57,8 @@ public class JekyllHydeV6 {
                 new Rectangle(offSet + columnWidth * 2 + gutter * 2.5f, offSet, columnWidth, columnHeight)};
         document.setRenderer(new ColumnDocumentRenderer(document, columns));    
         
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         document.setTextAlignment(TextAlignment.JUSTIFIED)
             .setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
         

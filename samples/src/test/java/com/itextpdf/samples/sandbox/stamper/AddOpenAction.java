@@ -12,6 +12,7 @@
 package com.itextpdf.samples.sandbox.stamper;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
@@ -36,8 +37,9 @@ public class AddOpenAction extends GenericTest {
     @Override
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
+        PdfPage firstPdfPage = pdfDoc.addNewPage(1);
         pdfDoc.getCatalog()
-                .setOpenAction(PdfExplicitDestination.createXYZ(1, 0, pdfDoc.getPage(1).getPageSize().getHeight(), 0.75f));
+                .setOpenAction(PdfExplicitDestination.createXYZ(firstPdfPage, 0, pdfDoc.getPage(1).getPageSize().getHeight(), 0.75f));
         pdfDoc.close();
     }
 }

@@ -52,9 +52,9 @@ public class MakeA3Booklet extends GenericTest {
         while (p++ < n) {
             page = srcDoc.getPage(p).copyAsFormXObject(pdfDoc);
             if (p % 2 == 1) {
-                canvas.addXObject(page, 0, 0);
+                canvas.addXObjectAt(page, 0, 0);
             } else {
-                canvas.addXObject(page, a4_width, 0);
+                canvas.addXObjectAt(page, a4_width, 0);
                 canvas = new PdfCanvas(pdfDoc.addNewPage());
             }
         }

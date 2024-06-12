@@ -11,6 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.fields.PdfFormAnnotation;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -40,7 +41,7 @@ public class HideButton extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(SRC), new PdfWriter(DEST));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
-        form.getField("Test").setVisibility(PdfFormField.HIDDEN);
+        form.getField("Test").getFirstFormAnnotation().setVisibility(PdfFormAnnotation.HIDDEN);
         pdfDoc.close();
     }
 }

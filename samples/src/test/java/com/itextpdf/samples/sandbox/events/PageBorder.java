@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.events;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -24,7 +24,6 @@ import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -82,7 +81,7 @@ public class PageBorder extends GenericTest {
             PdfCanvas canvas = new PdfCanvas(docEvent.getPage());
             Rectangle rect = docEvent.getPage().getPageSize();
 
-            canvas.setLineWidth(5).setStrokeColor(Color.RED).rectangle(rect).stroke();
+            canvas.setLineWidth(5).setStrokeColor(ColorConstants.RED).rectangle(rect).stroke();
         }
     }
 }

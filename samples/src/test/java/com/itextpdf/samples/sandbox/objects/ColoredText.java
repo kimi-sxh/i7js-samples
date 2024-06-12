@@ -11,8 +11,8 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -24,7 +24,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -45,14 +44,14 @@ public class ColoredText extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Text redText = new Text("This text is red. ")
-                .setFontColor(Color.RED)
-                .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA));
+                .setFontColor(ColorConstants.RED)
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
         Text blueText = new Text("This text is blue and bold. ")
-                .setFontColor(Color.BLUE)
-                .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD));
+                .setFontColor(ColorConstants.BLUE)
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
         Text greenText = new Text("This text is green and italic. ")
-                .setFontColor(Color.GREEN)
-                .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA_OBLIQUE));
+                .setFontColor(ColorConstants.GREEN)
+                .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_OBLIQUE));
 
         Paragraph p1 = new Paragraph(redText).setMargin(0);
         doc.add(p1);
@@ -61,7 +60,7 @@ public class ColoredText extends GenericTest {
         p2.add(greenText);
         doc.add(p2);
 
-        new Canvas(new PdfCanvas(pdfDoc.getLastPage()), pdfDoc, new Rectangle(36, 600, 108, 160))
+        new Canvas(new PdfCanvas(pdfDoc.getLastPage()), new Rectangle(36, 600, 108, 160))
                 .add(p1)
                 .add(p2);
 

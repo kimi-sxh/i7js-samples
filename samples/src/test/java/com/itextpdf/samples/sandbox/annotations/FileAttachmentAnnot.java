@@ -44,14 +44,14 @@ public class FileAttachmentAnnot extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Rectangle rect = new Rectangle(36, 700, 100, 100);
-        PdfFileSpec fs = PdfFileSpec.createEmbeddedFileSpec(pdfDoc, PATH, null, "test.docx", null, null, false);
+        PdfFileSpec fs = PdfFileSpec.createEmbeddedFileSpec(pdfDoc, PATH, null, "test.docx", null, null);
         PdfAnnotation attachment = new PdfFileAttachmentAnnotation(rect, fs)
                 .setContents("Click me");
 
         PdfFormXObject xObject = new PdfFormXObject(rect);
         ImageData imageData = ImageDataFactory.create(IMG);
         PdfCanvas canvas = new PdfCanvas(xObject, pdfDoc);
-        canvas.addImage(imageData, rect, true);
+        canvas.addImageWithTransformationMatrix(imageData, rect.getWidth(), 0.0F, 0.0F, rect.getHeight(), rect.getX(), rect.getY(), true);
         attachment.setNormalAppearance(xObject.getPdfObject());
 
         pdfDoc.addNewPage().addAnnotation(attachment);

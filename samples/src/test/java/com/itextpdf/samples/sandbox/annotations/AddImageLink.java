@@ -53,7 +53,7 @@ public class AddImageLink extends GenericTest {
         float h = img.getHeight();
 
         new PdfCanvas(pdfDoc.getFirstPage().newContentStreamAfter(), pdfDoc.getFirstPage().getResources(), pdfDoc)
-                .addImage(img, x, y, false);
+                .addImageAt(img, x, y, false);
         Rectangle linkLocation = new Rectangle(x, y, w, h);
 
         PdfAnnotation annotation = new PdfLinkAnnotation(linkLocation)

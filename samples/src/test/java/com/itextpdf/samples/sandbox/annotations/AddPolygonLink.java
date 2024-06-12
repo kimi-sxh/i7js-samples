@@ -49,9 +49,10 @@ public class AddPolygonLink extends GenericTest {
                 .lineTo(72, 730)
                 .closePathStroke();
         Rectangle linkLocation = new Rectangle(36, 700, 144, 760);
+        PdfPage pdfPage = pdfDoc.addNewPage(1);
         PdfLinkAnnotation linkAnnotation = new PdfLinkAnnotation(linkLocation)
                 .setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT)
-                .setAction(PdfAction.createGoTo(PdfExplicitDestination.createFit(1)));
+                .setAction(PdfAction.createGoTo(PdfExplicitDestination.createFit(pdfPage)));
         PdfArray arrayOfQuadPoints = new PdfArray(new int[]{72, 730, 144, 720, 72, 760, 36, 700});
         linkAnnotation.put(PdfName.QuadPoints, arrayOfQuadPoints);
 

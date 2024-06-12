@@ -60,8 +60,8 @@ public class TableTemplate extends GenericTest {
         for (int j = 0; j < 1500; j += 500) {
             for (int i = 1300; i > 0; i -= 650) {
                 clip = new PdfFormXObject(new Rectangle(500, 650));
-                new PdfCanvas(clip, pdfDoc).addXObject(tableTemplate, -j, 650 - i);
-                new PdfCanvas(pdfDoc.addNewPage()).addXObject(clip, 36, 156);
+                new PdfCanvas(clip, pdfDoc).addXObjectAt(tableTemplate, -j, 650 - i);
+                new PdfCanvas(pdfDoc.addNewPage()).addXObjectAt(clip, 36, 156);
             }
         }
 

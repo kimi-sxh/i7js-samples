@@ -30,7 +30,6 @@ import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.renderer.TableRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.ByteArrayOutputStream;
@@ -91,7 +90,7 @@ public class TableHeader extends GenericTest {
             PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
             Rectangle rect = new Rectangle(pdfDoc.getDefaultPageSize().getX() + doc.getLeftMargin(),
                     pdfDoc.getDefaultPageSize().getTop() - doc.getTopMargin(), 100, getTableHeight());
-            new Canvas(canvas, pdfDoc, rect)
+            new Canvas(canvas,  rect)
                     .add(table);
         }
 

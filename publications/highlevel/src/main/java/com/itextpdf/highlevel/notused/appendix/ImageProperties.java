@@ -5,13 +5,13 @@
 package com.itextpdf.highlevel.notused.appendix;
 
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Image;
 
 import java.io.File;
@@ -51,11 +51,11 @@ public class ImageProperties {
         document.add(img2);
         Image img3 = new Image(ImageDataFactory.create(TEST3));
         img3.scaleToFit(100, 100);
-        img3.setBackgroundColor(Color.BLUE);
+        img3.setBackgroundColor(ColorConstants.BLUE);
         document.add(img3);
         Image img4 = new Image(ImageDataFactory.create(TEST4));
         img4.scaleToFit(100, 100);
-        img4.setBackgroundColor(Color.RED);
+        img4.setBackgroundColor(ColorConstants.RED);
         document.add(img4);
         Image img5 = new Image(ImageDataFactory.create(TEST5));
         img5.scaleToFit(50, 50);

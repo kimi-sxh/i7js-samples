@@ -48,7 +48,7 @@ public class RemoveListSymbol extends GenericTest {
 
         Table phraseTable = new Table(2);
         phraseTable.setMarginTop(5);
-        phraseTable.addCell(new Cell().add("List:"));
+        phraseTable.addCell(new Cell().add(new Paragraph("List:")));
         phraseTable.addCell(list);
 
         doc.add(phraseTable);

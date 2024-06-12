@@ -18,6 +18,7 @@ import com.itextpdf.kernel.xmp.XMPException;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.pdfa.PdfADocument;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -54,7 +55,7 @@ public class PdfA3 extends GenericTest {
         parameters.put(PdfName.ModDate, new PdfDate().getPdfObject());
 
         PdfFileSpec fileSpec = PdfFileSpec.createEmbeddedFileSpec(pdfDoc, DATA.getBytes(), "united_states.csv",
-                "united_states.csv", new PdfName("text/csv"), parameters, PdfName.Data, false);
+                "united_states.csv", new PdfName("text/csv"), parameters, PdfName.Data);
         fileSpec.put(new PdfName("AFRelationship"), new PdfName("Data"));
 
         pdfDoc.addFileAttachment("united_states.csv", fileSpec);
@@ -62,7 +63,7 @@ public class PdfA3 extends GenericTest {
         array.add(fileSpec.getPdfObject().getIndirectReference());
         pdfDoc.getCatalog().put(new PdfName("AF"), array);
         Table table = new Table(new float[]{4, 1, 3, 4, 3, 3, 3, 3, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
         process(table, line, bold, 10, true);

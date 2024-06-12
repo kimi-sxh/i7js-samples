@@ -20,7 +20,6 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -52,9 +51,9 @@ public class IncorrectExample extends GenericTest {
             canvas = new PdfCanvas(pdfDoc.addNewPage());
             page = srcDoc.getPage(i).copyAsFormXObject(pdfDoc);
             if (isPortrait(srcDoc, i)) {
-                canvas.addXObject(page, 0, 0);
+                canvas.addXObjectAt(page, 0, 0);
             } else {
-                canvas.addXObject(page, 0, 1, -1, 0, pageSize.getWidth(), 0);
+                canvas.addXObjectWithTransformationMatrix(page, 0, 1, -1, 0, pageSize.getWidth(), 0);
             }
 
         }

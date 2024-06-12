@@ -65,7 +65,7 @@ public class C2E3_PdfA3b extends GenericTest {
         Paragraph p = new Paragraph();
         //PDF/A-3b
         //Embed font
-        p.setFont(PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true)).setFontSize(20);
+        p.setFont(PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED)).setFontSize(20);
         Text text = new Text("The quick brown ");
         p.add(text);
         Image image = new Image(ImageDataFactory.create(FOX));

@@ -11,7 +11,7 @@
  */
 package com.itextpdf.samples.sandbox.events;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -24,7 +24,6 @@ import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -91,7 +90,7 @@ public class VariableHeader extends GenericTest {
             try {
                 new PdfCanvas(documentEvent.getPage())
                         .beginText()
-                        .setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12)
+                        .setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12)
                         .moveText(450, 806)
                         .showText(header)
                         .endText()

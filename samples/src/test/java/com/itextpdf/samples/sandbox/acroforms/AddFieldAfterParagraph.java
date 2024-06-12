@@ -3,6 +3,7 @@ package com.itextpdf.samples.sandbox.acroforms;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -20,6 +21,7 @@ import java.io.File;
 /**
  * This example is an answer to a StackOverflow question:
  * http://stackoverflow.com/questions/37969102/how-can-i-add-an-pdfformfield-using-itext-7-at-the-current-page-position
+ * 添加表单域到当前指定位置后面（如段落后面）
  */
 public class AddFieldAfterParagraph extends GenericTest {
 
@@ -42,9 +44,12 @@ public class AddFieldAfterParagraph extends GenericTest {
         Rectangle freeBBox = doc.getRenderer().getCurrentArea().getBBox();
         float top = freeBBox.getTop();
         float fieldHeight = 20;
-        PdfTextFormField field = PdfFormField.createText(pdfDoc,
-                new Rectangle(freeBBox.getLeft(), top - fieldHeight, 100, fieldHeight), "myField", "Value");
-        form.addField(field);
+
+        Rectangle rectangle = new Rectangle(freeBBox.getLeft(), top - fieldHeight, 100, fieldHeight);
+        PdfTextFormField tf = new TextFormFieldBuilder(pdfDoc, "myField")
+                .setWidgetRectangle(rectangle).createText();
+        tf.setValue("Value");
+        form.addField(tf);
 
         doc.add(new AreaBreak());
         doc.add(new Paragraph("This is another paragraph.\nForm field will be inserted right after it."));
@@ -63,9 +68,10 @@ public class AddFieldAfterParagraph extends GenericTest {
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
             PdfAcroForm form = PdfAcroForm.getAcroForm(drawContext.getDocument(), true);
-            PdfTextFormField field = PdfFormField.createText(drawContext.getDocument(),
-                    occupiedArea.getBBox(), "myField2", "Another Value");
-            form.addField(field);
+            PdfTextFormField tf = new TextFormFieldBuilder(form.getPdfDocument(), "myField2")
+                    .setWidgetRectangle(occupiedArea.getBBox()).createText();
+            tf.setValue("Another Value");
+            form.addField(tf);
         }
     }
 

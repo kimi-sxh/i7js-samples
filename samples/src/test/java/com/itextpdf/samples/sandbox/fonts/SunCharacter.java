@@ -42,7 +42,7 @@ public class SunCharacter extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
 
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Paragraph p = new Paragraph(TEXT).setFont(font);
         doc.add(p);
 

@@ -17,6 +17,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 
@@ -51,7 +52,7 @@ public class MultipleImagesInTable extends GenericTest {
         Image img3 = new Image(ImageDataFactory.create(IMG3));
 
         Table table = new Table(1);
-        table.setWidthPercent(20);
+        table.setWidth(UnitValue.createPercentValue(20));
 
         img1.setAutoScale(true);
         img2.setAutoScale(true);

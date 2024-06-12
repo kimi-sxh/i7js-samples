@@ -76,7 +76,7 @@ public class TiledBackgroundColor2 extends GenericTest {
             float y = position.getBottom();
             while (x + image.getImageScaledWidth() < position.getRight()) {
                 image.setFixedPosition(x, y);
-                canvas.addImage(img, x, y, image.getImageScaledWidth(), false);
+                canvas.addImageWithTransformationMatrix(img, image.getImageScaledWidth(), 0.0F, 0.0F, image.getImageScaledWidth() / image.getImageWidth() * image.getImageHeight(), x, y, false);
                 x += image.getImageScaledWidth();
             }
         }

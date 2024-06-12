@@ -10,13 +10,12 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 
 import java.io.File;
 import java.io.IOException;
 
-@WrapToTest
 public class C03E15_MaryReillyV8 {
     
     public static final String MARY = "src/main/resources/img/0117002.jpg";
@@ -36,7 +35,7 @@ public class C03E15_MaryReillyV8 {
         document.add(p);
         Image img = new Image(ImageDataFactory.create(MARY));
         img.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        img.setWidthPercent(80);
+        img.setWidth(UnitValue.createPercentValue(80));
         document.add(img);
         document.close();
     }

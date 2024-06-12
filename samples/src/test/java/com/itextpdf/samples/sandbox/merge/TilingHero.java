@@ -52,7 +52,7 @@ public class TilingHero extends GenericTest {
         PdfCanvas canvas;
         for (int i = 0; i < 16; ) {
             canvas = new PdfCanvas(resultDoc.addNewPage());
-            canvas.addXObject(page, 4, 0, 0, 4, 0, 0);
+            canvas.addXObjectWithTransformationMatrix(page, 4, 0, 0, 4, 0, 0);
             i++;
             mediaBox = new Rectangle(
                     (i % 4) * width, (4 - (i / 4)) * height,

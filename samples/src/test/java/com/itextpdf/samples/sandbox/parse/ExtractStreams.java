@@ -11,13 +11,12 @@
  */
 package com.itextpdf.samples.sandbox.parse;
 
-import com.itextpdf.kernel.PdfException;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfObject;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfStream;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

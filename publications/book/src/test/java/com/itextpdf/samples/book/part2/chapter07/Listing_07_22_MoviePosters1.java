@@ -76,7 +76,7 @@ public class Listing_07_22_MoviePosters1 extends GenericTest {
 
         PdfCanvas pdfCanvas = new PdfCanvas(pdfDoc.addNewPage());
         for (int i = 0; i < 10; i++) {
-            pdfCanvas.addXObject(xObject, 0, i * 84.2f);
+            pdfCanvas.addXObjectAt(xObject, 0, i * 84.2f);
         }
         Canvas canvas = new Canvas(pdfCanvas, pdfDoc.getLastPage().getPageSize());
         PdfArray border = new PdfArray(new float[]{0, 0, 0});

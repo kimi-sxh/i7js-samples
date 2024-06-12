@@ -61,18 +61,9 @@ public class FillFlattenMerge2 extends GenericTest {
             reader = new PdfReader(SRC);
             pdfInnerDoc = new PdfDocument(reader, new PdfWriter(baos));
             form = PdfAcroForm.getAcroForm(pdfInnerDoc, true);
-            tokenizer = new StringTokenizer(line, ";");
-            fields = form.getFormFields();
-            fields.get("name").setValue(tokenizer.nextToken());
-            fields.get("abbr").setValue(tokenizer.nextToken());
-            fields.get("capital").setValue(tokenizer.nextToken());
-            fields.get("city").setValue(tokenizer.nextToken());
-            fields.get("population").setValue(tokenizer.nextToken());
-            fields.get("surface").setValue(tokenizer.nextToken());
-            fields.get("timezone1").setValue(tokenizer.nextToken());
-            fields.get("timezone2").setValue(tokenizer.nextToken());
-            fields.get("dst").setValue(tokenizer.nextToken());
-            form.flattenFields();
+
+            // Parse text line and fill all fields of form
+            fillAndFlattenForm(line, form);
             pdfInnerDoc.close();
 
             pdfInnerDoc = new PdfDocument(new PdfReader(new ByteArrayInputStream(baos.toByteArray())));
@@ -82,5 +73,24 @@ public class FillFlattenMerge2 extends GenericTest {
         br.close();
 
         pdfDoc.close();
+    }
+
+    public void fillAndFlattenForm(String line, PdfAcroForm form) {
+        StringTokenizer tokenizer = new StringTokenizer(line, ";");
+        Map<String, PdfFormField> fields = form.getAllFormFields();
+
+        fields.get("name").setValue(tokenizer.nextToken());
+        fields.get("abbr").setValue(tokenizer.nextToken());
+        fields.get("capital").setValue(tokenizer.nextToken());
+        fields.get("city").setValue(tokenizer.nextToken());
+        fields.get("population").setValue(tokenizer.nextToken());
+        fields.get("surface").setValue(tokenizer.nextToken());
+        fields.get("timezone1").setValue(tokenizer.nextToken());
+        fields.get("timezone2").setValue(tokenizer.nextToken());
+        fields.get("dst").setValue(tokenizer.nextToken());
+
+        // If no fields have been explicitly included via partialFormFlattening(),
+        // then all fields are flattened. Otherwise only the included fields are flattened.
+        form.flattenFields();
     }
 }

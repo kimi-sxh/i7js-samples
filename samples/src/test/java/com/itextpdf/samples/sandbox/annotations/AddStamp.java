@@ -24,7 +24,6 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -53,7 +52,7 @@ public class AddStamp extends GenericTest {
                 .setStampName(new PdfName("ITEXT"));
         PdfFormXObject xObj = new PdfFormXObject(new Rectangle(w, h));
         PdfCanvas canvas = new PdfCanvas(xObj, pdfDoc);
-        canvas.addImage(img, 0, 0, false);
+        canvas.addImageAt(img, 0, 0, false);
         stamp.setNormalAppearance(xObj.getPdfObject());
         stamp.setFlags(PdfAnnotation.PRINT);
 

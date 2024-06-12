@@ -17,10 +17,9 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.layer.PdfLayer;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -53,7 +52,7 @@ public class AddOCG extends GenericTest {
 
         Canvas canvasModel;
         canvas.beginLayer(nested);
-        canvasModel = new Canvas(canvas, pdfDoc, pdfDoc.getDefaultPageSize());
+        canvasModel = new Canvas(canvas, pdfDoc.getDefaultPageSize());
         canvasModel.showTextAligned("nested layers", 50, 755, TextAlignment.LEFT, 0);
         canvas.endLayer();
 

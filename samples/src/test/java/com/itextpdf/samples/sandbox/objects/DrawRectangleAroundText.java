@@ -51,7 +51,7 @@ public class DrawRectangleAroundText extends GenericTest {
                 + "ColumnText object, so it will be distributed over several"
                 + "lines (and we don't know in advance how many).");
 
-        new Canvas(canvas, pdfDoc, new Rectangle(120, 500, 130, 280))
+        new Canvas(canvas, new Rectangle(120, 500, 130, 280))
                 .add(p);
         canvas.rectangle(120, 500, 130, 280);
         canvas.stroke();
@@ -64,7 +64,7 @@ public class DrawRectangleAroundText extends GenericTest {
         ParagraphRenderer renderer = (ParagraphRenderer) p.createRendererSubTree().setParent(doc.getRenderer());
         float height = renderer.layout(new LayoutContext(new LayoutArea(0, new Rectangle(300, 500, 130, 280)))).getOccupiedArea().getBBox().getHeight();
 
-        new Canvas(canvas, pdfDoc, new Rectangle(300, 500, 130, 280))
+        new Canvas(canvas, new Rectangle(300, 500, 130, 280))
                 .add(p);
         canvas.rectangle(300, 500 + 280 - height, 130, height);
         canvas.stroke();

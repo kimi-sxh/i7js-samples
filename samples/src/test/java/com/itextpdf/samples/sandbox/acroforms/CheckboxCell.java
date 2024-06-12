@@ -13,12 +13,13 @@
  */
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.CheckBoxFormFieldBuilder;
+import com.itextpdf.forms.fields.PdfButtonFormField;
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfButtonFormField;
-import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Table;
@@ -26,12 +27,11 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
+
+//参见：https://kb.itextpdf.com/itext/create-fields-in-a-table
 @Category(SampleTest.class)
 public class CheckboxCell extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/checkbox_cell.pdf";
@@ -71,11 +71,17 @@ public class CheckboxCell extends GenericTest {
 
         @Override
         public void draw(DrawContext drawContext) {
+            PdfAcroForm form = PdfFormCreator.getAcroForm(drawContext.getDocument(), true);
+
             float x = (getOccupiedAreaBBox().getLeft() + getOccupiedAreaBBox().getRight()) / 2;
             float y = (getOccupiedAreaBBox().getTop() + getOccupiedAreaBBox().getBottom()) / 2;
             Rectangle rect = new Rectangle(x - 10, y - 10, 20, 20);
-            PdfButtonFormField checkBox = PdfFormField.createCheckBox(drawContext.getDocument(), rect, name, "Yes");
-            PdfAcroForm.getAcroForm(drawContext.getDocument(), true).addField(checkBox);
+            // The 4th parameter is the initial value of checkbox: 'Yes' - checked, 'Off' - unchecked
+            // By default, checkbox value type is cross.
+            PdfButtonFormField checkBox = new CheckBoxFormFieldBuilder(drawContext.getDocument(), name)
+                    .setWidgetRectangle(rect).createCheckBox();
+            checkBox.setValue("Yes");
+            form.addField(checkBox);
         }
     }
 }

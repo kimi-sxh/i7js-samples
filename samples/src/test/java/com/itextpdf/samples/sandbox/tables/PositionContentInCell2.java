@@ -12,18 +12,18 @@
 package com.itextpdf.samples.sandbox.tables;
 
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -117,7 +117,8 @@ public class PositionContentInCell2 extends GenericTest {
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
 
-            drawContext.getCanvas().addXObject(img.getXObject(), getOccupiedAreaBBox());
+            Rectangle rect = getOccupiedAreaBBox();
+            drawContext.getCanvas().addXObjectWithTransformationMatrix(img.getXObject(), rect.getWidth(), 0.0F, 0.0F, rect.getHeight(), rect.getX(), rect.getY());
             drawContext.getCanvas().stroke();
 
             float x = getOccupiedAreaBBox().getX() + wPct * getOccupiedAreaBBox().getWidth();

@@ -4,9 +4,9 @@
  */
 package com.itextpdf.highlevel.chapter07;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -21,8 +21,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +31,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C07E02_TextWatermark {
     public static final String SRC = "src/main/resources/txt/jekyll_hyde.txt";
     public static final String DEST = "results/chapter07/jekyll_hydeV1.pdf";
@@ -50,8 +48,8 @@ public class C07E02_TextWatermark {
                 new TextWatermark());
         // Initialize document
         Document document = new Document(pdf);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         document.setTextAlignment(TextAlignment.JUSTIFIED)
             .setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
         
@@ -90,7 +88,7 @@ public class C07E02_TextWatermark {
         PdfFont helvetica;
 
         protected TextWatermark() throws IOException {
-            helvetica = PdfFontFactory.createFont(FontConstants.HELVETICA);
+            helvetica = PdfFontFactory.createFont(StandardFonts.HELVETICA);
             lime = new DeviceCmyk(0.208f, 0, 0.584f, 0);
             blue = new DeviceCmyk(0.445f, 0.0546f, 0, 0.0667f);
         }

@@ -9,7 +9,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.IOException;
 /**
  * Simple image example.
  */
-@WrapToTest
 public class C01E03_QuickBrownFox {
     public static final String DOG = "src/main/resources/img/dog.bmp";
     public static final String FOX = "src/main/resources/img/fox.bmp";

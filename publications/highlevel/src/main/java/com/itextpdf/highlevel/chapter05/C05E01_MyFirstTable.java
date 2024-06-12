@@ -8,15 +8,15 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.test.annotations.WrapToTest;
+
 import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C05E01_MyFirstTable {
     
     public static final String DEST = "results/chapter05/my_first_table.pdf";
@@ -34,8 +34,8 @@ public class C05E01_MyFirstTable {
         // Initialize document
         Document document = new Document(pdf);
         Table table = new Table(3);
-        table.addCell(new Cell(1, 3).add("Cell with colspan 3"));
-        table.addCell(new Cell(2, 1).add("Cell with rowspan 2"));
+        table.addCell(new Cell(1, 3).add(new Paragraph("Cell with colspan 3")));
+        table.addCell(new Cell(2, 1).add(new Paragraph("Cell with rowspan 2")));
         table.addCell("row 1; cell 1");
         table.addCell("row 1; cell 2");
         table.addCell("row 2; cell 1");

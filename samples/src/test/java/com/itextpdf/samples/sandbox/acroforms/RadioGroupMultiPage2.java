@@ -11,12 +11,12 @@
  */
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.fields.*;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.renderer.IRenderer;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfButtonFormField;
-import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 
 import org.junit.experimental.categories.Category;
 
+//参见：https://kb.itextpdf.com/itext/create-fields-in-a-table#Createfieldsinatable-radiogroupmultipage2
 @Category(SampleTest.class)
 public class RadioGroupMultiPage2 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/radio_group_multi_page2.pdf";
@@ -44,8 +45,12 @@ public class RadioGroupMultiPage2 extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
+        PdfAcroForm form = PdfFormCreator.getAcroForm(pdfDoc, true);
 
-        PdfButtonFormField radioGroup = PdfFormField.createRadioGroup(pdfDoc, "answer", "answer 1");
+        // Radio buttons will be added to this radio group
+        RadioFormFieldBuilder builder = new RadioFormFieldBuilder(pdfDoc, "answer");
+        PdfButtonFormField radioGroup = builder.createRadioGroup();
+        radioGroup.setValue("answer 1");
 
         Table table = new Table(2);
         Cell cell;
@@ -59,31 +64,47 @@ public class RadioGroupMultiPage2 extends GenericTest {
             cell = new Cell().add(new Paragraph("Radio: " + i));
             table.addCell(cell);
             cell = new Cell();
-            cell.setNextRenderer(new MyCellRenderer(cell, radioGroup, "answer " + i));
+            cell.setNextRenderer(new AddRadioButtonRenderer(cell, radioGroup, "answer " + i));
             table.addCell(cell);
         }
         doc.add(table);
 
-        PdfAcroForm.getAcroForm(pdfDoc, true).addField(radioGroup);
+        form.addField(radioGroup);
+
         pdfDoc.close();
     }
 
 
-    private class MyCellRenderer extends CellRenderer {
+    private class AddRadioButtonRenderer extends CellRenderer {
         protected PdfButtonFormField radioGroup;
         protected String value;
 
-        public MyCellRenderer(Cell modelElement, PdfButtonFormField radioGroup, String value) {
+        public AddRadioButtonRenderer(Cell modelElement, PdfButtonFormField radioGroup, String value) {
             super(modelElement);
             this.radioGroup = radioGroup;
             this.value = value;
         }
 
+        // If a renderer overflows on the next area, iText uses #getNextRenderer() method to create a new renderer for the overflow part.
+        // If #getNextRenderer() isn't overridden, the default method will be used and thus the default rather than the custom
+        // renderer will be created
+        @Override
+        public IRenderer getNextRenderer() {
+            return new AddRadioButtonRenderer((Cell) modelElement, radioGroup, value);
+        }
+
         @Override
         public void draw(DrawContext drawContext) {
             PdfDocument document = drawContext.getDocument();
-            PdfFormField field = PdfFormField.createRadioButton(document, getOccupiedAreaBBox(), radioGroup, value);
-            PdfAcroForm.getAcroForm(document, true).addFieldAppearanceToPage(field, document.getPage(getOccupiedArea().getPageNumber()));
+            PdfAcroForm form = PdfFormCreator.getAcroForm(document, true);
+
+            // Create a radio button that is added to a radio group.
+            PdfFormAnnotation field = new RadioFormFieldBuilder(document, null)
+                    .createRadioButton( value, getOccupiedAreaBBox());
+            radioGroup.addKid(field);
+            // This method merges field with its annotation and place it on the given page.
+            // This method won't work if the field has no or more than one widget annotations.
+            form.addFieldAppearanceToPage(field.getParentField(), document.getPage(getOccupiedArea().getPageNumber()));
         }
     }
 }

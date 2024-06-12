@@ -42,7 +42,7 @@ public class MakeBookletA3 extends GenericTest {
             return;
         }
         PdfFormXObject page = srcDoc.getPage(p).copyAsFormXObject(pdfDoc);
-        canvas.addXObject(page, x, 0);
+        canvas.addXObjectAt(page, x, 0);
     }
 
     public void manipulatePdf(String dest) throws IOException {

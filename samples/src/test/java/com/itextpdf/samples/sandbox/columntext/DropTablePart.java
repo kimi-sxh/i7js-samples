@@ -11,7 +11,9 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 
@@ -37,9 +39,9 @@ public class DropTablePart extends GenericTest {
 
         for (int i = 0; i < 4; ) {
             Table table = new Table(new float[]{0.25f, 0.25f, 0.25f, 0.25f});
-            table.setWidthPercent(100);
+            table.setWidth(UnitValue.createPercentValue(100));
 
-            Cell cell = new Cell(1, 4).add("inner table " + (++i));
+            Cell cell = new Cell(1, 4).add(new Paragraph("inner table " + (++i)));
             table.addCell(cell);
             for (int j = 0; j < 18; j++) {
                 table.addCell("test Data " + (j + 1) + ".1");

@@ -80,7 +80,7 @@ public class AddOverlappingImage extends GenericTest {
                     this.getOccupiedAreaBBox().getWidth() / 3 - image.getWidth(), 0);
             float y = Math.max(this.getOccupiedAreaBBox().getY() +
                     this.getOccupiedAreaBBox().getHeight() / 3 - image.getHeight(), 0);
-            drawContext.getCanvas().addImage(image, x, y, false);
+            drawContext.getCanvas().addImageWithTransformationMatrix(image, image.getWidth(), 0.0F, 0.0F, image.getHeight(),x, y, false);
         }
 
         @Override

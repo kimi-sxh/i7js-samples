@@ -8,6 +8,7 @@
 package com.itextpdf.samples.book.part2.chapter07;
 
 import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PushButtonFormFieldBuilder;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
@@ -114,7 +115,8 @@ public class Listing_07_27_Advertisement extends GenericTest {
         protected int fontSize = 12;
 
         public CustomButton(String name, String caption, PdfDocument document, Rectangle rect) {
-            button = PdfFormField.createButton(document, new Rectangle(0, 0), 0);
+            button = new PushButtonFormFieldBuilder(document, name).setWidgetRectangle(new Rectangle(0, 0))
+                    .createPushButton();
             button.setFieldName(name);
             button.setPushButton(true);
 
@@ -239,7 +241,7 @@ public class Listing_07_27_Advertisement extends GenericTest {
                 canvas.addXObjectWithTransformationMatrix(obj, width / obj.getWidth(), 0, 0, height / obj.getHeight(), .5f, .5f);
             } else {
                 //TODO 还不确定先注释
-//                canvas.addXObject(obj, 0 + occupiedArea.getBBox().getWidth() - imageWidth, 0, imageWidth);
+//                canvas.addXObjectAt(obj, 0 + occupiedArea.getBBox().getWidth() - imageWidth, 0, imageWidth);
             }
 
 

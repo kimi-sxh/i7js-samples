@@ -6,7 +6,7 @@ package tutorial.chapter05;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -17,7 +17,6 @@ import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfTextAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,6 @@ import java.io.IOException;
 /**
  * Simple adding annotations example.
  */
-@WrapToTest
 public class C05E01_AddAnnotationsAndContent {
 
     public static final String SRC = "src/main/resources/pdf/job_application.pdf";
@@ -44,13 +42,13 @@ public class C05E01_AddAnnotationsAndContent {
 
         //Add text annotation
         PdfAnnotation ann = new PdfTextAnnotation(new Rectangle(400, 795, 0, 0))
+                .setOpen(true)
                 .setTitle(new PdfString("iText"))
-                .setContents("Please, fill out the form.")
-                .setOpen(true);
+                .setContents("Please, fill out the form.");
         pdfDoc.getFirstPage().addAnnotation(ann);
 
         PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-        canvas.beginText().setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 12)
+        canvas.beginText().setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 12)
                 .moveText(265, 597)
                 .showText("I agree to the terms and conditions.")
                 .endText();

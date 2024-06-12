@@ -61,7 +61,7 @@ public class PdfUA extends GenericTest {
         Paragraph p = new Paragraph();
         //PDF/UA
         //Embed font
-        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         p.setFont(font);
         //==================
         Text c = new Text("The quick brown ");

@@ -3,8 +3,8 @@
  */
 package tutorial.chapter05;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -15,9 +15,8 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,6 @@ import java.io.IOException;
 /**
  * Simple adding content example.
  */
-@WrapToTest
 public class C05E03_AddContent {
 
     public static final String SRC = "src/main/resources/pdf/ufo.pdf";
@@ -52,17 +50,17 @@ public class C05E03_AddContent {
             pageSize = page.getPageSize();
             canvas = new PdfCanvas(page);
             //Draw header text
-            canvas.beginText().setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 7)
+            canvas.beginText().setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 7)
                     .moveText(pageSize.getWidth() / 2 - 24, pageSize.getHeight() - 10)
                     .showText("I want to believe")
                     .endText();
             //Draw footer line
-            canvas.setStrokeColor(Color.BLACK)
+            canvas.setStrokeColor(ColorConstants.BLACK)
                     .setLineWidth(.2f)
                     .moveTo(pageSize.getWidth() / 2 - 30, 20)
                     .lineTo(pageSize.getWidth() / 2 + 30, 20).stroke();
             //Draw page number
-            canvas.beginText().setFontAndSize(PdfFontFactory.createFont(FontConstants.HELVETICA), 7)
+            canvas.beginText().setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA), 7)
                     .moveText(pageSize.getWidth() / 2 - 7, 10)
                     .showText(String.valueOf(i))
                     .showText(" of ")

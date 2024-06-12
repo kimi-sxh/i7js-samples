@@ -48,16 +48,16 @@ public class TiledImage extends GenericTest {
         PdfCanvas canvas;
         canvas = new PdfCanvas(pdfDoc.addNewPage().newContentStreamBefore(),
                 pdfDoc.getLastPage().getResources(), pdfDoc);
-        canvas.addImage(image, width, 0, 0, height, 0, -height / 2, false);
+        canvas.addImageWithTransformationMatrix(image, width, 0, 0, height, 0, -height / 2, false);
         canvas = new PdfCanvas(pdfDoc.addNewPage().newContentStreamBefore(),
                 pdfDoc.getLastPage().getResources(), pdfDoc);
-        canvas.addImage(image, width, 0, 0, height, 0, 0, false);
+        canvas.addImageWithTransformationMatrix(image, width, 0, 0, height, 0, 0, false);
         canvas = new PdfCanvas(pdfDoc.addNewPage().newContentStreamBefore(),
                 pdfDoc.getLastPage().getResources(), pdfDoc);
-        canvas.addImage(image, width, 0, 0, height, -width / 2, -height / 2, false);
+        canvas.addImageWithTransformationMatrix(image, width, 0, 0, height, -width / 2, -height / 2, false);
         canvas = new PdfCanvas(pdfDoc.addNewPage().newContentStreamBefore(),
                 pdfDoc.getLastPage().getResources(), pdfDoc);
-        canvas.addImage(image, width, 0, 0, height, -width / 2, 0, false);
+        canvas.addImageWithTransformationMatrix(image, width, 0, 0, height, -width / 2, 0, false);
 
         pdfDoc.close();
     }

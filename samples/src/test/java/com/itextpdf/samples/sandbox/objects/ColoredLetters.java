@@ -11,8 +11,8 @@
  */
 package com.itextpdf.samples.sandbox.objects;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -21,7 +21,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -54,17 +53,17 @@ public class ColoredLetters extends GenericTest {
     private Text returnCorrectColor(char letter) throws IOException {
         if (letter == 'b') {
             return new Text("b")
-                    .setFontColor(Color.BLUE)
-                    .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD));
+                    .setFontColor(ColorConstants.BLUE)
+                    .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD));
         } else if (letter == 'g') {
             return new Text("g")
-                    .setFontColor(Color.GREEN)
-                    .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA))
+                    .setFontColor(ColorConstants.GREEN)
+                    .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                     .setItalic();
         } else {
             return new Text(String.valueOf(letter))
-                    .setFontColor(Color.RED)
-                    .setFont(PdfFontFactory.createFont(FontConstants.HELVETICA));
+                    .setFontColor(ColorConstants.RED)
+                    .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA));
         }
     }
 }

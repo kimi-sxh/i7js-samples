@@ -7,6 +7,9 @@
 
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.fields.PdfFormCreator;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.io.source.RandomAccessSourceFactory;
@@ -41,19 +44,26 @@ public class ReadOnlyField extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(new RandomAccessSourceFactory().createSource(createForm()),
                 new ReaderProperties()), new PdfWriter(DEST));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
-        form.getField("text").setReadOnly(true).setValue("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+        form.getField("text")
+                .setReadOnly(true)
+                .setValue("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
         pdfDoc.close();
     }
 
     public byte[] createForm() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfFont font = PdfFontFactory.createFont();
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(baos));
+        PdfAcroForm form = PdfFormCreator.getAcroForm(pdfDoc, true);
 
         Rectangle rect = new Rectangle(36, 770, 104, 36);
-        PdfTextFormField tf = PdfFormField.createText(pdfDoc, rect, "text", "text", PdfFontFactory.createFont(), 20f);
-        tf.setMultiline(true);
-
-        PdfAcroForm.getAcroForm(pdfDoc, true).addField(tf);
+        PdfTextFormField textField = new TextFormFieldBuilder(pdfDoc, "text")
+                .setWidgetRectangle(rect).createText();
+        textField.setValue("text").setFont(font).setFontSize(20f);
+        // Being set as true, the field can contain multiple lines of text;
+        // if false, the field's text is restricted to a single line.
+        textField.setMultiline(true);
+        form.addField(textField);
 
         pdfDoc.close();
         return baos.toByteArray();

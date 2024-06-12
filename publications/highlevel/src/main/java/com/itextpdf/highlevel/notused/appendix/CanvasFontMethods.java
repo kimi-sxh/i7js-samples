@@ -4,8 +4,8 @@
  */
 package com.itextpdf.highlevel.notused.appendix;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -16,7 +16,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvasConstants;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.property.Property;
+import com.itextpdf.layout.properties.Property;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,18 +42,18 @@ public class CanvasFontMethods {
         PdfPage page = pdf.addNewPage();
         PdfCanvas pdfCanvas = new PdfCanvas(page);
         Rectangle rectangle = new Rectangle(36, 36, 523, 770);
-        Canvas canvas = new Canvas(pdfCanvas, pdf, rectangle);
+        Canvas canvas = new Canvas(pdfCanvas,  rectangle);
         Paragraph p;
         p = new Paragraph("Testing font methods");
         canvas.add(p);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
         canvas.setFont(font);
         p = new Paragraph("Testing font methods: changed font");
         canvas.add(p);
         canvas.setFontSize(18);
         p = new Paragraph("Testing font methods: changed font size");
         canvas.add(p);
-        canvas.setFontColor(Color.BLUE);
+        canvas.setFontColor(ColorConstants.BLUE);
         p = new Paragraph("Testing font methods: changed color");
         canvas.add(p);
         canvas.setBold();
@@ -76,7 +76,7 @@ public class CanvasFontMethods {
         canvas.add(p);
         canvas.setProperty(Property.UNDERLINE, null);
         canvas.setUnderline(2, 4);
-        canvas.setUnderline(Color.BLUE, 5, 0.1f, 2, -0.5f, PdfCanvasConstants.LineCapStyle.ROUND);
+        canvas.setUnderline(ColorConstants.BLUE, 5, 0.1f, 2, -0.5f, PdfCanvasConstants.LineCapStyle.ROUND);
         p = new Paragraph("Testing font methods: underline (custom)");
         canvas.add(p);
         canvas.setProperty(Property.UNDERLINE, null);
@@ -84,7 +84,7 @@ public class CanvasFontMethods {
         p = new Paragraph("Testing font methods: change text rendering mode");
         canvas.add(p);
         canvas.setStrokeWidth(0.1f);
-        canvas.setStrokeColor(Color.BLUE);
+        canvas.setStrokeColor(ColorConstants.BLUE);
         p = new Paragraph("Testing font methods: change stroke width and color");
         canvas.add(p);
         //Close document

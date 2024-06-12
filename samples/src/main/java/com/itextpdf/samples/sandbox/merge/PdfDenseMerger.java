@@ -144,29 +144,32 @@ public class PdfDenseMerger {
 
         PdfDocumentContentParser contentParser = new PdfDocumentContentParser(from);
         PageVerticalAnalyzer finder = contentParser.processContent(pageNum, new PageVerticalAnalyzer());
-        if (finder.verticalFlips.size() < 2)
+        if (finder.verticalFlips.size() < 2) {
             return;
+        }
         Rectangle pageSizeToImport = page.getPageSize();
 
         int startFlip = finder.verticalFlips.size() - 1;
         boolean first = true;
         while (startFlip > 0) {
-            if (!first)
+            if (!first) {
                 newPage();
+            }
 
             float freeSpace = yPosition - (pageSize.getBottom() + bottom);
             int endFlip = startFlip + 1;
-            while ((endFlip > 1) && (finder.verticalFlips.get(startFlip) - finder.verticalFlips.get(endFlip - 2) < freeSpace))
+            while ((endFlip > 1) && (finder.verticalFlips.get(startFlip) - finder.verticalFlips.get(endFlip - 2) < freeSpace)) {
                 endFlip -= 2;
+            }
             if (endFlip < startFlip) {
                 float height = finder.verticalFlips.get(startFlip) - finder.verticalFlips.get(endFlip);
 
                 canvas.saveState();
                 canvas.rectangle(0, yPosition - height, pageSizeToImport.getWidth(), height);
                 canvas.clip();
-                canvas.newPath();
+                canvas.endPath();
 
-                canvas.addXObject(formXObject, 0, yPosition - (finder.verticalFlips.get(startFlip) - pageSizeToImport.getBottom()));
+                canvas.addXObjectWithTransformationMatrix(formXObject, 1.0F, 0.0F, 0.0F, 1.0F, 0, yPosition - (finder.verticalFlips.get(startFlip) - pageSizeToImport.getBottom()));
 
                 canvas.restoreState();
                 yPosition -= height + gap;

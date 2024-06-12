@@ -81,7 +81,7 @@ public class Listing_10_22_TransparentOverlay extends GenericTest {
         gState.put(PdfName.SMask, maskDict);
         canvas.setExtGState(gState);
 
-        canvas.addXObject(xObject2, 0, 0);
+        canvas.addXObjectAt(xObject2, 0, 0);
 
         doc.close();
     }

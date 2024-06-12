@@ -13,8 +13,8 @@ package com.itextpdf.samples.sandbox.tables;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.PatternColor;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.PatternColor;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
@@ -27,7 +27,6 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -82,7 +81,7 @@ public class TiledBackground extends GenericTest {
         public void draw(DrawContext drawContext) {
             PdfPattern.Tiling img_pattern = new PdfPattern.Tiling(img.getWidth(), img.getHeight(), img.getWidth(),
                     img.getHeight());
-            new PdfPatternCanvas(img_pattern, drawContext.getDocument()).addImage(img, 0, 0, false);
+            new PdfPatternCanvas(img_pattern, drawContext.getDocument()).addImageAt(img, 0, 0, false);
             PdfCanvas canvas = drawContext.getCanvas();
             colorRectangle(canvas, new PatternColor(img_pattern), getOccupiedAreaBBox().getX(),
                     getOccupiedAreaBBox().getY(), getOccupiedAreaBBox().getWidth(), getOccupiedAreaBBox().getHeight());

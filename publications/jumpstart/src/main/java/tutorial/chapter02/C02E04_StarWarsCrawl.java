@@ -3,16 +3,16 @@
  */
 package tutorial.chapter02;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import java.util.List;
  * Simple changing text state example.
  */
 
-@WrapToTest
 public class C02E04_StarWarsCrawl {
 
     public static final String DEST = "results/chapter02/star_wars_crawl.pdf";
@@ -55,7 +54,9 @@ public class C02E04_StarWarsCrawl {
 
         int maxStringWidth = 0;
         for (String fragment : text) {
-            if (fragment.length() > maxStringWidth) maxStringWidth = fragment.length();
+            if (fragment.length() > maxStringWidth) {
+                maxStringWidth = fragment.length();
+            }
         }
 
         //Initialize PDF document
@@ -69,7 +70,7 @@ public class C02E04_StarWarsCrawl {
 
         //Set black background
         canvas.rectangle(0, 0, ps.getWidth(), ps.getHeight())
-                .setColor(Color.BLACK, true)
+                .setColor(ColorConstants.BLACK, true)
                 .fill();
 
         //Replace the origin of the coordinate system to the top left corner
@@ -78,7 +79,7 @@ public class C02E04_StarWarsCrawl {
         float lineHeight = 5;
         float yOffset = -40;
         canvas.beginText()
-            .setFontAndSize(PdfFontFactory.createFont(FontConstants.COURIER_BOLD), 1)
+            .setFontAndSize(PdfFontFactory.createFont(StandardFonts.COURIER_BOLD), 1)
             .setColor(yellowColor, true);
         for (int j = 0; j < text.size(); j++) {
             String line = text.get(j);

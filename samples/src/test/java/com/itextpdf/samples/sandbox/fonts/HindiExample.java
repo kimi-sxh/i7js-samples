@@ -12,7 +12,7 @@
 package com.itextpdf.samples.sandbox.fonts;
 
 import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -21,10 +21,10 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -61,8 +61,8 @@ public class HindiExample extends GenericTest {
         doc.add(p2);
 
         Table table = new Table(new float[]{10, 60, 30});
-        table.setWidthPercent(100);
-        Cell customerLblCell = new Cell().add("CUSTOMERS");
+        table.setWidth(UnitValue.createPercentValue(100));
+        Cell customerLblCell = new Cell().add(new Paragraph("CUSTOMERS"));
         Cell balanceLblCell = new Cell().add(new Paragraph("\u0915\u093e\u0930\u092a\u093e\u0930\u094d\u0915\u093f\u0902\u0917")
                 .setFont(f)
                 .setFontColor(new DeviceRgb(50, 205, 50)));

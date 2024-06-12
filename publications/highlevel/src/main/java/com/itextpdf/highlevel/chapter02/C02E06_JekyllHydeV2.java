@@ -9,8 +9,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +19,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C02E06_JekyllHydeV2 {
     public static final String SRC = "src/main/resources/txt/jekyll_hyde.txt";
     public static final String DEST = "results/chapter02/jekyll_hyde_v2.pdf";

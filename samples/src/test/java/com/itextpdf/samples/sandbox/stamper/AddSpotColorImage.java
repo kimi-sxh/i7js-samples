@@ -9,13 +9,13 @@ package com.itextpdf.samples.sandbox.stamper;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.kernel.colors.DeviceCmyk;
+import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -65,7 +65,12 @@ public class AddSpotColorImage extends GenericTest {
         PdfPage pdfPage = pdfDoc.getFirstPage();
         pdfPage.setIgnorePageRotationForContent(true);
         PdfCanvas canvas = new PdfCanvas(pdfPage);
-        canvas.addXObject(imageXObject, 100, 200, 100);
+        PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
+        if (bbox == null)
+            throw new PdfException("PdfFormXObject has invalid BBox.");
+        float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
+        float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
+        canvas.addXObjectWithTransformationMatrix(imageXObject, 100, 0.0F, 0.0F, 100 / formWidth * formHeight,100, 200);
 
         pdfDoc.close();
     }

@@ -11,6 +11,8 @@
  */
 package com.itextpdf.samples.sandbox.acroforms;
 
+import com.itextpdf.forms.fields.PdfFormCreator;
+import com.itextpdf.forms.fields.TextFormFieldBuilder;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.forms.PdfAcroForm;
@@ -18,6 +20,7 @@ import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.forms.fields.PdfTextFormField;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
@@ -29,6 +32,7 @@ import java.io.FileOutputStream;
 
 import org.junit.experimental.categories.Category;
 
+//参见：https://kb.itextpdf.com/itext/create-fields-in-a-table#Createfieldsinatable-comboboxitems
 @Category(SampleTest.class)
 public class CreateFormInTable extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/create_form_in_table.pdf";
@@ -46,12 +50,12 @@ public class CreateFormInTable extends GenericTest {
 
         Table table = new Table(2);
         Cell cell;
-        cell = new Cell().add("Name:");
+        cell = new Cell().add(new Paragraph("Name:"));
         table.addCell(cell);
         cell = new Cell();
         cell.setNextRenderer(new MyCellRenderer(cell, "name"));
         table.addCell(cell);
-        cell = new Cell().add("Address");
+        cell = new Cell().add(new Paragraph("Address"));
         table.addCell(cell);
         cell = new Cell();
         cell.setNextRenderer(new MyCellRenderer(cell, "address"));
@@ -73,8 +77,10 @@ public class CreateFormInTable extends GenericTest {
         @Override
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
-            PdfTextFormField field = PdfFormField.createText(drawContext.getDocument(), getOccupiedAreaBBox(), fieldName, "");
-            PdfAcroForm form = PdfAcroForm.getAcroForm(drawContext.getDocument(), true);
+            PdfTextFormField field = new TextFormFieldBuilder(drawContext.getDocument(), fieldName)
+                    .setWidgetRectangle(getOccupiedAreaBBox()).createText();
+            field.setValue("");
+            PdfAcroForm form = PdfFormCreator.getAcroForm(drawContext.getDocument(), true);
             form.addField(field);
         }
     }

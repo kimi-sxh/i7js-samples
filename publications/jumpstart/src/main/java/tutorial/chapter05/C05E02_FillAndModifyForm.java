@@ -5,12 +5,11 @@ package tutorial.chapter05;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.*;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import java.util.Map;
 /**
  * Simple filling out form example.
  */
-@WrapToTest
 public class C05E02_FillAndModifyForm {
 
     public static final String SRC = "src/main/resources/pdf/job_application.pdf";
@@ -42,7 +40,7 @@ public class C05E02_FillAndModifyForm {
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
         Map<String, PdfFormField> fields = form.getFormFields();
 
-        fields.get("name").setValue("James Bond").setBackgroundColor(Color.ORANGE);
+        fields.get("name").setValue("James Bond").setBackgroundColor(ColorConstants.ORANGE);
         fields.get("language").setValue("English");
 
         fields.get("experience1").setValue("Yes");
@@ -61,7 +59,7 @@ public class C05E02_FillAndModifyForm {
         fields.get("shift").setOptions(arr);
         fields.get("shift").setValue("Any");
 
-        PdfFont courier = PdfFontFactory.createFont(FontConstants.COURIER);
+        PdfFont courier = PdfFontFactory.createFont(StandardFonts.COURIER);
         fields.get("info").setValue("I was 38 years old when I became an MI6 agent.", courier, 7f);
 
         pdfDoc.close();

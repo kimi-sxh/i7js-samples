@@ -13,19 +13,16 @@
 package com.itextpdf.samples.sandbox.events;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.canvas.draw.DottedLine;
 import com.itextpdf.kernel.pdf.navigation.PdfExplicitDestination;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Tab;
-import com.itextpdf.layout.element.TabStop;
-import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.layout.LayoutContext;
 import com.itextpdf.layout.layout.LayoutResult;
-import com.itextpdf.layout.property.TabAlignment;
+import com.itextpdf.layout.properties.TabAlignment;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.TextRenderer;
 import com.itextpdf.samples.GenericTest;
@@ -100,9 +97,9 @@ public class CreateTOC2 extends GenericTest {
         public void draw(DrawContext drawContext) {
             super.draw(drawContext);
             String name = "dest" + (counter++);
-            int page = drawContext.getDocument().getNumberOfPages();
+            PdfPage page = drawContext.getDocument().getLastPage();
             toc.add(new AbstractMap.SimpleEntry<String, AbstractMap.SimpleEntry<String, Integer>>(((Text) modelElement).getText(),
-                    new AbstractMap.SimpleEntry<String, Integer>(name, page)));
+                    new AbstractMap.SimpleEntry<String, Integer>(name, drawContext.getDocument().getNumberOfPages())));
             drawContext.getDocument().addNamedDestination(name,
                     PdfExplicitDestination.createFitH(page, drawContext.getDocument().getLastPage().getPageSize().getTop()).getPdfObject());
         }

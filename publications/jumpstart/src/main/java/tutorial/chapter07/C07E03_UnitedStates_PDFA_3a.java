@@ -9,19 +9,18 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.filespec.PdfFileSpec;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.pdfa.PdfADocument;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.StringTokenizer;
 
-@WrapToTest
 public class C07E03_UnitedStates_PDFA_3a {
     public static final String DATA = "src/main/resources/data/united_states.csv";
     public static final String FONT = "src/main/resources/font/FreeSans.ttf";
@@ -59,7 +58,7 @@ public class C07E03_UnitedStates_PDFA_3a {
         PdfFileSpec fileSpec = PdfFileSpec.createEmbeddedFileSpec(
             pdf, Files.readAllBytes(Paths.get(DATA)), "united_states.csv",
             "united_states.csv", new PdfName("text/csv"), parameters,
-            PdfName.Data, false);
+            PdfName.Data);
         fileSpec.put(new PdfName("AFRelationship"), new PdfName("Data"));
         pdf.addFileAttachment("united_states.csv", fileSpec);
         PdfArray array = new PdfArray();
@@ -67,12 +66,12 @@ public class C07E03_UnitedStates_PDFA_3a {
         pdf.getCatalog().put(new PdfName("AF"), array);
 
         //Embed fonts
-        PdfFont font = PdfFontFactory.createFont(FONT, true);
-        PdfFont bold = PdfFontFactory.createFont(BOLD_FONT, true);
+        PdfFont font = PdfFontFactory.createFont(FONT, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont bold = PdfFontFactory.createFont(BOLD_FONT, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         // Create content
         Table table = new Table(new float[]{4, 1, 3, 4, 3, 3, 3, 3, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
         process(table, line, bold, true);

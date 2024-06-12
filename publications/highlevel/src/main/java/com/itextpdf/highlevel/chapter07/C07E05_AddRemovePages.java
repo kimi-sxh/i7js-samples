@@ -16,7 +16,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.test.annotations.WrapToTest;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -24,7 +24,6 @@ import java.io.IOException;
  *
  * @author iText
  */
-@WrapToTest
 public class C07E05_AddRemovePages {
     
     public static final String SRC = "src/main/resources/pdfs/jekyll_hyde_bookmarked.pdf";
@@ -46,8 +45,9 @@ public class C07E05_AddRemovePages {
         int total = pdf.getNumberOfPages();
         for (int i = 9; i <= total; i++) {
             pdf.removePage(9);
-            if (i == 12)
+            if (i == 12) {
                 pdf.removeAllHandlers();
+            }
         }
         pdf.close();
     }
@@ -60,7 +60,7 @@ public class C07E05_AddRemovePages {
             PdfDocument pdf = docEvent.getDocument();
             PdfPage page = docEvent.getPage();
             PdfCanvas pdfCanvas = new PdfCanvas(page);
-            Canvas canvas = new Canvas(pdfCanvas, pdf, page.getPageSize());
+            Canvas canvas = new Canvas(pdfCanvas, page.getPageSize());
             canvas.add(new Paragraph().add(docEvent.getType()));
         }
         

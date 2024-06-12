@@ -7,33 +7,27 @@
 
 package com.itextpdf.samples.tagging;
 
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfName;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.CanvasArtifact;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.TagTreePointer;
 import com.itextpdf.kernel.utils.CompareTool;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.AreaBreakType;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.AreaBreakType;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.test.ExtendedITextTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 import static org.junit.Assert.fail;
 
@@ -99,7 +93,7 @@ public class TaggingSamples extends ExtendedITextTest {
         // We can move it and as a result all new content will be under the current position of the auto tagging pointer.
         // Auto tagging pointer is also used for tagging annotations and forms, so the same approach could be used there.
         TagTreePointer autoTaggingPointer = pdfDocument.getTagStructureContext().getAutoTaggingPointer();
-        autoTaggingPointer.addTag(PdfName.Sect); // create a new tag, which will be a kid of the root element
+        autoTaggingPointer.addTag(PdfName.Sect.getValue()); // create a new tag, which will be a kid of the root element
 
 
         // add some content to the page
@@ -126,7 +120,7 @@ public class TaggingSamples extends ExtendedITextTest {
         // From here we want to create another section of the document.
         autoTaggingPointer
                 .moveToParent() // we move the root tag
-                .addTag(PdfName.Sect); // and create a new 'Section' tag
+                .addTag(PdfName.Sect.getValue()); // and create a new 'Section' tag
 
 
         p = new Paragraph(text4);
@@ -149,16 +143,16 @@ public class TaggingSamples extends ExtendedITextTest {
         // then this content won't be tagged at all (for example if you set role to null for Text element, then the
         // text on the page won't be tagged too).
         Paragraph caption = new Paragraph().setTextAlignment(TextAlignment.CENTER);
-        caption.setRole(null);
+        caption.getAccessibilityProperties().setRole(null);
         Text captionText = new Text("Table 2, winners");
-        captionText.setRole(PdfName.Caption);
+        captionText.getAccessibilityProperties().setRole(PdfName.Caption.getValue());
         caption.add(captionText);
         document.add(caption);
 
         // By default, root tag has role of 'Document'. Let's change it to 'Part'.
         autoTaggingPointer
                 .moveToRoot() // we move to the root tag (here we also could have used moveToParent method
-                .setRole(PdfName.Part); // and change the role of the tag the pointer points to
+                .setRole(PdfName.Part.getValue()); // and change the role of the tag the pointer points to
 
         document.close();
 
@@ -181,32 +175,32 @@ public class TaggingSamples extends ExtendedITextTest {
         // The blue star would be something like logo of our document.
         // So for example we don't want it to be read out loud on every page. To achieve it, we mark it as an Artifact.
         canvas.openTag(new CanvasArtifact());
-        drawStar(canvas, 30, 745, Color.BLUE);
+        drawStar(canvas, 30, 745, ColorConstants.BLUE);
         canvas.closeTag();
 
         // The green star we want to be a part of actual content and logical structure of the document.
         // To modify tag structure manually we create TagTreePointer. After creation it points at the root tag.
         TagTreePointer tagPointer = new TagTreePointer(pdfDocument);
-        tagPointer.addTag(PdfName.Figure);
+        tagPointer.addTag(PdfName.Figure.getValue());
         tagPointer.getProperties().setAlternateDescription("The green star.");
         tagPointer.setPageForTagging(firstPage); // it is important to set the page at which new content will be tagged
 
         canvas.openTag(tagPointer.getTagReference());
-        drawStar(canvas, 450, 745, Color.GREEN);
+        drawStar(canvas, 450, 745, ColorConstants.GREEN);
         canvas.closeTag();
 
 
         // We can change the position of the existing tags in the tag structure.
         tagPointer.moveToParent();
         TagTreePointer newPositionOfStar = new TagTreePointer(pdfDocument);
-        newPositionOfStar.moveToKid(PdfName.Sect);
+        newPositionOfStar.moveToKid(PdfName.Sect.getValue());
         int indexOfTheGreenStarTag = 2;
         // tagPointer points at the parent of the green star tag
         tagPointer.relocateKid(indexOfTheGreenStarTag, newPositionOfStar);
 
         // Using the relocateKid method, we can even change the order of the same parent's kids.
         // This could be used to change for example reading order.
-        tagPointer.moveToRoot().moveToKid(PdfName.Sect); // now both tagPointer and newPositionOfStar point at the same tag
+        tagPointer.moveToRoot().moveToKid(PdfName.Sect.getValue()); // now both tagPointer and newPositionOfStar point at the same tag
         newPositionOfStar.setNextNewKidIndex(0); // next added tag to this tag pointer will be added at the 0 position
         indexOfTheGreenStarTag = 2;
         tagPointer.relocateKid(indexOfTheGreenStarTag, newPositionOfStar);
@@ -230,13 +224,13 @@ public class TaggingSamples extends ExtendedITextTest {
         document.add(new AreaBreak(AreaBreakType.LAST_PAGE));
 
         Table table = new Table(2);
-        table.addCell(new Cell().add("Created as a sample document.").setBorder(null));
-        table.addCell(new Cell().add("30.03.2016").setBorder(null));
+        table.addCell(new Cell().add(new Paragraph("Created as a sample document.")).setBorder(null));
+        table.addCell(new Cell().add(new Paragraph("30.03.2016")).setBorder(null));
         table.setFixedPosition(40, 150, 500);
 
         // This marks the whole table contents as an Artifact.
         // NOTE: Only content that is already added before this call will be marked as Artifact. New content will be tagged, unless you make this call again.
-        table.setRole(PdfName.Artifact);
+        table.getAccessibilityProperties().setRole(PdfName.Artifact.getValue());
         document.add(table);
 
         document.close();

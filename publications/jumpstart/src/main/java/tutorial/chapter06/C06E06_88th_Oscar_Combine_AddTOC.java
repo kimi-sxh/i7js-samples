@@ -3,25 +3,24 @@
  */
 package tutorial.chapter06;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.action.PdfAction;
 import com.itextpdf.kernel.pdf.canvas.draw.DottedLine;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.Property;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Tab;
 import com.itextpdf.layout.element.TabStop;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.property.TabAlignment;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.Property;
+import com.itextpdf.layout.properties.TabAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
 
-@WrapToTest
 public class C06E06_88th_Oscar_Combine_AddTOC {
     public static final String SRC1 = "src/main/resources/pdf/88th_noms_announcement.pdf";
     public static final String SRC2 = "src/main/resources/pdf/oscars_movies_checklist_2016.pdf";
@@ -63,7 +62,7 @@ public class C06E06_88th_Oscar_Combine_AddTOC {
 
             //Overwrite page number
             Text text = new Text(String.format("Page %d", pdfDoc.getNumberOfPages() - 1));
-            text.setBackgroundColor(Color.WHITE);
+            text.setBackgroundColor(ColorConstants.WHITE);
             document.add(new Paragraph(text).setFixedPosition(
                     pdfDoc.getNumberOfPages(), 549, 742, 100));
 

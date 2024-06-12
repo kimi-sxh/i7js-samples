@@ -11,15 +11,15 @@
  */
 package com.itextpdf.samples.sandbox.tables;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -40,38 +40,38 @@ public class SimpleTable10 extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(5);
-        Cell sn = new Cell(2, 1).add("S/N");
-        sn.setBackgroundColor(Color.YELLOW);
+        Cell sn = new Cell(2, 1).add(new Paragraph("S/N"));
+        sn.setBackgroundColor(ColorConstants.YELLOW);
         table.addCell(sn);
-        Cell name = new Cell(1, 3).add("Name");
-        name.setBackgroundColor(Color.CYAN);
+        Cell name = new Cell(1, 3).add(new Paragraph("Name"));
+        name.setBackgroundColor(ColorConstants.CYAN);
         table.addCell(name);
-        Cell age = new Cell(2, 1).add("Age");
-        age.setBackgroundColor(Color.GRAY);
+        Cell age = new Cell(2, 1).add(new Paragraph("Age"));
+        age.setBackgroundColor(ColorConstants.GRAY);
         table.addCell(age);
-        Cell surname = new Cell().add("SURNAME");
-        surname.setBackgroundColor(Color.BLUE);
+        Cell surname = new Cell().add(new Paragraph("SURNAME"));
+        surname.setBackgroundColor(ColorConstants.BLUE);
         table.addCell(surname);
-        Cell firstname = new Cell().add("FIRST NAME");
-        firstname.setBackgroundColor(Color.RED);
+        Cell firstname = new Cell().add(new Paragraph("FIRST NAME"));
+        firstname.setBackgroundColor(ColorConstants.RED);
         table.addCell(firstname);
-        Cell middlename = new Cell().add("MIDDLE NAME");
-        middlename.setBackgroundColor(Color.GREEN);
+        Cell middlename = new Cell().add(new Paragraph("MIDDLE NAME"));
+        middlename.setBackgroundColor(ColorConstants.GREEN);
         table.addCell(middlename);
-        Cell f1 = new Cell().add("1");
-        f1.setBackgroundColor(Color.PINK);
+        Cell f1 = new Cell().add(new Paragraph("1"));
+        f1.setBackgroundColor(ColorConstants.PINK);
         table.addCell(f1);
-        Cell f2 = new Cell().add("James");
-        f2.setBackgroundColor(Color.MAGENTA);
+        Cell f2 = new Cell().add(new Paragraph("James"));
+        f2.setBackgroundColor(ColorConstants.MAGENTA);
         table.addCell(f2);
-        Cell f3 = new Cell().add("Fish");
-        f3.setBackgroundColor(Color.ORANGE);
+        Cell f3 = new Cell().add(new Paragraph("Fish"));
+        f3.setBackgroundColor(ColorConstants.ORANGE);
         table.addCell(f3);
-        Cell f4 = new Cell().add("Stone");
-        f4.setBackgroundColor(Color.DARK_GRAY);
+        Cell f4 = new Cell().add(new Paragraph("Stone"));
+        f4.setBackgroundColor(ColorConstants.DARK_GRAY);
         table.addCell(f4);
-        Cell f5 = new Cell().add("17");
-        f5.setBackgroundColor(Color.LIGHT_GRAY);
+        Cell f5 = new Cell().add(new Paragraph("17"));
+        f5.setBackgroundColor(ColorConstants.LIGHT_GRAY);
         table.addCell(f5);
         doc.add(table);
 

@@ -19,14 +19,14 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -51,13 +51,13 @@ public class DiagonalCell extends GenericTest {
         cell.setNextRenderer(new DiagonalCellRenderer(cell, "Gravity", "Occ"));
         table.addCell(cell.setHeight(30));
 
-        table.addCell(new Cell().add("1").setHeight(30));
-        table.addCell(new Cell().add("2").setHeight(30));
-        table.addCell(new Cell().add("3").setHeight(30));
-        table.addCell(new Cell().add("4").setHeight(30));
-        table.addCell(new Cell().add("5").setHeight(30));
+        table.addCell(new Cell().add(new Paragraph("1")).setHeight(30));
+        table.addCell(new Cell().add(new Paragraph("2")).setHeight(30));
+        table.addCell(new Cell().add(new Paragraph("3")).setHeight(30));
+        table.addCell(new Cell().add(new Paragraph("4")).setHeight(30));
+        table.addCell(new Cell().add(new Paragraph("5")).setHeight(30));
         for (int i = 0; i < 5; ) {
-            table.addCell(new Cell().add(String.valueOf(++i)).setHeight(30));
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(++i))).setHeight(30));
             table.addCell(new Cell().setHeight(30));
             table.addCell(new Cell().setHeight(30));
             table.addCell(new Cell().setHeight(30));
@@ -91,7 +91,7 @@ public class DiagonalCell extends GenericTest {
                     .lineTo(rect.getRight(), rect.getBottom())
                     .stroke()
                     .restoreState();
-            new Canvas(canvas, drawContext.getDocument(), getOccupiedAreaBBox())
+            new Canvas(canvas, getOccupiedAreaBBox())
                     .showTextAligned(textTopRight, rect.getRight() - 2, rect.getTop() - 2, TextAlignment.RIGHT, VerticalAlignment.TOP, 0)
                     .showTextAligned(textBottomLeft, rect.getLeft() + 2, rect.getBottom() + 2, TextAlignment.LEFT);
         }

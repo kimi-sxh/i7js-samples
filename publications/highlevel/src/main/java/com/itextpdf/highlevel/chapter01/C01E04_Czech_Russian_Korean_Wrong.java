@@ -4,14 +4,13 @@
  */
 package com.itextpdf.highlevel.chapter01;
 
-import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C01E04_Czech_Russian_Korean_Wrong {
     
     public static final String DEST = "results/chapter01/czech_russian_korean_wrong.pdf";
@@ -50,7 +48,7 @@ public class C01E04_Czech_Russian_Korean_Wrong {
         Document document = new Document(pdf);
         
         // Add content
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
         document.add(new Paragraph().setFont(font)
                 .add(CZECH).add(" by Robert Louis Stevenson"));
         document.add(new Paragraph().setFont(font)

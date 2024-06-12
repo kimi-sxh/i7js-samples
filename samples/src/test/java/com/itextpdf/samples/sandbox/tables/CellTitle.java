@@ -12,7 +12,7 @@
 
 package com.itextpdf.samples.sandbox.tables;
 
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
@@ -25,10 +25,9 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
+import org.junit.experimental.categories.Category;
 
 import java.io.File;
-
-import org.junit.experimental.categories.Category;
 
 @Category(SampleTest.class)
 public class CellTitle extends GenericTest {
@@ -41,7 +40,7 @@ public class CellTitle extends GenericTest {
     }
 
     public Cell getCell(String content, String title) {
-        Cell cell = new Cell().add(content);
+        Cell cell = new Cell().add(new Paragraph(content));
         cell.setNextRenderer(new CellTitleRenderer(cell, title));
         cell.setPaddingTop(8).setPaddingBottom(8);
         return cell;
@@ -76,9 +75,9 @@ public class CellTitle extends GenericTest {
             // create above canvas in order to draw above borders (notice that we draw borders using TableRenderer)
             PdfCanvas aboveCanvas = new PdfCanvas(drawContext.getDocument().getLastPage().newContentStreamAfter(),
                     drawContext.getDocument().getLastPage().getResources(), drawContext.getDocument());
-            new Canvas(aboveCanvas, drawContext.getDocument(), getOccupiedAreaBBox())
+            new Canvas(aboveCanvas, getOccupiedAreaBBox())
                     .add(new Paragraph(title)
-                            .setBackgroundColor(Color.LIGHT_GRAY)
+                            .setBackgroundColor(ColorConstants.LIGHT_GRAY)
                             .setFixedPosition(getOccupiedAreaBBox().getLeft() + 5, getOccupiedAreaBBox().getTop() - 8, 30));
         }
     }

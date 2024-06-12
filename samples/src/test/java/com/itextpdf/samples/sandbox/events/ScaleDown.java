@@ -51,7 +51,7 @@ public class ScaleDown extends GenericTest {
             eventHandler.setPageDict(srcDoc.getPage(p).getPdfObject());
             canvas = new PdfCanvas(pdfDoc.addNewPage());
             page = srcDoc.getPage(p).copyAsFormXObject(pdfDoc);
-            canvas.addXObject(page, scale, 0f, 0f, scale, 0f, 0f);
+            canvas.addXObjectWithTransformationMatrix(page, scale, 0f, 0f, scale, 0f, 0f);
         }
 
         pdfDoc.close();

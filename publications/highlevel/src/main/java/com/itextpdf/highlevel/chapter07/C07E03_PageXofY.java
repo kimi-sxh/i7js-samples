@@ -4,8 +4,7 @@
  */
 package com.itextpdf.highlevel.chapter07;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -22,8 +21,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.hyphenation.HyphenationConfig;
-import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.test.annotations.WrapToTest;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,7 +31,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C07E03_PageXofY {
     public static final String SRC = "src/main/resources/txt/jekyll_hyde.txt";
     public static final String DEST = "results/chapter07/jekyll_hydeV2.pdf";
@@ -53,8 +50,8 @@ public class C07E03_PageXofY {
         pdf.addEventHandler(PdfDocumentEvent.END_PAGE, event);
         // Initialize document
         Document document = new Document(pdf);
-        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         document.setTextAlignment(TextAlignment.JUSTIFIED)
             .setHyphenation(new HyphenationConfig("en", "uk", 3, 3));
         
@@ -100,11 +97,13 @@ public class C07E03_PageXofY {
             PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
             PdfDocument pdf = docEvent.getDocument();
             PdfPage page = docEvent.getPage();
-            if (pdf.getPageNumber(page) == 1) return;
+            if (pdf.getPageNumber(page) == 1) {
+                return;
+            }
             Rectangle pageSize = page.getPageSize();
             PdfCanvas pdfCanvas = new PdfCanvas(
                 page.getLastContentStream(), page.getResources(), pdf);
-            Canvas canvas = new Canvas(pdfCanvas, pdf, pageSize);
+            Canvas canvas = new Canvas(pdfCanvas, pageSize);
             canvas.showTextAligned(header,
                 pageSize.getWidth() / 2,
                 pageSize.getTop() - 30, TextAlignment.CENTER);
@@ -133,11 +132,11 @@ public class C07E03_PageXofY {
             Rectangle pageSize = page.getPageSize();
             PdfCanvas pdfCanvas = new PdfCanvas(
                 page.getLastContentStream(), page.getResources(), pdf);
-            Canvas canvas = new Canvas(pdfCanvas, pdf, pageSize);
+            Canvas canvas = new Canvas(pdfCanvas, pageSize);
             Paragraph p = new Paragraph()
                 .add("Page ").add(String.valueOf(pageNumber)).add(" of");
             canvas.showTextAligned(p, x, y, TextAlignment.RIGHT);
-            pdfCanvas.addXObject(placeholder, x + space, y - descent);
+            pdfCanvas.addXObjectAt(placeholder, x + space, y - descent);
             pdfCanvas.release();
         }
         

@@ -3,9 +3,10 @@
  */
 package tutorial.chapter03;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.color.DeviceCmyk;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -14,15 +15,15 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.border.SolidBorder;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +32,6 @@ import java.util.StringTokenizer;
 /**
  * Simple table renderer example.
  */
-@WrapToTest
 public class C03E02_PremierLeague {
 
     public static final String DATA = "src/main/resources/data/premier_league.csv";
@@ -57,10 +57,10 @@ public class C03E02_PremierLeague {
         // Initialize document
         Document document = new Document(pdf, ps);
 
-        PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
-        PdfFont bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
         Table table = new Table(new float[]{1.5f, 7, 2, 2, 2, 2, 3, 4, 4, 2});
-        table.setWidthPercent(100)
+        table.setWidth(UnitValue.createPercentValue(100))
                 .setTextAlignment(TextAlignment.CENTER)
                 .setHorizontalAlignment(HorizontalAlignment.CENTER);
 
@@ -91,7 +91,7 @@ public class C03E02_PremierLeague {
             } else {
                 columnNumber++;
                 Cell cell = new Cell().add(new Paragraph(tokenizer.nextToken()));
-                cell.setFont(font).setBorder(new SolidBorder(Color.BLACK, 0.5f));
+                cell.setFont(font).setBorder(new SolidBorder(ColorConstants.BLACK, 0.5f));
                 switch (columnNumber) {
                     case 4:
                         cell.setBackgroundColor(greenColor);

@@ -27,6 +27,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.pdfa.PdfADocument;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -67,7 +68,7 @@ public class PdfA1a extends GenericTest {
         template = new PdfFormXObject(new Rectangle(795, 575, 30, 30));
         PdfCanvas canvas = new PdfCanvas(template, pdfDoc);
         total = new Image(template);
-        total.setRole(PdfName.Artifact);
+        total.getAccessibilityProperties().setRole(PdfName.Artifact.getValue());
 
         pdfDoc.addEventHandler(PdfDocumentEvent.END_PAGE, new HeaderHandler());
         pdfDoc.getCatalog().setLang(new PdfString("en-us"));
@@ -75,7 +76,7 @@ public class PdfA1a extends GenericTest {
         parameters.put(PdfName.ModDate, new PdfDate().getPdfObject());
 
         Table table = new Table(new float[]{4, 1, 3, 4, 3, 3, 3, 3, 1});
-        table.setWidthPercent(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         BufferedReader br = new BufferedReader(new FileReader(DATA));
         String line = br.readLine();
         process(table, line, bold, 10, true);
@@ -123,7 +124,7 @@ public class PdfA1a extends GenericTest {
             canvas.showText(String.format("Page %d of", pageNum));
             canvas.endText();
             canvas.stroke();
-            canvas.addXObject(template, 0, 0);
+            canvas.addXObjectAt(template, 0, 0);
             canvas.endMarkedContent();
             canvas.release();
         }

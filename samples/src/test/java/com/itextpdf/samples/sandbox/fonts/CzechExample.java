@@ -38,10 +38,10 @@ public class CzechExample extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
-        PdfFont f1 = PdfFontFactory.createFont(FONT, "Cp1250", true);
+        PdfFont f1 = PdfFontFactory.createFont(FONT, "Cp1250", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Paragraph p1 = new Paragraph("Testing of letters \u010c,\u0106,\u0160,\u017d,\u0110").setFont(f1);
         doc.add(p1);
-        PdfFont f2 = PdfFontFactory.createFont(FONT, "Identity-H", true);
+        PdfFont f2 = PdfFontFactory.createFont(FONT, "Identity-H", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         Paragraph p2 = new Paragraph("Testing of letters \u010c,\u0106,\u0160,\u017d,\u0110").setFont(f2);
         doc.add(p2);
         doc.close();

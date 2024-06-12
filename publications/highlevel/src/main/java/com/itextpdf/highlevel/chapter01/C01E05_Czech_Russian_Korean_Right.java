@@ -11,7 +11,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.test.annotations.WrapToTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.io.IOException;
 /**
  * @author Bruno Lowagie (iText Software)
  */
-@WrapToTest
 public class C01E05_Czech_Russian_Korean_Right {
     
     public static final String DEST = "results/chapter01/czech_russian_korean.pdf";
@@ -53,13 +51,13 @@ public class C01E05_Czech_Russian_Korean_Right {
         Document document = new Document(pdf);
         
         // Add content
-        PdfFont font1250 = PdfFontFactory.createFont(FONT, PdfEncodings.CP1250, true);
+        PdfFont font1250 = PdfFontFactory.createFont(FONT, PdfEncodings.CP1250, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph().setFont(font1250)
                 .add(CZECH).add(" by Robert Louis Stevenson"));
-        PdfFont font1251 = PdfFontFactory.createFont(FONT, "Cp1251", true);
+        PdfFont font1251 = PdfFontFactory.createFont(FONT, "Cp1251", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph().setFont(font1251)
                 .add(RUSSIAN).add(" by Robert Louis Stevenson"));
-        PdfFont fontUnicode = PdfFontFactory.createFont(HCRBATANG, PdfEncodings.IDENTITY_H, true);
+        PdfFont fontUnicode = PdfFontFactory.createFont(HCRBATANG, PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph().setFont(fontUnicode)
                 .add(KOREAN).add(" by Robert Louis Stevenson"));
         

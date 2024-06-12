@@ -12,7 +12,7 @@
 package com.itextpdf.samples.sandbox.annotations;
 
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
@@ -22,7 +22,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
-
 import org.junit.experimental.categories.Category;
 
 import java.io.File;
@@ -49,7 +48,7 @@ public class AddPointerAnnotation extends GenericTest {
         PdfLineAnnotation lineAnnotation = new PdfLineAnnotation(rect, new float[]{225, 355, 470, 590});
         lineAnnotation.setTitle(new PdfString("You are here:"));
         lineAnnotation.setContents("Cambridge Innovation Center");
-        lineAnnotation.setColor(Color.RED);
+        lineAnnotation.setColor(ColorConstants.RED);
         lineAnnotation.setFlag(PdfAnnotation.PRINT);
 
         PdfDictionary borderStyle = new PdfDictionary();

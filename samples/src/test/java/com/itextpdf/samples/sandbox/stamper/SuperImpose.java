@@ -51,7 +51,7 @@ public class SuperImpose extends GenericTest {
         for (String path : EXTRA) {
             srcDoc = new PdfDocument(new PdfReader(path));
             page = srcDoc.getFirstPage().copyAsFormXObject(pdfDoc);
-            canvas.addXObject(page, 0, 0);
+            canvas.addXObjectAt(page, 0, 0);
             srcDoc.close();
         }
         pdfDoc.close();

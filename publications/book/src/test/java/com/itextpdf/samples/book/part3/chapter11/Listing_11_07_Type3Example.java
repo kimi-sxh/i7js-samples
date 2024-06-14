@@ -21,6 +21,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+//type3的例子
 @Category(SampleTest.class)
 public class Listing_11_07_Type3Example extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part3/chapter11/Listing_11_07_Type3Example.pdf";

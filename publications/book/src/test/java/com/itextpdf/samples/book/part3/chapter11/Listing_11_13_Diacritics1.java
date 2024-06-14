@@ -26,6 +26,7 @@ import org.junit.experimental.categories.Category;
 import java.awt.*;
 import java.io.IOException;
 
+//变音符的例子
 @Category(SampleTest.class)
 public class Listing_11_13_Diacritics1 extends GenericTest {
     public static final String DEST =

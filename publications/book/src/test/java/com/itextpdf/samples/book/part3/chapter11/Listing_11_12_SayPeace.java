@@ -23,7 +23,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.properties.BaseDirection;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.licensekey.LicenseKey;
+import com.itextpdf.licensing.base.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -34,6 +34,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -54,7 +55,7 @@ public class Listing_11_12_SayPeace extends GenericTest {
     @Override
     protected void manipulatePdf(String dest) throws Exception {
         //Load the license file to use advanced typography features
-        LicenseKey.loadLicenseFile(System.getenv("ITEXT7_LICENSEKEY") + "/itextkey-typography.xml");
+        LicenseKey.loadLicenseFile(new File("./target/test-classes/license/2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4.json"));
         //Initialize document
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document document = new Document(pdfDoc, PageSize.A4);

@@ -45,7 +45,7 @@ public class Listing_11_14_Diacritics2 extends GenericTest {
         f.getGlyph('\u00a8').setXAdvance((short)-450);
         doc.add(new Paragraph(MOVIE).setFont(f));
         f = PdfFontFactory.createFont(FONTS[1], PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
-        f.getGlyph('\u00a8').setXAdvance((short)-600);
+        f.getGlyph('\u00a8').setXAdvance((short)-900);
         doc.add(new Paragraph(MOVIE).setFont(f));
         doc.close();
     }

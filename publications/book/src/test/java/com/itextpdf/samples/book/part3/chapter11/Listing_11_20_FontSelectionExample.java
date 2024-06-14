@@ -7,17 +7,26 @@
 
 package com.itextpdf.samples.book.part3.chapter11;
 
+import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.font.FontProvider;
+import com.itextpdf.layout.font.FontSelector;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.Ignore;
 import org.junit.experimental.categories.Category;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Ignore("Font selector not implemented")
 @Category(SampleTest.class)
@@ -38,15 +47,31 @@ public class Listing_11_20_FontSelectionExample extends GenericTest {
     protected void manipulatePdf(String dest) throws Exception {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
-        // FontSelector selector = new FontSelector();
-        PdfFont font1 = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
-        // f1.setColor(BaseColor.BLUE); // 12
-        PdfFont font2 = PdfFontFactory.createFont(FontProgramFactory.createFont("MSung-Light"), "UniCNS-UCS2-H",  PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
-        // f2.setColor(BaseColor.RED);
-        // selector.addFont(f1);
-        // selector.addFont(f2);
-        // Paragraph ph = selector.process(TEXT);
-        // doc.add(ph);
+        FontProgram font1 = FontProgramFactory.createFont(StandardFonts.TIMES_ROMAN);
+        //doc.setFont();
+        List<PdfFont> substitutionFonts = new ArrayList<>();
+        PdfFont msung = PdfFontFactory.createFont("MSung-Light", "UniCNS-UCS2-H", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont roman = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+        substitutionFonts.add(roman);
+        substitutionFonts.add(msung);
+
+        char[] cc = TEXT.toCharArray();
+        Paragraph paragraph = new Paragraph().setMarginTop(0.0f).setMarginBottom(0.0f);
+        for(int i=0;i<cc.length;i++){
+            for(int j=0;j< substitutionFonts.size();j++) {
+                if('\n' == cc[i]) {//换行
+                    doc.add(paragraph);
+                    paragraph = new Paragraph().setMarginTop(0.0f).setMarginBottom(0.0f);
+                }
+                if(substitutionFonts.get(j).containsGlyph(cc[i])) {
+                    paragraph.add(new Text(String.valueOf(cc[i]))
+                            .setFont(substitutionFonts.get(j))
+                            .setFontColor(j==0?ColorConstants.RED:ColorConstants.BLUE));
+                    break;
+                }
+            }
+        }
+         doc.add(paragraph);
         // step 5: we close the document
         doc.close();
     }

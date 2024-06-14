@@ -16,10 +16,13 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.BaseDirection;
-import com.itextpdf.licensekey.LicenseKey;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.licensing.base.LicenseKey;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
+
+import java.io.File;
 
 @Category(SampleTest.class)
 public class Listing_11_11_RightToLeftExample extends GenericTest {
@@ -37,7 +40,8 @@ public class Listing_11_11_RightToLeftExample extends GenericTest {
     @Override
     protected void manipulatePdf(String dest) throws Exception {
         //Load the license file to use advanced typography features
-        LicenseKey.loadLicenseFile(System.getenv("ITEXT7_LICENSEKEY") + "/itextkey-typography.xml");
+        LicenseKey.loadLicenseFile(new File("./target/test-classes/license/2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4.json"));
+        //LicenseKey.loadLicenseFile(System.getenv("ITEXT7_LICENSEKEY") + "/itextkey-typography.xml");
         //Initialize document
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document document = new Document(pdfDoc, PageSize.A4);
@@ -45,7 +49,7 @@ public class Listing_11_11_RightToLeftExample extends GenericTest {
         PdfFont font = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
         document.add(new Paragraph("Movie title: Nina's Tragedies"));
         document.add(new Paragraph("directed by Savi Gabizon"));
-        document.add(new Paragraph(MOVIE).setFont(font).setFontSize(14).setBaseDirection(BaseDirection.RIGHT_TO_LEFT));
+        document.add(new Paragraph(MOVIE).setFont(font).setFontSize(14).setTextAlignment(TextAlignment.RIGHT).setBaseDirection(BaseDirection.RIGHT_TO_LEFT));
 
         //Close document
         document.close();

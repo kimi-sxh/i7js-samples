@@ -34,6 +34,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.itextpdf.licensing</groupId>
+            <artifactId>licensing-base</artifactId>
+            <version>4.1.4</version>
+        </dependency>
+        <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>barcodes</artifactId>
             <version>${project.version}</version>
@@ -54,12 +59,19 @@
             <artifactId>samples</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>itext-licensekey</artifactId>
+                    <groupId>com.itextpdf</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-licensekey</artifactId>
-            <version>${licensekey.version}</version>
-        </dependency>
+        <!-- 7.2.x以下用 -->
+<!--        <dependency>-->
+<!--            <groupId>com.itextpdf</groupId>-->
+<!--            <artifactId>itext-licensekey</artifactId>-->
+<!--            <version>${licensekey.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>font-asian</artifactId>

@@ -37,6 +37,7 @@ import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Set;
@@ -51,6 +52,9 @@ public class Listing_05_19_MovieHistory2 extends GenericTest {
                     "Nineties", "Twenty-first Century"};
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_05_19_MovieHistory2().manipulatePdf(DEST);
     }
 
@@ -109,6 +113,7 @@ public class Listing_05_19_MovieHistory2 extends GenericTest {
                 secondTitle = new Div().add(new Paragraph(
                         String.format("The year %d", movie.getYear())).setFont(font).setFontSize(18));
                 secondTitle.setProperty(Property.DESTINATION, String.valueOf(movie.getYear()));
+                //画线
                 secondTitle.setNextRenderer(new SectionRenderer(secondTitle, 2));
                 secondLevel = firstLevel.addOutline(String.valueOf(movie.getYear()));
                 secondLevel.addDestination(PdfDestination.makeDestination(new PdfString(String.valueOf(movie.getYear()))));
@@ -119,13 +124,13 @@ public class Listing_05_19_MovieHistory2 extends GenericTest {
                 firstTitle.add(secondTitle);
 
             }
-            // subsection
+
+            //子章节 电影的具体信息
             thirdTitle = new Div().add(new Paragraph(movie.getMovieTitle()).setFont(font).setFontSize(14).setMarginLeft(20));
             thirdTitle.setNextRenderer(new SectionRenderer(thirdTitle, 3));
             thirdTitle.setProperty(Property.DESTINATION, movie.getMovieTitle());
             thirdLevel = secondLevel.addOutline(movie.getMovieTitle());
             thirdLevel.addDestination(PdfDestination.makeDestination(new PdfString(movie.getMovieTitle())));
-
 
             thirdTitle.add(new Paragraph("Duration: " + movie.getDuration()).setFont(bold));
             thirdTitle.add(new Paragraph("Director(s):").setFont(bold));

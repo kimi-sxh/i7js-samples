@@ -1,0 +1,237 @@
+[
+  {
+    "product": "itext-core",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 8,
+      "minor": 0
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "OHYXftlIcQwElee1fidR700C2HNI/4YLdEbI87qmlPF+lNrchI3p+pfxvIMd9dsNwQSyR7taDDZ+I5f/9wKx2YGVYqawaGFIfCjEySI/PepbyjwzMgOLvqlHCem6B8MIzitKj4iJ5XFsAUtOUbm7UQluvSYoNntLnW2pxX4aNciI5+e5RyVi+qVPbJMky5aOS+Y3jlk/+8G6Vl/GyWBQAxQ8bpzR7JtLb8ZJN4HQYlLQyQicRUt8H4ZeurbAclqWhTlwFleLuSS3PnBbFs4KbZ0hatNNFWoBSoKCoyUU9MDjf2lBynWvSgttGtCfVwY8I9ri52XSxaBuQmr2E04lKQMHp1Y3+EgmjGnbUZg+6/KQ1lKQuYixi4YaPKoPIG2COzViUrL5zVY6Idvc7cFdMJCFHSFHfw2AjUHJvaQpPeaGFwuZsPCVB5r4rXQEaYTGd0BRQLBlWOw5CfadAWMbccxQBwvo2ThonzhY3HGVbmuphebQEGQXeVxBtHbh2TkrzkUDcdF578IsI+JKUgOQIJmt/TImwv1GmXsNb0OjtXIHFAzQh0gtq5Pi31iXb2Gr4fkJmSynMFLSnkAzl5Hd3JMu4q7oHsmgvvCA8Ud4S4eV7YwEn31R/hvH/F0k6JellrJKnNBUEnjerYQAUp3EatE7bGP3shyMy2TYjEtcPCk="
+  },
+  {
+    "product": "pdfXfa",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 4
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "Az6zlbnZYRT0UPfOcyIhccOBl74wlwE13yhgEEfPs8UwBfTUNpbiBarJlokGKxTXEwk4/9ACIw/bjzDQLp4bRU+0VhCQVewfYeiDmd2OQNJlJzqw24TTcOh1/Q5zoBTx65bdIEyBhBBLD6aef6FtE5Lt/x57olUoLAv60LaW9GSPHFA69cxLsBeElKPKZ6GhGttr5lODvZ+cacnAob6FyR6hrfEolWIhk55CeasyIyHiHYVNt0Y22TP0CFUVsZVoJQrCwxCWu+OL2PB+eaU9nM3TbrbwRd0sHbhcBovwgjWFC+LC18da+WBN7TRF39L4rtFA2Q4YHS58s+aAKdm1bZqtyS0BeJtb9r4eT0Eumt+2fwrIHi5tuE99ZlMaThuhKHmB1XyWYlSTnXIgqAOiRiSuBF7Fj+ZhXmYoyvJrunXPYS8S3DoRiGO8Mw3q54nu0Y5mttNs/Q0kp3jX3/koprM3ax4B9sA2gd2ks3iOcy4VLMkokKf6Z6YfBU1sU6jLwTgobpJmB6dfrK9dK7Kh9d68ElhG+tsoRsjIoSD3Zk9vDR3+ql77WUaO/hGA9tB8c7/PhGvSLYLgm40mc0p/7LmRAhhKQYamBxoXGg7E7oYsSPwy1OahU+9yhyuGKbCdmXhm9rByH1de6OZ3lLdVe6OJrJmcYKzoABkhS51NIpk="
+  },
+  {
+    "product": "pdfSweep",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 4
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "e+/KC0WWIplo8EstPX+LGv1/YGNjX2XA1n2Ycqn77sIlKkmKLGss0b6XVwZfBbulVC2iG7VB8E9DhCJu0ZKg+UNlQWj7pFb41DLvGLFq4R06QBBwolp4qnMqCtdjkuL91rz0bmRwrKdm27+VQTtt5uBukIdfgKCLVgWaoV3x96ZIEar6LWRukLXGj21E8c+DYi4Ab2vHEJVd01rGrhhMjEdZXbMlYPqf7NJv6BRXvi7fQpw37gLcZ9I3B8IqfurFC1YGEFyDr4BHGdlvAyM/53FycXpFtjkpGfg1+fXDiNQaeI9pXXRgMkwi54JIQxGRp/OdXIhBTCh3YH+9aWDaC9UcYlOCP5uiBlOqCTT1cNJWYunie4TqbnGf1hidt6W/AEqlhKOacufkXQKHkbWgP6lHRR0B6QGy4+s6NEBta/yBHFR0Ma3/DTxyzdOgLeZRuwaptPaKi1diRnyqxntMjKH49c9nIZZ83PctXJ71ryq0Vyx5NomxcFO0WZvROiSVzUfPvTgEmJRmTU4HZ2vMm4l7MdjwLFIWIt3jUwvhIAXh4jbzTV8uWES0Fjs5lakkpJ0qpsrgWltTraNfdzc1BV4KRJungqvQRrsTSwCdqW6BW5wyCLDyvL/mgQTCvdGdCUdq3Yhsim0S8o9GJ9hOxHBMX80oeGBUxs+ySFgDGJw="
+  },
+  {
+    "product": "pdfRender",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 2
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "UKAPhEdmZzWt+BEpQYXd8z6DUERqJng159LZXk/WS3Lwha0NXqeWgI0xlXRRppfNmgb9GgJxBUEj0Om9wNmzkTNkaRw4G8XUaBjO3I8gkWqiXQtOTADQK5EnYrATx0Edve21uxEncr/rmBoZt/mOcP/E9VjfPR9y2ms8K/+ns1ss4Buq4ZXR79Xd4NhyDvw62ufoQo5t+yCjrnbBiU1FJHEa7QZIvP+wHvlBSCXl5uxIZNd0qGu8AHmWr87p/Cwnc3x87kV1GCCMtdoMI8fhhq2/6NunO5ilbfo8IFM9nAgLlDd6rl5kBJAcbrpUz4lFfCo7+mmbOqCTOkFRtquWYl6k/0McDxYGKijjIUFnxzikosb9c6DvYH7V/XQCQl0I8P3KxU7MEhliH51JonAszFLcWGRLsc7HfESSfy8eXostAQLaislhyX43SjQT/xT1diRgTOYYAklO1hlKqrfsahnZBuTJcGrbFPV1VLFpWUBWRcia6wPZurhVo55pHq/puktgt6dpVGLtUg5aNCihAperM7wBXVywn+pkukj8r71kLoVVzMZmQHoJOV8xJzd7PuItFh8tpvNuotri/rTs2vqSPBevfTUt2vTDupeJpmEFEo5e9Nk+kGFVK8GgIb0KbfjlZL2nyws0s9hZDnfNmKE1JLZtsdC8MmeSJtFK3K4="
+  },
+  {
+    "product": "pdfOcr-tesseract4",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 3
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "HQbOJcoZtkqaqG/pgvZLbkFt7CBkR7HF3gUSiCtknQolXN3rQyoDmD4iiy8D9RSyljBFIwMCC/jKxNPKYvB5UgWg12k/YQ/mzpaJSC4QhlJdVKeBanpek1355B3V4aa65/pdRkLm7kTQSAEfexwJIBc0ia/fuHad46goX5VEiZIMa/9mEa5Va2DtVKor2IOaJsIAOpL9m9HLCECWOHVy+s6vJZo+XtyMGoIuTIYednSK1jieT84dgOPWKmvzwlF79juJDoAxAc/61+bpWXSvXRQH55GjH4M+DczZJFRkn1cKj8TAFsitGJlKBdgHxvb2Y+Q7Xth0kCD0YETD4CYiJuxQXi7HP/wwhBn8/OtiYbtcpbRPTzpv4Hvd0bXrnyi/AwXOd9lwTpUXtYi94A3h19O+qnZVE7ahEw2dP0cAPYDFRVpe4834KUI4ccmpFm/SuQjFQ63ChGmP6ovGI+Ymre/gMCeQ4TG9Hg0C+e5zGkbH3mhAZHGdEquDuviJ/Ue0MScANiSGiGTg5uTegs2GRDZO+yZNxYc+gP8ntwgDs/tMzTVKg83se7vIyrzmdPlfQviBZ6GjXALUM+7/+PahmfcshwH+msHZktRq7iO/nS2kwuvo3w7imt5GsfW0mzJfPFyv2pttitlnpenbU9uLZwHuyG/hb3j3V6SpO4O8BmI="
+  },
+  {
+    "product": "pdfOptimizer",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 3
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "Dyf1uxZNvxOu0mNsyOFQ6xVHagxWLKRkWDhtNJ9JdzNGkIp7qt27yNu5x9Jvpsse4NFYM5CPJo+bM5E2LIiR+1z7V6HciTvJZoi8dRaNw4FmWyOTXpM5lZvS/HI3dWS6HhUXmDITV853jcaq79zzcDPbQeX8G1rJXFQMlSabFRlzCs/xcWUpfmpAHrECg9+lbc3v9C4GLli8tMvmVDSX9n44WgIJoh2TbLKaFd4QicKyj/Dcu3ad663bA1B+L9z1nKEAzwrcYqEA48BwlgDfv2/ldmsNFKO8WP/4vGEJvCTDhDbaur8SKKN4VafjNcBKjwDLABM0Md27UfZSplRy/avukCDdOEsi4r0Q9BnBKZIR19XkyuTLip9aTjQmjkRTeUEehpqhX0Zho14FSWBsJYY6saQokmXx/bxkgM9c6yKAd+wFrwKIPgqJY6i1HbiAYn/L214k96AMlpz5RP5z1m5NaxAr2ggFFNfbCNyQLVdn4O9ZILp9Xr/2+3UdlQu9m6JykkzFUy5vykEgZy4s0qOrgUO1rnqOUYsFZ3U9tJ3fMIIa6h4cIrjrdLz1I3Moi+Y9t60nFIjGeo4zP+gz/v2jEtK+v48zZt2lL0XLuPLMW1+dSdx0pb65iMDahuJ3Xp3USdRXVWTT7oTXlT8gY7PvAQlJ6zSK56xb7HmFsEU="
+  },
+  {
+    "product": "pdfHtml",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 5
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "OVZL9G9XY0zJxFL4oWcqR7G+xmYPOIjDBhYsRYsXR1F+0UsBcU2DsMLbLn/vr72JbOeXZFuG5Yz7P4OWfgi2FI9sZHxfo8wBCVeJlJxQoAZlqJS/1n/Fe472/SVmdgLkcnSc9XC5xH9EgeJvtK55vz+9JMhFsvFhRbq/1OhU4JLl8OSkAIuq6qA87EKCCB0v/soWTTbjqkQhm9widiynmLXLjygA+eT4gBalaMYiajKS0L/Qhhvo7b2Nzu7C0wGe2YkM79aVwtoKWBJB0yazAdrl7V5nTkZlgpweksPkSfEnO0J1LsHbeKGnB6rZ88FtdKIddRfjJMvsr2I4HQh0FlEpoJdEYMpM2VWUKOYpRbb15ZFk8cmkF1OWSCIIshUMs7cwIvSlMXteaEtWRWiR1ytWbD2+6HswlxuvCEi9/lqYXj9w9TEPzXht9/PapnZqwnMHm+LPSYdvLWc38xXnweu/8m3PHqO8SNEiGmVH5il5IuNWfHsqc0t/21CXJph90VMwxQ+e6Y85HnSkIlGVWSL8XqVxe/cHEgSbEcG6EyCYP2cLjsge5tNoa+VUL7Zy1UXLLd3j3whLqLq93hfMKXVU2z7gbEbWrkjlb15Or7iBS5ELbhyqopx4gXRmQunWMWxp9eBSPqOsuB8V2pPrVwODUTmYqL+8KcpBt3pzOeU="
+  },
+  {
+    "product": "pdfCalligraph",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 4
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "FedMSEtUVHQtTntjn5gbGgsuXo4rcxR9MBBArERcC8sJ2hzJ+qFOD+z/bECS78IkaFglSH+rW75j86742MC4kdV7B4mTF0MBQ4goZwIN5onTWb+rpEWUzMIyw4ZxDA8KET+trXbUiDU71XXJhQ6SyrIxQcZlLxq+wG3/dnohpAYIG59exeyxxHnxGLDJ+jcfyNCigiGRggrHXLONyNUnavzA1xiT4yXvDRzrm5t1r6RmDY0r9eVZ3y6sYa4JHD3xmBl+xL0i16um7gva/d0jNeH/uk5z25w7wKabg2IZ4fABy2SMz6rwxmY7dTQW5VoVBQGt4lyWC2J0ZnBt3WN7qO7zNn9Y4rOW4lxRR2ozuWCDYzshgKnJrZZdNALe6X9VMORKZ2uRog+CSCJJk8/Jz7t8c28sl6V3iBrSquHfaQH+WeoC4H0w+UaDMXnzPSCuoyXhfrajH/1SNmPofThOpURqGwDHnW+7O1ZR148TsxEQqzKeF6E/+oOF/v6kU08A3AcjBhG+7/I3FKKPcykzFy/UezSB5YKpGsG6ac4q5hZlTK1L4eME/KrtsNFKQ3PkRB5D20LMXhWPqb70BWnXNjaMFQih97D5MXnmomYu/8HH89fuQu0IHoXURMBc6/5dHFtdfrraeNjCikqTjV/X1frIRRYIECzYmRRvt2DooMA="
+  },
+  {
+    "product": "pdfOffice",
+    "licensee": {
+      "company": "shenzhen fadada internet technology CO.LTD",
+      "name": "xiaohui su",
+      "email": "1289888752@qq.com"
+    },
+    "key": "2ab957fc9e2de841907f74b3407de4080b3fe9607ec5241c17b189c8889982f4",
+    "creationDate": "2024-06-14",
+    "expirationDate": "2024-07-15",
+    "onExpiration": "fail",
+    "platform": "any",
+    "licenseType": "trial",
+    "productVersion": {
+      "major": 2
+    },
+    "limits": {
+      "default": {
+        "limitType": "unlimited",
+        "sendEvents": false
+      }
+    },
+    "licenseVersion": "1.0.0",
+    "sendStatistics": "disabled",
+    "signature": "htqQLPcYavQlnSr6e5Ed0RgBUqV0ySK8MOG7NctssH0Qd1lb7Jqwxj3tGl7lsolKIZDTU39tjfftk+lxRtJbOVmrDqvFl7/HVPF+UtUXl57W6x14GzJ4tUmbrjA6S/NmX4ZpMIhfPKz9Gzt4wCqGqKk4qtxYeouDqtJy3Wk4aZPV/ZHXjy9RlHd7rTslgwF99FOfJFY+i1Qe9zZMPgL07o/OVw/diPgG/jtDCezMc52b6gYBLPLUj02pvr+prInn1Hf5HJC02r5MOImbyJwQVCRkdxCH+dxmNRDLlt68yXZDHekSCNhCUpBPUkPjzFZ1/kivQjcaMtGzFwSgty99rZuygzS7tc+bJ2AW4CBxqXDdGRFBUqggDuPPI8Jb8KqzUzGSFp+l6zWxshhFqkcu5IvaSP8EDlnPv1i0vhW4A7ee8+TL1ZFaoWE9kS1/R/qUuZ9ALdSaMwGDLneoMwG7o7OvG27lmgbuMUW/w0qYWyPdAGjieRCUbnMICthz9l17emhLx40ALttz9KzL8qbGt8gbvPg/1W+mx1rbQCdiv6zGOXZ7WMs9tvV1Yoo9lo1oHaP2E2Zd58xFhCSTzm4pAMbfbO1kYxrKuVcY+etohrJj5rzb4x5x5rXep/VfKYtjYJehCGAxzYZc594xBcsRBWJBT0YhMNINllKyWpzZ/i8="
+  }
+]

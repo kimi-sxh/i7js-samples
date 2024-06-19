@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+//合并后添加页码
 @Category(SampleTest.class)
 public class FillFlattenMerge3 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/reporting/fill_flatten_merge3.pdf";

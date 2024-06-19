@@ -15,6 +15,14 @@ import java.util.List;
 
 public class PojoToElementFactory {
 
+    /**
+     * <b>概要：</b>
+     *  获取电影导演列表
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/19 10:02</br>
+     * @param movie
+     * @return
+     **/
     public static com.itextpdf.layout.element.List getDirectorList(Movie movie) {
         com.itextpdf.layout.element.List list = new com.itextpdf.layout.element.List();
         for (Director director : movie.getDirectors()) {
@@ -37,6 +45,14 @@ public class PojoToElementFactory {
         return duration;
     }
 
+    /**
+     * <b>概要：</b>
+     *  获取电影的国家列表
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/19 10:01</br>
+     * @param movie
+     * @return
+     **/
     public static com.itextpdf.layout.element.List getCountryList(Movie movie) {
         com.itextpdf.layout.element.List list = new com.itextpdf.layout.element.List();
         for (Country country : movie.getCountries()) {

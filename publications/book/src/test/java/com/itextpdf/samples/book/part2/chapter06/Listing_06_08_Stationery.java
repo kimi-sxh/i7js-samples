@@ -160,7 +160,7 @@ public class Listing_06_08_Stationery extends GenericTest {
             }
             new PdfCanvas(pdfDoc.getPage(pageNum).newContentStreamBefore(),
                     pdfDoc.getPage(pageNum).getResources(), pdfDoc)
-                    .addXObject(watermark, 0, 0);
+                    .addXObjectAt(watermark, 0, 0);
         }
     }
 }

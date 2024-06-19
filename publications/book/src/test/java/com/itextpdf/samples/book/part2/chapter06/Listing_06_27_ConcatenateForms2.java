@@ -44,7 +44,7 @@ public class Listing_06_27_ConcatenateForms2 extends GenericTest {
         // Get the fields
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
         // Loop over the fields
-        Map<String, PdfFormField> map = form.getFormFields();
+        Map<String, PdfFormField> map = form.getAllFormFields();
         Set<String> keys = new HashSet<>(map.keySet());
         for (String key : keys) {
             // rename the fields

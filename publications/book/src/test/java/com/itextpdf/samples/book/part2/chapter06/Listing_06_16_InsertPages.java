@@ -126,7 +126,7 @@ public class Listing_06_16_InsertPages extends GenericTest {
             new PdfCanvas(docEvent.getPage().newContentStreamBefore(),
                     docEvent.getPage().getResources(),
                     docEvent.getDocument())
-                    .addXObject(page, 0, 0);
+                    .addXObjectAt(page, 0, 0);
         }
     }
 }

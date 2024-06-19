@@ -60,6 +60,9 @@ public class Listing_12_06_HelloWorldCompression extends GenericTest {
     protected PdfFont normal;
 
     public static void main(String args[]) throws IOException, XMPException, SQLException {
+        File file = new File(RESULT[0]);
+        file.getParentFile().mkdirs();
+
         new Listing_12_06_HelloWorldCompression().manipulatePdf(RESULT[0]);
     }
 

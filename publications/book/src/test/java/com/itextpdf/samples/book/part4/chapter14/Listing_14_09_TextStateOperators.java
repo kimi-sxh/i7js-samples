@@ -128,7 +128,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
                 setFontAndSize(font, 24).
                 showText(text).
                 endText().
-                addXObject(xObject, 360, 610).
+                addXObjectAt(xObject, 360, 610).
                 restoreState().
 
                 saveState().
@@ -138,7 +138,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
                 setFontAndSize(font, 24).
                 showText(text).
                 endText().
-                addXObject(xObject, 360, 570).
+                addXObjectAt(xObject, 360, 570).
                 restoreState().
 
                 saveState().
@@ -148,7 +148,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
                 setFontAndSize(font, 24).
                 showText(text).
                 endText().
-                addXObject(xObject, 360, 530).
+                addXObjectAt(xObject, 360, 530).
                 restoreState().
 
                 saveState().
@@ -158,7 +158,7 @@ public class Listing_14_09_TextStateOperators extends GenericTest {
                 setFontAndSize(font, 24).
                 showText(text).
                 endText().
-                addXObject(xObject, 360, 490).
+                addXObjectAt(xObject, 360, 490).
                 restoreState();
 
         //Close document

@@ -28,6 +28,7 @@ import org.junit.experimental.categories.Category;
 import java.io.File;
 import java.io.IOException;
 
+//同一份文件合并多次，域名重命名
 @Category(SampleTest.class)
 public class MergeForms2 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/merge_forms2.pdf";

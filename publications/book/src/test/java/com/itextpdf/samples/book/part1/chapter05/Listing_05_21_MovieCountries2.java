@@ -35,6 +35,7 @@ import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,6 +48,9 @@ public class Listing_05_21_MovieCountries2 extends Listing_05_20_MovieCountries1
     public static final String DEST = "./target/test/resources/book/part1/chapter05/Listing_05_21_MovieCountries2.pdf";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_05_21_MovieCountries2().manipulatePdf(DEST);
     }
 

@@ -14,6 +14,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -21,6 +22,7 @@ import org.junit.experimental.categories.Category;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//设置列宽
 @Category(SampleTest.class)
 public class Listing_04_02_ColumnWidths extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part1/chapter04/Listing_04_02_ColumnWidths.pdf";
@@ -53,7 +55,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
 
     public static Table createTable1() {
         Table table = new Table(new float[]{2, 1, 1});
-        table.setWidth(288 / 5.23f);
+        table.setWidth(UnitValue.createPercentValue(288/523f * 100));
         Cell cell;
         cell = new Cell(1, 3).add(new Paragraph("Table 1"));
         table.addCell(cell);
@@ -68,7 +70,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
 
     public static Table createTable2() {
         Table table = new Table(new float[]{2, 1, 1});
-        table.setWidth(288);
+        table.setWidth(UnitValue.createPointValue(288));
         Cell cell;
         cell = new Cell(1, 3).add(new Paragraph("Table 2"));
         table.addCell(cell);
@@ -83,7 +85,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
 
     public static Table createTable3() {
         Table table = new Table(new float[]{2, 1, 1});
-        table.setWidth(55.067f);
+        table.setWidth(UnitValue.createPercentValue(55.067f));
         Cell cell;
         cell = new Cell(1, 3).add(new Paragraph("Table 3"));
         table.addCell(cell);
@@ -99,7 +101,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
     public static Table createTable4() {
         Table table = new Table(new float[]{144, 72, 72});
         Rectangle rect = new Rectangle(523, 770);
-        table.setWidth((144 + 72 + 72) / rect.getWidth() * 100);
+        table.setWidth(UnitValue.createPercentValue((144 + 72 + 72) / rect.getWidth() * 100));
         Cell cell;
         cell = new Cell(1, 3).add(new Paragraph("Table 4"));
         table.addCell(cell);

@@ -17,6 +17,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -27,6 +28,9 @@ public class Listing_12_01_MetadataPdf extends GenericTest {
     public static final String RESULT2
             = "./target/test/resources/book/part3/chapter12/Listing_12_01_MetadataPdf_pdf_metadata_changed.pdf";
     public static void main(String args[]) throws IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_12_01_MetadataPdf().manipulatePdf(DEST);
     }
 

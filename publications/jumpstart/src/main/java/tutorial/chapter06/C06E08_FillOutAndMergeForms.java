@@ -1,16 +1,13 @@
-/*
- * This example is part of the iText 7 tutorial.
- */
 package tutorial.chapter06;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.PdfPageFormCopier;
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
-
 import java.io.*;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -45,7 +42,7 @@ public class C06E08_FillOutAndMergeForms {
 
             //Rename fields
             i++;
-            PdfAcroForm form = PdfAcroForm.getAcroForm(sourcePdfDocument, true);
+            PdfAcroForm form = PdfFormCreator.getAcroForm(sourcePdfDocument, true);
             form.renameField("name", "name_" + i);
             form.renameField("abbr", "abbr_" + i);
             form.renameField("capital", "capital_" + i);
@@ -55,10 +52,10 @@ public class C06E08_FillOutAndMergeForms {
             form.renameField("timezone1", "timezone1_" + i);
             form.renameField("timezone2", "timezone2_" + i);
             form.renameField("dst", "dst_" + i);
-            
+
             //Fill out fields
             StringTokenizer tokenizer = new StringTokenizer(line, ";");
-            Map<String, PdfFormField> fields = form.getFormFields();
+            Map<String, PdfFormField> fields = form.getAllFormFields();
             fields.get("name_" + i).setValue(tokenizer.nextToken());
             fields.get("abbr_" + i).setValue(tokenizer.nextToken());
             fields.get("capital_" + i).setValue(tokenizer.nextToken());

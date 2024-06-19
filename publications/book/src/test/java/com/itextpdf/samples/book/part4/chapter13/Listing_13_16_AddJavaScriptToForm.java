@@ -8,9 +8,7 @@
 package com.itextpdf.samples.book.part4.chapter13;
 
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfButtonFormField;
-import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.forms.fields.*;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -61,18 +59,25 @@ public class Listing_13_16_AddJavaScriptToForm extends GenericTest {
         canvas.endText();
 
         // create a radio button field
-        PdfButtonFormField married = PdfFormField.createRadioGroup(pdfDoc, "married", "Yes");
+        RadioFormFieldBuilder builder = new RadioFormFieldBuilder(pdfDoc,"married");
+        PdfButtonFormField married = builder.createRadioGroup();
+        married.setValue("Yes");
         Rectangle rectYes = new Rectangle(40, 744, 16, 22);
-        PdfFormField yes = PdfFormField.createRadioButton(pdfDoc, rectYes, married, "Yes");
+        PdfFormAnnotation yes = builder.createRadioButton("Yes", rectYes);
         Rectangle rectNo = new Rectangle(84, 744, 16, 22);
-        PdfFormField no = PdfFormField.createRadioButton(pdfDoc, rectNo, married, "No");
+        PdfFormAnnotation no = builder.createRadioButton("No", rectNo);
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
+        married.addKid(yes);
+        married.addKid(no);
         form.addField(married);
         // create a text field
         Rectangle rect = new Rectangle(40, 710, 160, 16);
-        PdfTextFormField partner = PdfFormField.createText(pdfDoc, rect, "partner", "partner");
-        partner.setBorderColor(ColorConstants.DARK_GRAY);
-        partner.setBorderWidth(0.5f);
+
+        PdfTextFormField partner = new TextFormFieldBuilder(pdfDoc, "partner")
+                .setWidgetRectangle(rect).createText();
+        partner.setValue("partner");
+        partner.getFirstFormAnnotation().setBorderColor(ColorConstants.DARK_GRAY);
+        partner.getFirstFormAnnotation().setBorderWidth(0.5f);
         form.addField(partner);
 
         pdfDoc.close();
@@ -89,9 +94,12 @@ public class Listing_13_16_AddJavaScriptToForm extends GenericTest {
         fd.getWidgets().get(0).setAdditionalAction(PdfName.Fo, PdfAction.createJavaScript("setReadOnly(false);"));
         // Get the PDF dictionary of the NO radio button and add an additional action
         fd.getWidgets().get(1).setAdditionalAction(PdfName.Fo, PdfAction.createJavaScript("setReadOnly(true);"));
-        PdfButtonFormField button = PdfFormField.createPushButton(pdfDoc, new Rectangle(40, 690, 160, 20), "submit", "validate and submit");
-        button.setVisibility(PdfFormField.VISIBLE_BUT_DOES_NOT_PRINT);
-        button.setAction(PdfAction.createJavaScript("validate();"));
+        PdfButtonFormField button = new PushButtonFormFieldBuilder(pdfDoc, "submit")
+                .setWidgetRectangle(new Rectangle(40, 690, 160, 20)).createPushButton();
+        button.setPushButton(true);
+        button.setValue("validate and submit");
+        button.getFirstFormAnnotation().setVisibility(PdfFormAnnotation.VISIBLE_BUT_DOES_NOT_PRINT);
+        button.getFirstFormAnnotation().setAction(PdfAction.createJavaScript("validate();"));
         form.addField(button);
         // close the document
         pdfDoc.close();

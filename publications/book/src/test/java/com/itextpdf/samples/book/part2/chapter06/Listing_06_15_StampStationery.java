@@ -72,7 +72,7 @@ public class Listing_06_15_StampStationery extends GenericTest {
         PdfFormXObject watermark = stationeryDoc.getFirstPage().copyAsFormXObject(pdfDoc);
         for (int i = 1; i <= n; i++) {
             page = pdfDoc.getPage(i);
-            new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc).addXObject(watermark, 0, 0);
+            new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc).addXObjectAt(watermark, 0, 0);
         }
 
         pdfDoc.close();

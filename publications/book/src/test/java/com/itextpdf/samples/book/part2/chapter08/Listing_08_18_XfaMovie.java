@@ -80,7 +80,7 @@ public class Listing_08_18_XfaMovie extends GenericTest {
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
         XfaForm xfa = form.getXfaForm();
         out.println(xfa.isXfaPresent() ? "XFA form" : "AcroForm");
-        Set<String> fields = form.getFormFields().keySet();
+        Set<String> fields = form.getAllFormFields().keySet();
         for (String key : fields) {
             out.println(key);
         }

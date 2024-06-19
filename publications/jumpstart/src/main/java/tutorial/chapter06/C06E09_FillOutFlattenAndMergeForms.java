@@ -1,15 +1,12 @@
-/*
- * This example is part of the iText 7 tutorial.
- */
 package tutorial.chapter06;
 
 import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
-
 import java.io.*;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -45,9 +42,9 @@ public class C06E09_FillOutFlattenAndMergeForms {
             PdfDocument sourcePdfDocument = new PdfDocument(new PdfReader(SRC), new PdfWriter(baos));
 
             //Read fields
-            PdfAcroForm form = PdfAcroForm.getAcroForm(sourcePdfDocument, true);
+            PdfAcroForm form = PdfFormCreator.getAcroForm(sourcePdfDocument, true);
             StringTokenizer tokenizer = new StringTokenizer(line, ";");
-            Map<String, PdfFormField> fields = form.getFormFields();
+            Map<String, PdfFormField> fields = form.getAllFormFields();
 
             //Fill out fields
             fields.get("name").setValue(tokenizer.nextToken());

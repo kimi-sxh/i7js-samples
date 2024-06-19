@@ -9,7 +9,9 @@ package com.itextpdf.samples.book.part2.chapter08;
 
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
+import com.itextpdf.forms.fields.PdfFormAnnotation;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.RadioFormFieldBuilder;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.DeviceGray;
@@ -43,17 +45,20 @@ public class Listing_08_02_RadioButtons extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(DEST));
         Document doc = new Document(pdfDoc);
         PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA, PdfEncodings.WINANSI, PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
-        PdfButtonFormField radioGroup = PdfFormField.createRadioGroup(pdfDoc, "language", "");
+        RadioFormFieldBuilder builder = new RadioFormFieldBuilder(pdfDoc,"language");
+        PdfButtonFormField radioGroup = builder.createRadioGroup();
+        radioGroup.setValue("");
         radioGroup.setFieldName("language");
         Rectangle rect = new Rectangle(40, 806, 60 - 40, 788 - 806);
-        PdfFormField radio;
+        PdfFormAnnotation radio;
         for (int page = 1; page <= LANGUAGES.length; page++) {
             pdfDoc.addNewPage();
-            radio = PdfFormField.createRadioButton(pdfDoc, rect, radioGroup, LANGUAGES[page - 1]);
+            radio = builder.createRadioButton( LANGUAGES[page - 1], rect);
             radio.setPage(page);
             doc.showTextAligned(new Paragraph(LANGUAGES[page - 1]).setFont(font).setFontSize(18),
                     70, 790, page, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
-            radio.getWidgets().get(0).setColor(new DeviceGray(0.8f).getColorValue());
+            radio.getWidget().setColor(new DeviceGray(0.8f).getColorValue());
+            radioGroup.addKid(radio);
         }
         PdfAcroForm.getAcroForm(pdfDoc, true).addField(radioGroup);
         doc.close();

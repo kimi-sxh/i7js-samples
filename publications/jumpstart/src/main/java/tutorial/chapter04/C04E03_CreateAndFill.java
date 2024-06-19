@@ -1,6 +1,3 @@
-/*
- * This example is part of the iText 7 tutorial.
- */
 package tutorial.chapter04;
 
 import com.itextpdf.forms.PdfAcroForm;
@@ -8,7 +5,6 @@ import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -35,7 +31,7 @@ public class C04E03_CreateAndFill {
         Document doc = new Document(pdf);
 
         PdfAcroForm form = C04E02_JobApplication.addAcroForm(doc);
-        Map<String, PdfFormField> fields = form.getFormFields();
+        Map<String, PdfFormField> fields = form.getAllFormFields();
         fields.get("name").setValue("James Bond");
         fields.get("language").setValue("English");
         fields.get("experience1").setValue("Off");

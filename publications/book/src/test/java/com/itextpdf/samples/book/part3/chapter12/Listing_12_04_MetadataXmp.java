@@ -48,6 +48,9 @@ public class Listing_12_04_MetadataXmp extends GenericTest {
     public static final String DEST = RESULTS[0];
 
     public static void main(String args[]) throws IOException, XMPException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_12_04_MetadataXmp().manipulatePdf(DEST);
     }
 
@@ -106,7 +109,9 @@ public class Listing_12_04_MetadataXmp extends GenericTest {
     }
 
     public void manipulatePdf(String dest) throws IOException, XMPException {
+        //创建元数据信息用xmp表示 /ROOT下的/Metadata
         createPdf(RESULTS[0]);
+        //用字典表示元数据信息 /Info
         createPdfAutomatic(RESULTS[1]);
         manipulatePdf(METADATA_PDF, RESULTS[2]);
         readXmpMetadata(RESULTS[2], RESULT_XML);

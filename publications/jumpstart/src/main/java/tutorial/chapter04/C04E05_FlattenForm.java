@@ -1,16 +1,12 @@
-/*
- * This example is part of the iText 7 tutorial.
- */
 package tutorial.chapter04;
 
-import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
-
-import java.io.File;
-import java.io.IOException;
+import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.PdfFormField;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -33,8 +29,8 @@ public class C04E05_FlattenForm {
         PdfDocument pdf = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
 
 
-        PdfAcroForm form = PdfAcroForm.getAcroForm(pdf, true);
-        Map<String, PdfFormField> fields = form.getFormFields();
+        PdfAcroForm form = PdfFormCreator.getAcroForm(pdf, true);
+        Map<String, PdfFormField> fields = form.getAllFormFields();
         fields.get("name").setValue("James Bond");
         fields.get("language").setValue("English");
         fields.get("experience1").setValue("Off");

@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+//按顺序填充表单字段
 @Category(SampleTest.class)
 public class FillFormFieldOrder extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/fill_form_field_order.pdf";

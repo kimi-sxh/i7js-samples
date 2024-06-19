@@ -26,6 +26,7 @@ import java.io.FileReader;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+//就一个表单填充多次信息合并在一起
 @Category(SampleTest.class)
 public class FillFlattenMerge1 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/reporting/fill_flatten_merge1.pdf";

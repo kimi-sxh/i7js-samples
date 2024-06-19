@@ -8,9 +8,11 @@
 package com.itextpdf.samples.book.part2.chapter08;
 
 import com.itextpdf.forms.PdfAcroForm;
+import com.itextpdf.forms.fields.ChoiceFormFieldBuilder;
 import com.itextpdf.forms.fields.PdfChoiceFormField;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
@@ -19,6 +21,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.samples.GenericTest;
@@ -50,30 +53,42 @@ public class Listing_08_12_ChoiceFields extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
         Cell cell;
-        Cell space;
-        space = new Cell(1, 2);
-        space.setBorder(Border.NO_BORDER);
-        space.setHeight(8);
-        Table table = new Table(2);
-        Style leftCellStyle = new Style().setBorder(Border.NO_BORDER)
+        Cell space = new Cell(1, 2)
+                .setBorder(Border.NO_BORDER)
+                .setHeight(8);
+        Table table = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
+        Style leftCellStyle = new Style()
+                .setBorder(Border.NO_BORDER)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT);
+
+        // row 1
         table.addCell(new Cell().add(new Paragraph("Language of the movie:")).addStyle(leftCellStyle));
-        cell = new Cell();
-        cell.setHeight(20);
+        cell = new Cell().setHeight(20);
         cell.setNextRenderer(new ChoiceCellRenderer(cell, 1));
         table.addCell(cell);
-        table.addCell(space);
+
+        // row 2
+        table.addCell(space.clone(true));
+
+        // row 3
         table.addCell(new Cell().add(new Paragraph("Subtitle languages:")).addStyle(leftCellStyle));
-        cell = new Cell();
+        cell = new Cell().setHeight(71);
         cell.setNextRenderer(new ChoiceCellRenderer(cell, 2));
-        cell.setHeight(71);
         table.addCell(cell);
-        table.addCell(space);
+
+        // row 4
+        table.addCell(space.clone(true));
+
+        // row 5
         table.addCell(new Cell().add(new Paragraph("Select preferred language")).addStyle(leftCellStyle));
         cell = new Cell();
         cell.setNextRenderer(new ChoiceCellRenderer(cell, 3));
         table.addCell(cell);
-        table.addCell(space);
+
+        // row 6
+        table.addCell(space.clone(true));
+
+        // row 7
         table.addCell(new Cell().add(new Paragraph("Language of the director:"))
                 .setBorder(Border.NO_BORDER)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT));
@@ -168,14 +183,18 @@ public class Listing_08_12_ChoiceFields extends GenericTest {
                         langAndExpArray[i][0] = EXPORTVALUES[i];
                         langAndExpArray[i][1] = LANGUAGES[i];
                     }
-                    text = PdfFormField.createList(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langAndExpArray);
+                    text = new ChoiceFormFieldBuilder(document, String.format("choice_%s", cf))
+                            .setWidgetRectangle(getOccupiedAreaBBox()).setOptions(langAndExpArray)
+                            .createComboBox();
                     text.setTopIndex(1);
                     break;
                 case 2:
                     langArray = new String[LANGUAGES.length];
                     System.arraycopy(LANGUAGES, 0, langArray, 0, LANGUAGES.length);
-                    text = PdfFormField.createList(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langArray);
-                    text.setBorderColor(ColorConstants.GREEN);
+                    text = new ChoiceFormFieldBuilder(document, String.format("choice_%s", cf))
+                            .setWidgetRectangle(getOccupiedAreaBBox()).setOptions(langArray)
+                            .createComboBox();
+                    text.getFirstFormAnnotation().setBorderColor(ColorConstants.GREEN);
                     PdfDictionary borderDict = new PdfDictionary();
                     borderDict.put(PdfName.S, PdfName.D);
                     text.getWidgets().get(0).setBorderStyle(borderDict);
@@ -189,16 +208,20 @@ public class Listing_08_12_ChoiceFields extends GenericTest {
                         langAndExpArray[i][0] = EXPORTVALUES[i];
                         langAndExpArray[i][1] = LANGUAGES[i];
                     }
-                    text = PdfFormField.createComboBox(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langAndExpArray);
-                    text.setBorderColor(ColorConstants.RED);
-                    text.setBackgroundColor(ColorConstants.GRAY);
+                    text = new ChoiceFormFieldBuilder(document, String.format("choice_%s", cf))
+                            .setWidgetRectangle(getOccupiedAreaBBox()).setOptions(langAndExpArray)
+                            .createComboBox();
+                    text.getFirstFormAnnotation().setBorderColor(ColorConstants.RED);
+                    text.getFirstFormAnnotation().setBackgroundColor(ColorConstants.GRAY);
 
                     text.setListSelected(new int[]{4});
                     break;
                 case 4:
                     langArray = new String[LANGUAGES.length];
                     System.arraycopy(LANGUAGES, 0, langArray, 0, LANGUAGES.length);
-                    text = PdfFormField.createComboBox(document, getOccupiedAreaBBox(), String.format("choice_%s", cf), "", langArray);
+                    text = new ChoiceFormFieldBuilder(document, String.format("choice_%s", cf))
+                            .setWidgetRectangle(getOccupiedAreaBBox()).setOptions(langArray)
+                            .createComboBox();
                     text.setFieldFlag(PdfChoiceFormField.FF_EDIT, true);
                     break;
             }

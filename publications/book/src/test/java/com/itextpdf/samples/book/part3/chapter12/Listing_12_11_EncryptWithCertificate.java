@@ -68,6 +68,9 @@ public class Listing_12_11_EncryptWithCertificate extends GenericTest {
     public static Properties properties = new Properties();
 
     public static void main(String args[]) throws IOException, GeneralSecurityException {
+        File file = new File(RESULT1);
+        file.getParentFile().mkdirs();
+
         new Listing_12_11_EncryptWithCertificate().manipulatePdf(RESULT1);
     }
 

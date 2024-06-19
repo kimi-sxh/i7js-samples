@@ -1,3 +1,8 @@
+代码说明参见：
+https://kb.itextpdf.com/itext/itext-jump-start-tutorial-for-java；
+完整代码参见（chapter-1到chapter-7）：
+https://kb.itextpdf.com/itext/itext-7-jump-start-tutorial-chapter-1
+
 # README #
 
 ## How to set up ##

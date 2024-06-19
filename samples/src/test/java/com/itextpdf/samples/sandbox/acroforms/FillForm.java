@@ -24,6 +24,7 @@ import org.junit.experimental.categories.Category;
 import java.io.File;
 import java.io.FileInputStream;
 
+//简单填充文本框
 @Category(SampleTest.class)
 public class FillForm extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/fill_form.pdf";

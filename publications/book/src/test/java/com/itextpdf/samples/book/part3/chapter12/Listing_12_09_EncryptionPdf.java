@@ -38,6 +38,9 @@ public class Listing_12_09_EncryptionPdf extends GenericTest {
             = "./target/test/resources/book/part3/chapter12/Listing_12_09_EncryptionPdf_encryption_encrypted.pdf";
 
     public static void main(String args[]) throws IOException {
+        File file = new File(RESULT1);
+        file.getParentFile().mkdirs();
+
         new Listing_12_09_EncryptionPdf().manipulatePdf(RESULT1);
     }
 

@@ -8,8 +8,9 @@
 package com.itextpdf.samples.book.part2.chapter08;
 
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfButtonFormField;
-import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.forms.fields.*;
+import com.itextpdf.forms.fields.properties.CheckBoxType;
+import com.itextpdf.forms.form.FormProperty;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -27,6 +28,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
+import com.itextpdf.kernel.pdf.xobject.PdfXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AbstractElement;
@@ -87,21 +89,36 @@ public class Listing_08_01_Buttons extends GenericTest {
         return new String(jsBytes);
     }
 
+    /**
+     * <b>概要：</b>
+     *  创建pdf表单
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/13 9:51</br>
+     * @param filename
+     * @return
+     **/
     public void createPdf(String filename) throws IOException {
-        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(filename));
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(filename.replace(" ","%20")));
         Document doc = new Document(pdfDoc);
         pdfDoc.getCatalog().setOpenAction(PdfAction.createJavaScript(readFileToString(RESOURCE).replace("\r\n", "\n")));
         PdfCanvas canvas = new PdfCanvas(pdfDoc.addNewPage());
         PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         Rectangle rect;
-        PdfButtonFormField radioGroup = PdfFormField.createRadioGroup(pdfDoc, "language", "");
-        PdfFormField radio;
+
+        RadioFormFieldBuilder builder = new RadioFormFieldBuilder(pdfDoc,"language");
+        PdfButtonFormField radioGroup = builder.createRadioGroup();
+        radioGroup.setValue("English");
+        radioGroup.setCheckType(CheckBoxType.DIAMOND);
+
+        //单选框
+        PdfFormAnnotation radio;
         for (int i = 0; i < LANGUAGES.length; i++) {
             rect = new Rectangle(40, 806 - i * 40, 60 - 40, 806 - 788);
-            radio = PdfFormField.createRadioButton(pdfDoc, rect, radioGroup, LANGUAGES[i]);
-            radio.setBorderColor(ColorConstants.DARK_GRAY);
-            radio.setBackgroundColor(ColorConstants.LIGHT_GRAY);
-            radio.setCheckType(PdfFormField.TYPE_CIRCLE);
+            radio = builder.createRadioButton( LANGUAGES[i], rect)
+                    .setBorderColor(ColorConstants.DARK_GRAY)
+                    .setBackgroundColor(ColorConstants.LIGHT_GRAY);
+            //radio.setCheckType(CheckBoxType.CIRCLE);
+            radioGroup.addKid(radio);
             canvas
                     .beginText()
                     .setFontAndSize(font, 18)
@@ -111,6 +128,7 @@ public class Listing_08_01_Buttons extends GenericTest {
         }
         PdfAcroForm.getAcroForm(pdfDoc, true).addField(radioGroup);
 
+        //自定义画复选框
         PdfButtonFormField checkBox;
         for (int i = 0; i < LANGUAGES.length; i++) {
             PdfFormXObject xObjectApp1 = new PdfFormXObject(new Rectangle(0, 0, 200 - 180, 806 - 788));
@@ -136,7 +154,8 @@ public class Listing_08_01_Buttons extends GenericTest {
                     .restoreState();
 
             rect = new Rectangle(180, 806 - i * 40, 200 - 180, 806 - 788);
-            checkBox = PdfFormField.createCheckBox(pdfDoc, rect, LANGUAGES[i], "Off");
+            checkBox = new CheckBoxFormFieldBuilder(pdfDoc, LANGUAGES[i]).setWidgetRectangle(rect).createCheckBox();
+            checkBox.setValue("Off");
             checkBox.getWidgets().get(0).getNormalAppearanceObject().put(new PdfName("Off"),
                     xObjectApp1.getPdfObject());
             checkBox.getWidgets().get(0).getNormalAppearanceObject().put(new PdfName("Yes"),
@@ -170,16 +189,19 @@ public class Listing_08_01_Buttons extends GenericTest {
 
     /**
      * Manipulates a PDF file src with the file dest as result
-     *
+     *  填充pdf
      * @param src  the original PDF
      * @param dest the resulting PDF
      * @throws IOException
      */
     public void fillPdf(String src, String dest) throws IOException {
+        //填充单选框
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
         String[] radiostates = form.getField("language").getAppearanceStates();
         form.getField("language").setValue(radiostates[4]);
+
+        //填充复选框
         for (int i = 0; i < LANGUAGES.length; i++) {
             String[] checkboxStates = form.getField("English").getAppearanceStates();
             form.getField(LANGUAGES[i]).setValue(checkboxStates[i % 2 == 0 ? 1 : 0], false);
@@ -198,8 +220,8 @@ public class Listing_08_01_Buttons extends GenericTest {
         protected Color buttonBackgroundColor = ColorConstants.WHITE;
 
         public Button(String name, String caption, PdfDocument document, Rectangle rect) {
-            button = PdfFormField.createButton(document, new Rectangle(0, 0), 0);
-            button.setFieldName(name);
+            button = new PushButtonFormFieldBuilder(document, "name")
+                    .setWidgetRectangle(rect).createPushButton();
             button.setPushButton(true);
 
             this.caption = caption;
@@ -312,12 +334,9 @@ public class Listing_08_01_Buttons extends GenericTest {
                 if (image.getHeight() > modelButton.rect.getHeight()) {
                     imageWidth = image.getWidth() * (modelButton.rect.getHeight() / image.getHeight()) * 2/3;
                 }
-                PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
-                if (bbox == null)
-                    throw new PdfException("PdfFormXObject has invalid BBox.");
-                float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
-                float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
-                canvas.addXObjectWithTransformationMatrix(imageXObject, imageWidth, 0, 0, imageWidth / formWidth * formHeight, 3, 3);
+                Rectangle rect = PdfXObject.calculateProportionallyFitRectangleWithWidth(imageXObject, 3, 3, imageWidth);
+                canvas.addXObjectFittedIntoRectangle(imageXObject, rect);
+
                 xObject.getResources().addImage(imageXObject);
             }
 

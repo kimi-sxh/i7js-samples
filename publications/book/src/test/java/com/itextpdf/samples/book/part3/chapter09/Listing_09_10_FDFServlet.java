@@ -8,9 +8,7 @@
 package com.itextpdf.samples.book.part3.chapter09;
 
 import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfButtonFormField;
-import com.itextpdf.forms.fields.PdfFormField;
-import com.itextpdf.forms.fields.PdfTextFormField;
+import com.itextpdf.forms.fields.*;
 import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -50,17 +48,19 @@ public class Listing_09_10_FDFServlet extends HttpServlet {
         PdfDocument pdfDoc = new PdfDocument(reader, new PdfWriter(baos));
         PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
         // We add a submit button to the existing form
-        PdfButtonFormField submit = PdfFormField.createPushButton(
-                pdfDoc, new Rectangle(90, 660, 50, 30), "submit", "POST");
-        submit.setBackgroundColor(new DeviceGray(0.7f));
-        submit.setVisibility(PdfFormField.VISIBLE_BUT_DOES_NOT_PRINT);
-        submit.setAction(PdfAction.createSubmitForm("/book/fdf", null, 0));
+        PdfButtonFormField submit = new PushButtonFormFieldBuilder(pdfDoc, "submit")
+                .setWidgetRectangle(new Rectangle(90, 660, 50, 30)).createPushButton();
+        submit.setValue("POST");
+        submit.getFirstFormAnnotation().setBackgroundColor(new DeviceGray(0.7f));
+        submit.getFirstFormAnnotation().setVisibility(PdfFormAnnotation.VISIBLE_BUT_DOES_NOT_PRINT);
+        submit.getFirstFormAnnotation().setAction(PdfAction.createSubmitForm("/book/fdf", null, 0));
         form.addField(submit);
         // We add an extra field that can be used to upload a file
-        PdfTextFormField upload = PdfFormField.createText(
-                pdfDoc, new Rectangle(160, 660, 310, 30), "image", "image");
+        PdfTextFormField upload = new TextFormFieldBuilder(pdfDoc, "image")
+                .setWidgetRectangle(new Rectangle(160, 660, 310, 30)).createText();
+        upload.setValue("image");
         upload.setFileSelect(true);
-        upload.setBackgroundColor(new DeviceGray(0.9f));
+        upload.getFirstFormAnnotation().setBackgroundColor(new DeviceGray(0.9f));
         upload.setAdditionalAction(PdfName.U,
                 PdfAction.createJavaScript(
                         "this.getField('image').browseForFileToSubmit();"

@@ -33,6 +33,7 @@ import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +43,7 @@ import java.util.TreeSet;
 
 @Category(SampleTest.class)
 public class Listing_05_20_MovieCountries1 extends GenericTest {
-    public static final String DEST = "./target/test/resources/book/part1/chapter05/Listing_05_20_MovieCountries1.pdf";
+    public static final String DEST = "./target/book/part1/chapter05/Listing_05_20_MovieCountries1.pdf";
 
     protected PdfFont bold;
     protected PdfFont italic;
@@ -51,6 +52,9 @@ public class Listing_05_20_MovieCountries1 extends GenericTest {
     protected PdfFormXObject template;
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_05_20_MovieCountries1().manipulatePdf(DEST);
     }
 
@@ -134,7 +138,7 @@ public class Listing_05_20_MovieCountries1 extends GenericTest {
             canvas.showText(String.format("Page %d of", pageNum));
             canvas.endText();
             canvas.stroke();
-            canvas.addXObjectAt(template, 0, 0);
+            canvas.addXObject(template);
             canvas.release();
         }
 

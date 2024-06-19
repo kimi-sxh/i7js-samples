@@ -89,10 +89,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-licensekey</artifactId>
-            <version>${licensekey.version}</version>
+            <groupId>com.itextpdf.licensing</groupId>
+            <artifactId>licensing-base</artifactId>
+            <version>4.1.4</version>
         </dependency>
+        <!-- 7.2.x以下用 -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.itextpdf</groupId>-->
+        <!--            <artifactId>itext-licensekey</artifactId>-->
+        <!--            <version>${licensekey.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>

@@ -1,27 +1,23 @@
-/*
-
-    This file is part of the iText (R) project.
-    Copyright (c) 1998-2016 iText Group NV
-
-*/
-
 package com.itextpdf.samples.book.part2.chapter08;
 
+import com.itextpdf.forms.fields.PdfFormCreator;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
-import com.itextpdf.kernel.exceptions.PdfException;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.tagging.StandardRoles;
+import com.itextpdf.kernel.pdf.tagutils.DefaultAccessibilityProperties;
 import com.itextpdf.kernel.pdf.tagutils.AccessibilityProperties;
+import com.itextpdf.kernel.pdf.xobject.PdfXObject;
+import com.itextpdf.layout.tagging.IAccessibleElement;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AbstractElement;
-import com.itextpdf.layout.element.IElement;
 import com.itextpdf.layout.element.ILeafElement;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.layout.LayoutArea;
@@ -32,15 +28,14 @@ import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.renderer.AbstractRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
-import com.itextpdf.layout.tagging.IAccessibleElement;
-import com.itextpdf.test.annotations.type.SampleTest;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.samples.GenericTest;
-
-import java.io.IOException;
-
+import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
+
+import java.io.File;
+import java.io.IOException;
 
 @Category(SampleTest.class)
 public class Listing_08_06_ReplaceIcon extends GenericTest {
@@ -57,6 +52,9 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
     protected String[] arguments;
 
     public static void main(String[] args) throws Exception {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         Listing_08_06_ReplaceIcon application = new Listing_08_06_ReplaceIcon();
         application.arguments = args;
         application.manipulatePdf(DEST);
@@ -64,7 +62,7 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
 
     public void manipulatePdf2(String src, String dest) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(src),new PdfWriter(dest));
-        PdfAcroForm form = PdfAcroForm.getAcroForm(pdfDoc, true);
+        PdfAcroForm form = PdfFormCreator.getAcroForm(pdfDoc, true);
         Document doc = new Document(pdfDoc);
         CustomButton ad = new CustomButton((PdfButtonFormField) form.getField("advertisement"));
         ad.setImage(ImageDataFactory.create(RESOURCE));
@@ -81,7 +79,7 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
 
     class CustomButton extends AbstractElement<CustomButton> implements ILeafElement, IAccessibleElement {
 
-        protected PdfName role = PdfName.Figure;
+        protected DefaultAccessibilityProperties accessibilityProperties;
         protected PdfButtonFormField button;
         protected String caption;
         protected ImageData image;
@@ -98,16 +96,12 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
             return new CustomButtonRenderer(this);
         }
 
-        public PdfName getRole() {
-            return role;
-        }
-
-        public void setRole(PdfName role) {
-            this.role = role;
-        }
-
+        @Override
         public AccessibilityProperties getAccessibilityProperties() {
-            return null;
+            if (accessibilityProperties == null) {
+                accessibilityProperties = new DefaultAccessibilityProperties(StandardRoles.FIGURE);
+            }
+            return accessibilityProperties;
         }
 
         public PdfButtonFormField getButton() {
@@ -195,12 +189,9 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
             } else if (imageXObject.getHeight() > rect.getHeight()) {
                 imageWidth = imageWidth * (rect.getHeight() / imageXObject.getHeight());
             }
-            PdfArray bbox = ((PdfStream)imageXObject.getPdfObject()).getAsArray(PdfName.BBox);
-            if (bbox == null)
-                throw new PdfException("PdfFormXObject has invalid BBox.");
-            float formWidth = Math.abs(bbox.getAsNumber(2).floatValue() - bbox.getAsNumber(0).floatValue());
-            float formHeight = Math.abs(bbox.getAsNumber(3).floatValue() - bbox.getAsNumber(1).floatValue());
-            canvas.addXObjectWithTransformationMatrix(imageXObject, imageWidth - 1, 0f, 0f, (imageWidth - 1) / formWidth * formHeight, 0.5f, 0.5f);
+
+            Rectangle rectangle = PdfXObject.calculateProportionallyFitRectangleWithWidth(imageXObject, 0.5f, 0.5f, imageWidth - 1);
+            canvas.addXObjectFittedIntoRectangle(imageXObject, rectangle);
 
 
             PdfButtonFormField button = modelButton.getButton();
@@ -208,7 +199,7 @@ public class Listing_08_06_ReplaceIcon extends GenericTest {
             xObject.getPdfObject().getOutputStream().writeBytes(str.getBytes());
             xObject.getResources().addImage(imageXObject);
 
-            PdfAcroForm.getAcroForm(drawContext.getDocument(), true).addField(button, drawContext.getDocument().getPage(1));
+            PdfFormCreator.getAcroForm(drawContext.getDocument(), true).addField(button, drawContext.getDocument().getPage(1));
         }
 
         @Override

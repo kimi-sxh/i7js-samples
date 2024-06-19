@@ -52,7 +52,7 @@ public class Listing_06_22_ConcatenateStamp extends GenericTest {
             page = resultDoc.getLastPage();
             PdfFormXObject backPage = srcDoc1.getPage(i).copyAsFormXObject(resultDoc);
             new PdfCanvas(page.newContentStreamBefore(), page.getResources(), resultDoc)
-                    .addXObject(backPage, 0, 0);
+                    .addXObjectAt(backPage, 0, 0);
             doc.add(new Paragraph(String.format("page %d of %d", i, n1 + n2)).setFixedPosition(297.5f, 28, 200));
             doc.add(new AreaBreak());
         }
@@ -60,7 +60,7 @@ public class Listing_06_22_ConcatenateStamp extends GenericTest {
             PdfFormXObject backPage = srcDoc2.getPage(i).copyAsFormXObject(resultDoc);
             page = resultDoc.getLastPage();
             new PdfCanvas(page.newContentStreamBefore(), page.getResources(), resultDoc)
-                    .addXObject(backPage, 0, 0);
+                    .addXObjectAt(backPage, 0, 0);
             doc.add(new Paragraph(String.format("page %d of %d", i + n1, n1 + n2)).setFixedPosition(297.5f, 28, 200));
             if (n2 != i) {
                 doc.add(new AreaBreak());

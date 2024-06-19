@@ -36,7 +36,7 @@ public class Listing_02_03_DirectorPhrases1 extends GenericTest {
 
     public void manipulatePdf(String dest) throws IOException, SQLException {
         // Initialize document
-        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest.replace(" ","%20")));
         Document doc = new Document(pdfDoc);
 
         DatabaseConnection connection = new HsqldbConnection("filmfestival");

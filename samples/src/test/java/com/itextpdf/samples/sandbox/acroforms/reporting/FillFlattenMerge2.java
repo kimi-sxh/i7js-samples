@@ -26,6 +26,7 @@ import java.io.FileReader;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+//smart mode模式,会减少文件大小，但是需要更多的内容
 @Category(SampleTest.class)
 public class FillFlattenMerge2 extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/reporting/fill_flatten_merge2.pdf";

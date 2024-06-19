@@ -20,6 +20,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
@@ -68,7 +69,7 @@ public class Listing_08_15_Subscribe extends GenericTest {
         PdfFormField personal =
                 new NonTerminalFormFieldBuilder(pdfDoc, "personal").createNonTerminalFormField();
         personal.setFieldName("personal");
-        Table table = new Table(3);
+        Table table = new Table(UnitValue.createPercentArray(3)).useAllAvailableWidth();;
         Cell cell;
 
         table.addCell(new Cell().add(new Paragraph("Your name:")));

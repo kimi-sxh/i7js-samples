@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+//合并merge不同文件的表单
 @Category(SampleTest.class)
 public class MergeForms extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/acroforms/merge_forms.pdf";

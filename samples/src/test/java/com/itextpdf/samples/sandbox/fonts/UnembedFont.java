@@ -23,6 +23,7 @@ import org.junit.experimental.categories.Category;
 
 import java.io.File;
 
+//不嵌入字体
 @Category(SampleTest.class)
 public class UnembedFont extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/fonts/unembed_font.pdf";

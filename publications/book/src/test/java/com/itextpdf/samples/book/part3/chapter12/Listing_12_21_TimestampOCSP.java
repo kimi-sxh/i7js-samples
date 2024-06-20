@@ -51,6 +51,8 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
     public static String SIGNED2 = "./target/test/resources/book/part3/chapter12/Listing_12_21_TimestampOCSP_ocsp.pdf";
     public static String SIGNED3 = "./target/test/resources/book/part3/chapter12/Listing_12_21_TimestampOCSP_ts_oscp.pdf";
 
+    public static String SIGNED4 = "./target/test/resources/book/part3/chapter12/Listing_12_21_TimestampOCSP_ts_cert_invalid.pdf";
+
     public static String[] RESULT = {
             SIGNED0,
 //            SIGNED1,
@@ -78,6 +80,21 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         // Keystore and certificate chain
         String keystore = properties.getProperty("PRIVATE");
         String password = properties.getProperty("PASSWORD");
+
+        this.signPdf(src, dest, withTS, withOCSP,keystore,password);
+    }
+
+    public void signExpirePdf(String src, String dest, boolean withTS, boolean withOCSP)
+            throws IOException, GeneralSecurityException {
+        // Keystore and certificate chain
+        String expireKeystore = properties.getProperty("EXPIRE_PRIVATE");
+        String expirePassword = properties.getProperty("EXPIRE_PASSWORD");
+
+        this.signPdf(src, dest, withTS, withOCSP,expireKeystore,expirePassword);
+    }
+
+    public void signPdf(String src, String dest, boolean withTS, boolean withOCSP,String keystore,String password)
+            throws IOException, GeneralSecurityException {
         KeyStore ks = KeyStore.getInstance("PKCS12");
         ks.load(new FileInputStream(keystore), password.toCharArray());
         String alias = (String) ks.aliases().nextElement();
@@ -104,7 +121,9 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
             String tsa_url = properties.getProperty("TSA");
             String tsa_login = properties.getProperty("TSA_LOGIN");
             String tsa_passw = properties.getProperty("TSA_PASSWORD");
-            tsc = new TSAClientBouncyCastle(tsa_url,"ON","127.0.0.1","8889", tsa_login, tsa_passw);
+            //正向代理
+//            tsc = new TSAClientBouncyCastle(tsa_url,"ON","127.0.0.1","8889", tsa_login, tsa_passw);
+            tsc = new TSAClientBouncyCastle(tsa_url,"OFF","","", tsa_login, tsa_passw);
         }
         // If we use OCSP:
         IOcspClient ocsp = null;
@@ -126,7 +145,10 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         signPdf(src, SIGNED0, false, false);
         signPdf(src, SIGNED1, true, false);
         signPdf(src, SIGNED2, false, true);
-//        signPdf(src, SIGNED3, true, true);
+        signPdf(src, SIGNED3, true, true);
+
+        //过期证书签名 校验
+        signExpirePdf(src, SIGNED4, true, false);
     }
 
     @Test

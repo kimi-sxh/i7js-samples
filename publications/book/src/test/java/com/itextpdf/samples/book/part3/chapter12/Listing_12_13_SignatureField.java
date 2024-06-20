@@ -27,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -83,11 +84,13 @@ public class Listing_12_13_SignatureField extends SignatureTest {
         if (null == mkDictionary) {
             mkDictionary = new PdfDictionary();
         }
+        //annotation 的border颜色
         PdfArray black = new PdfArray();
         black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[0]));
         black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[1]));
         black.add(new PdfNumber(ColorConstants.BLACK.getColorValue()[2]));
         mkDictionary.put(PdfName.BC, black);
+        //annotation的背景色
         PdfArray white = new PdfArray();
         black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[0]));
         black.add(new PdfNumber(ColorConstants.WHITE.getColorValue()[1]));
@@ -111,13 +114,13 @@ public class Listing_12_13_SignatureField extends SignatureTest {
         String path = properties.getProperty("PRIVATE");
         String keystore_password = properties.getProperty("PASSWORD");
         String key_password = properties.getProperty("PASSWORD");
-        KeyStore ks = KeyStore.getInstance("pkcs12", "BC");
+        KeyStore ks = KeyStore.getInstance("pkcs12","BC");
         ks.load(new FileInputStream(path), keystore_password.toCharArray());
         String alias = ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, key_password.toCharArray());
         Certificate[] chain = ks.getCertificateChain(alias);
         // reader and signer
-        PdfReader reader = new PdfReader(ORIGINAL);
+        PdfReader reader = new PdfReader(src);
         StampingProperties stampingProperties = new StampingProperties();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
@@ -140,6 +143,9 @@ public class Listing_12_13_SignatureField extends SignatureTest {
     }
 
     public static void main(String[] args) throws Exception {
+        File file = new File(ORIGINAL);
+        file.getParentFile().mkdirs();
+
         new Listing_12_13_SignatureField().manipulatePdf();
     }
 

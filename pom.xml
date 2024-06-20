@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.itextpdf</groupId>
         <artifactId>root</artifactId>
-        <version>8.0.4</version>
+        <version>8.0.5-SNAPSHOT</version>
         <relativePath />
     </parent>
 
@@ -19,16 +19,17 @@
     <modules>
         <module>samples</module>
         <module>publications</module>
+        <module>sandbox</module>
     </modules>
 
     <properties>
-        <itext.version>8.0.4</itext.version>
+        <itext.version>8.0.5-SNAPSHOT</itext.version>
         <itext.legacy.version>5.5.9</itext.legacy.version>
         <cleanup.version>4.0.2</cleanup.version>
         <typography.version>1.0.2</typography.version>
         <zugferd.version>1.0.2</zugferd.version>
         <licensekey.version>2.0.3</licensekey.version>
-        <bouncycastle.version>1.49</bouncycastle.version>
+<!--        <bouncycastle.version>1.49</bouncycastle.version>-->
         <assertj.version>2.3.0</assertj.version>
         <checkstyle.version>2.15</checkstyle.version>
         <failsafe.version>2.18.1</failsafe.version>

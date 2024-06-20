@@ -85,7 +85,7 @@ public class Listing_12_11_EncryptWithCertificate extends GenericTest {
 
     public void createPdf(String dest) throws IOException, CertificateException {
         Certificate cert1 = getPublicCertificate("./src/test/resources/encryption/foobar.cer");
-        Certificate cert2 = getPublicCertificate(properties.getProperty("PUBLIC"));
+        Certificate cert2 = getPublicCertificate("./src/test/resources/encryption/suxh.cer");
         PdfWriter writer = new PdfWriter(dest, new WriterProperties().setPublicKeyEncryption(new Certificate[]{cert1, cert2},
                 new int[]{EncryptionConstants.ALLOW_PRINTING, EncryptionConstants.ALLOW_COPY}, EncryptionConstants.ENCRYPTION_AES_128));
         Document doc = new Document(new PdfDocument(writer));

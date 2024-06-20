@@ -78,13 +78,13 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         // Keystore and certificate chain
         String keystore = properties.getProperty("PRIVATE");
         String password = properties.getProperty("PASSWORD");
-        KeyStore ks = KeyStore.getInstance("PKCS12", "BC");
+        KeyStore ks = KeyStore.getInstance("PKCS12");
         ks.load(new FileInputStream(keystore), password.toCharArray());
         String alias = (String) ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, password.toCharArray());
         Certificate[] chain = ks.getCertificateChain(alias);
         // Creating the reader and the signer
-        PdfReader reader = new PdfReader(SRC);
+        PdfReader reader = new PdfReader(src);
         StampingProperties stampingProperties = new StampingProperties();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
@@ -100,10 +100,11 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         // If we add a time stamp:
         ITSAClient tsc = null;
         if (withTS) {
+            //时间戳地址使用正向代理
             String tsa_url = properties.getProperty("TSA");
             String tsa_login = properties.getProperty("TSA_LOGIN");
             String tsa_passw = properties.getProperty("TSA_PASSWORD");
-            tsc = new TSAClientBouncyCastle(tsa_url, tsa_login, tsa_passw);
+            tsc = new TSAClientBouncyCastle(tsa_url,"ON","127.0.0.1","8889", tsa_login, tsa_passw);
         }
         // If we use OCSP:
         IOcspClient ocsp = null;
@@ -123,7 +124,7 @@ public class Listing_12_21_TimestampOCSP extends SignatureTest {
         Security.addProvider(new BouncyCastleProvider());
         properties.load(new FileInputStream(PATH));
         signPdf(src, SIGNED0, false, false);
-//        signPdf(src, SIGNED1, true, false);
+        signPdf(src, SIGNED1, true, false);
         signPdf(src, SIGNED2, false, true);
 //        signPdf(src, SIGNED3, true, true);
     }

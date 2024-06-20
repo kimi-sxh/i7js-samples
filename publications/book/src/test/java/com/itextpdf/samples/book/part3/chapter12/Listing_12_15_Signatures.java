@@ -70,7 +70,7 @@ public class Listing_12_15_Signatures extends SignatureTest {
         String path = properties.getProperty("PRIVATE");
         String keystore_password = properties.getProperty("PASSWORD");
         String key_password = properties.getProperty("PASSWORD");
-        KeyStore ks = KeyStore.getInstance("pkcs12", "BC");
+        KeyStore ks = KeyStore.getInstance("pkcs12");
         ks.load(new FileInputStream(path), keystore_password.toCharArray());
         String alias = ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, key_password.toCharArray());
@@ -93,7 +93,8 @@ public class Listing_12_15_Signatures extends SignatureTest {
         signer.signDetached(digest, es, chain, null, null, null, 0, PdfSigner.CryptoStandard.CMS);
     }
 
-    public void signPdfSecondTime(String src, String dest)
+    //是否使用追加模式
+    public void signPdfSecondTime(String src, String dest, boolean appendMode)
             throws IOException, GeneralSecurityException {
         String path = "./src/test/resources/encryption/.keystore";
         String keystore_password = "f00b4r";
@@ -105,7 +106,11 @@ public class Listing_12_15_Signatures extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         // reader and signer
         PdfReader reader = new PdfReader(src);
-        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+//        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        StampingProperties stampingProperties = new StampingProperties();
+        if(appendMode) {
+            stampingProperties.useAppendMode();
+        }
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
@@ -172,6 +177,9 @@ public class Listing_12_15_Signatures extends SignatureTest {
     }
 
     public static void main(String[] args) throws Exception {
+        File file = new File(ORIGINAL);
+        file.getParentFile().mkdirs();
+
         new Listing_12_15_Signatures().manipulatePdf(ORIGINAL);
     }
 
@@ -180,7 +188,8 @@ public class Listing_12_15_Signatures extends SignatureTest {
         properties.load(new FileInputStream(PATH));
         createPdf(src);
         signPdfFirstTime(src, SIGNED1);
-        signPdfSecondTime(SIGNED1, SIGNED2);
+        boolean appendMode = true;
+        signPdfSecondTime(SIGNED1, SIGNED2,appendMode);
         verifySignatures();
         extractFirstRevision();
     }

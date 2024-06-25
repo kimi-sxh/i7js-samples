@@ -49,6 +49,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import static org.junit.Assert.fail;
 
+//设置签名元数据信息
 @Category(SampleTest.class)
 public class C2_08_SignatureMetadata extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
@@ -91,6 +92,9 @@ public class C2_08_SignatureMetadata extends SignatureTest {
     }
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());

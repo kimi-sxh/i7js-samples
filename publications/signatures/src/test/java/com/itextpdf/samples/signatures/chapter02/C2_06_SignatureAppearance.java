@@ -22,6 +22,7 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.properties.BaseDirection;
@@ -30,6 +31,7 @@ import com.itextpdf.licensekey.LicenseKey;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.*;
 import com.itextpdf.test.annotations.type.SampleTest;
+import com.itextpdf.text.pdf.PdfTemplate;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -46,14 +48,13 @@ import java.security.cert.Certificate;
 
 import static org.junit.Assert.fail;
 
+//自定义外观文字和图片
 @Category(SampleTest.class)
 public class C2_06_SignatureAppearance extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
     public static final char[] PASSWORD = "password".toCharArray();
     public static final String SRC = "./src/test/resources/pdfs/hello_to_sign.pdf";
     public static final String DEST = "./target/test/resources/signatures/chapter02/signature_appearance%s.pdf";
-    public static final String IMG = "./src/test/resources/img/1t3xt.gif";
-
     public void sign1(String src, String name, String dest,
                       Certificate[] chain, PrivateKey pk,
                       String digestAlgorithm, String provider, PdfSigner.CryptoStandard subfilter,
@@ -77,6 +78,8 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         IExternalDigest digest = new BouncyCastleDigest();
         signer.signDetached(digest, pks, chain, null, null, null, 0, subfilter);
     }
+
+    public static final String IMG = "./src/test/resources/img/1t3xt.gif";
 
     public void sign2(String src, String name, String dest,
                       Certificate[] chain, PrivateKey pk,
@@ -124,7 +127,13 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         signer.setFieldName(name);
         // Custom text and background image
         appearance.setLayer2Text("This document was signed by Bruno Specimen");
+        //普通png图片
         appearance.setImage(ImageDataFactory.create(IMG));
+        //svg图片
+//        PdfTemplate pdfTemplate = new PdfTemplate(signer.getDocument().getWriter());
+//        Image img = null;//PdfSignatureAppearance.svgToImgTemplate(pdfTemplate, imgsrc, 1, 0);
+//        appearance.setImage(img.get);
+
         appearance.setImageScale(1);
         // Creating the signature
         PrivateKeySignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
@@ -147,8 +156,9 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         appearance.setLocation(location);
         appearance.setReuseAppearance(false);
         signer.setFieldName(name);
+        appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC);
         // Default text and scaled background image
-        appearance.setImage(ImageDataFactory.create(IMG));
+        appearance.setSignatureGraphic(ImageDataFactory.create(IMG));
         appearance.setImageScale(-1);
         // Creating the signature
         PrivateKeySignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
@@ -157,6 +167,9 @@ public class C2_06_SignatureAppearance extends SignatureTest {
     }
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -165,15 +178,15 @@ public class C2_06_SignatureAppearance extends SignatureTest {
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         Certificate[] chain = ks.getCertificateChain(alias);
         C2_06_SignatureAppearance app = new C2_06_SignatureAppearance();
-        app.sign1(SRC, "Signature1", String.format(DEST, 1), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Custom appearance example", "Ghent");
-        app.sign2(SRC, "Signature1", String.format(DEST, 2), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Custom appearance example", "Ghent");
-        app.sign3(SRC, "Signature1", String.format(DEST, 3), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Custom appearance example", "Ghent");
+//        app.sign1(SRC, "Signature1", String.format(DEST, 1), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Custom appearance example", "Ghent");
+//        app.sign2(SRC, "Signature1", String.format(DEST, 2), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Custom appearance example", "Ghent");
+//        app.sign3(SRC, "Signature1", String.format(DEST, 3), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Custom appearance example", "Ghent");
         app.sign4(SRC, "Signature1", String.format(DEST, 4), chain, pk,
                 DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
                 "Custom appearance example", "Ghent");

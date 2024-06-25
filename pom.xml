@@ -29,6 +29,7 @@
         <typography.version>1.0.2</typography.version>
         <zugferd.version>1.0.2</zugferd.version>
         <licensekey.version>2.0.3</licensekey.version>
+        <pdfxfa.version>4.0.5-SNAPSHOT</pdfxfa.version>
 <!--        <bouncycastle.version>1.49</bouncycastle.version>-->
         <assertj.version>2.3.0</assertj.version>
         <checkstyle.version>2.15</checkstyle.version>

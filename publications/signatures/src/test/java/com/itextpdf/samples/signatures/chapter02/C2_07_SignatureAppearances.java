@@ -14,11 +14,16 @@
  */
 package com.itextpdf.samples.signatures.chapter02;
 
+import com.itextpdf.io.font.FontProgram;
+import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.StampingProperties;
+import com.itextpdf.layout.font.FontProvider;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.DigestAlgorithms;
@@ -26,6 +31,15 @@ import com.itextpdf.signatures.IExternalDigest;
 import com.itextpdf.signatures.PdfSignatureAppearance;
 import com.itextpdf.signatures.PdfSigner;
 import com.itextpdf.signatures.PrivateKeySignature;
+import com.itextpdf.styledxmlparser.node.INode;
+import com.itextpdf.styledxmlparser.resolver.resource.ResourceResolver;
+import com.itextpdf.svg.converter.SvgConverter;
+import com.itextpdf.svg.element.SvgImage;
+import com.itextpdf.svg.processors.ISvgProcessorResult;
+import com.itextpdf.svg.processors.impl.DefaultSvgProcessor;
+import com.itextpdf.svg.processors.impl.SvgConverterProperties;
+import com.itextpdf.svg.renderers.ISvgNodeRenderer;
+import com.itextpdf.svg.xobject.SvgImageXObject;
 import com.itextpdf.test.annotations.type.SampleTest;
 
 import java.io.File;
@@ -47,6 +61,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import static org.junit.Assert.fail;
 
+//文字和图片自定义外观怎么排布  #setRenderingMode
 @Category(SampleTest.class)
 public class C2_07_SignatureAppearances extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
@@ -54,6 +69,7 @@ public class C2_07_SignatureAppearances extends SignatureTest {
     public static final String SRC = "./src/test/resources/pdfs/hello_to_sign.pdf";
     public static final String DEST = "./target/test/resources/signatures/chapter02/signature_appearance_%s.pdf";
     public static final String IMG = "./src/test/resources/img/1t3xt.gif";
+    private static final String FONT_DIR = "./src/test/resources/font/";
 
     public void sign(String src, String name, String dest,
                      Certificate[] chain, PrivateKey pk,
@@ -81,7 +97,36 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         signer.signDetached(digest, pks, chain, null, null, null, 0, subfilter);
     }
 
+    public void signSVG(String src, String name, String dest,
+                     Certificate[] chain, PrivateKey pk,
+                     String digestAlgorithm, String provider,
+                     PdfSigner.CryptoStandard subfilter,
+                     String reason, String location, PdfSignatureAppearance.RenderingMode renderingMode,
+                     SvgImage svgImage)
+            throws GeneralSecurityException, IOException {
+        // Creating the reader and the signer
+        PdfReader reader = new PdfReader(src);
+        StampingProperties stampingProperties = new StampingProperties();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
+        // Creating the appearance
+        PdfSignatureAppearance appearance = signer.getSignatureAppearance();
+        appearance.setReason(reason);
+        appearance.setLocation(location);
+        appearance.setReuseAppearance(false);
+        signer.setFieldName(name);
+        appearance.setLayer2Text("Signed on " + new Date().toString());
+        appearance.setRenderingMode(renderingMode);
+        appearance.setSignatureGraphic(svgImage);
+        // Creating the signature
+        PrivateKeySignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
+        IExternalDigest digest = new BouncyCastleDigest();
+        signer.signDetached(digest, pks, chain, null, null, null, 0, subfilter);
+    }
+
     public static void main(String[] args) throws IOException, GeneralSecurityException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -91,18 +136,42 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         ImageData image = ImageDataFactory.create(IMG);
         C2_07_SignatureAppearances app = new C2_07_SignatureAppearances();
-        app.sign(SRC, "Signature1", String.format(DEST, 1), chain, pk,
+//        app.sign(SRC, "Signature1", String.format(DEST, 1), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Appearance 1", "Ghent", PdfSignatureAppearance.RenderingMode.DESCRIPTION, null);
+//        app.sign(SRC, "Signature1", String.format(DEST, 2), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Appearance 2", "Ghent", PdfSignatureAppearance.RenderingMode.NAME_AND_DESCRIPTION, null);
+//        app.sign(SRC, "Signature1", String.format(DEST, 3), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Appearance 3", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION, image);
+//        app.sign(SRC, "Signature1", String.format(DEST, 4), chain, pk,
+//                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
+//                "Appearance 4", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC, image);
+
+        //sign svg(svg图片的签名)
+        /*
+         * ①svg包含中文名字没法显示(已解决，后面再说)
+         * ②目前只针对renderingMode为graphics做改造，其他渲染模式没有改造 改造参见PdfSignatureAppearance#setContent
+         * ③针对svg图片切割问题需要研究
+         **/
+        //String svgFileName = "c:\\wechat.svg";//纯画笔画出来的svg
+        String svgFileName = "c:\\测试.svg";//包含中文
+        SvgConverterProperties svgConverterProperties = new SvgConverterProperties() ;
+        FontProgramFactory.registerFont(FONT_DIR + "simsun.ttf", "simsun");
+        PdfFont simsun = PdfFontFactory.createRegisteredFont("simsun");
+        FontProvider fontProvider = new FontProvider();
+        fontProvider.addFont(simsun.getFontProgram());
+        svgConverterProperties.setFontProvider(fontProvider);
+        INode parsedSvg = SvgConverter.parse(new FileInputStream(svgFileName));
+        ISvgProcessorResult result = new DefaultSvgProcessor().process(parsedSvg, svgConverterProperties);
+        ISvgNodeRenderer topSvgRenderer = result.getRootRenderer();
+        float[] wh = SvgConverter.extractWidthAndHeight(topSvgRenderer);
+        SvgImageXObject svgImageXObject = new SvgImageXObject(new Rectangle(0, 0, wh[0], wh[1]),
+                result, new ResourceResolver("c:\\"));
+        app.signSVG(SRC, "Signature1", String.format(DEST, "svg"), chain, pk,
                 DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Appearance 1", "Ghent", PdfSignatureAppearance.RenderingMode.DESCRIPTION, null);
-        app.sign(SRC, "Signature1", String.format(DEST, 2), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Appearance 2", "Ghent", PdfSignatureAppearance.RenderingMode.NAME_AND_DESCRIPTION, null);
-        app.sign(SRC, "Signature1", String.format(DEST, 3), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Appearance 3", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION, image);
-        app.sign(SRC, "Signature1", String.format(DEST, 4), chain, pk,
-                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
-                "Appearance 4", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC, image);
+                "Appearance 4", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC, new SvgImage(svgImageXObject));
     }
 
     @Test

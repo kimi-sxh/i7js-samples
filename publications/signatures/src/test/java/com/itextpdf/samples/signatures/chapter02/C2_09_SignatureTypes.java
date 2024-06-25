@@ -70,7 +70,7 @@ public class C2_09_SignatureTypes extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        StampingProperties stampingProperties = new StampingProperties();
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
@@ -128,7 +128,7 @@ public class C2_09_SignatureTypes extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        StampingProperties stampingProperties = new StampingProperties();
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
@@ -148,6 +148,9 @@ public class C2_09_SignatureTypes extends SignatureTest {
     }
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -157,17 +160,26 @@ public class C2_09_SignatureTypes extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         C2_09_SignatureTypes app = new C2_09_SignatureTypes();
         // TODO DEVSIX-488
+        //根据certificationLevel测试
         app.sign(SRC, String.format(DEST, 1), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.NOT_CERTIFIED, "Test 1", "Ghent");
         app.sign(SRC, String.format(DEST, 2), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING_AND_ANNOTATIONS, "Test 1", "Ghent");
         app.sign(SRC, String.format(DEST, 3), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING, "Test 1", "Ghent");
         app.sign(SRC, String.format(DEST, 4), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_NO_CHANGES_ALLOWED, "Test 1", "Ghent");
-        app.addAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated"));
-        app.addAnnotation(String.format(DEST, 2), String.format(DEST, "2_annotated"));
-        app.addAnnotation(String.format(DEST, 3), String.format(DEST, "3_annotated"));
-        app.addAnnotation(String.format(DEST, 4), String.format(DEST, "4_annotated"));
+
+        //针对不同的certificationLevel添加annot的情况
+        app.addAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated"));//没有破坏签名
+        app.addAnnotation(String.format(DEST, 2), String.format(DEST, "2_annotated"));//没有破坏签名
+        app.addAnnotation(String.format(DEST, 3), String.format(DEST, "3_annotated"));//破坏签名
+        app.addAnnotation(String.format(DEST, 4), String.format(DEST, "4_annotated"));//破坏签名
+
+        //没有追加模式的情况下，添加annotation会破坏签名
         app.addWrongAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated_wrong"));
-        app.addWrongAnnotation(SRC, String.format(DEST, "1_annotated_wrong"));
+        //app.addWrongAnnotation(SRC, String.format(DEST, "1_annotated_wrong"));
+
+        //直接添加文字也会破坏签名
         app.addText(String.format(DEST, 1), String.format(DEST, "1_text"));
+
+        //二次签名
         app.signAgain(String.format(DEST, 1), String.format(DEST, "1_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
         app.signAgain(String.format(DEST, 2), String.format(DEST, "2_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
         app.signAgain(String.format(DEST, 3), String.format(DEST, "3_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");

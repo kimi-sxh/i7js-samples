@@ -120,9 +120,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>pdfxfa</artifactId>
+            <version>${pdfxfa.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-bridge</artifactId>
             <version>1.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>svg</artifactId>
+            <version>${itext.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

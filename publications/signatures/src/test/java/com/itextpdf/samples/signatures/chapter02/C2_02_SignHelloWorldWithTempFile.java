@@ -39,6 +39,7 @@ import java.util.List;
 
 import static org.junit.Assert.fail;
 
+//签名大文件内存溢出使用临时文件处理
 @Category(SampleTest.class)
 public class C2_02_SignHelloWorldWithTempFile extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
@@ -74,6 +75,9 @@ public class C2_02_SignHelloWorldWithTempFile extends SignatureTest {
     }
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());

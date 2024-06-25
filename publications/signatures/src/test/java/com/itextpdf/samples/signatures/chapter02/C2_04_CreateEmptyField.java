@@ -50,6 +50,7 @@ import java.util.List;
 
 import static org.junit.Assert.fail;
 
+//新文档添加空的签名域 已有的文档添加空的签名域
 @Category(SampleTest.class)
 public class C2_04_CreateEmptyField extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
@@ -60,6 +61,14 @@ public class C2_04_CreateEmptyField extends SignatureTest {
     public static final String SIGNAME = "Signature1";
     public static final String UNSIGNED2 = "./target/test/resources/signatures/chapter02/hello_empty2.pdf";
 
+    /**
+     * <b>概要：</b>
+     * 创建新的文档包含空的签名域
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/21 10:49</br>
+     * @param filename
+     * @return
+     **/
     public void createPdf(String filename) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(filename));
         Document doc = new Document(pdfDoc);
@@ -71,6 +80,7 @@ public class C2_04_CreateEmptyField extends SignatureTest {
         // set the widget properties
         field.getWidgets().get(0).setHighlightMode(PdfAnnotation.HIGHLIGHT_INVERT).setFlags(PdfAnnotation.PRINT);
 
+        //设置/MK签名字典
         PdfDictionary mkDictionary = field.getWidgets().get(0).getAppearanceCharacteristics();
         if (null == mkDictionary) {
             mkDictionary = new PdfDictionary();
@@ -89,6 +99,7 @@ public class C2_04_CreateEmptyField extends SignatureTest {
 
         field.getWidgets().get(0).setAppearanceCharacteristics(mkDictionary);
 
+        //设置appearance /N
         // add the field
         PdfAcroForm.getAcroForm(pdfDoc, true).addField(field);
         // maybe you want to define an appearance
@@ -109,6 +120,15 @@ public class C2_04_CreateEmptyField extends SignatureTest {
         doc.close();
     }
 
+    /**
+     * <b>概要：</b>
+     *  对已有的文档添加空的签名域
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/21 10:47</br>
+     * @param src
+     * @param dest
+     * @return
+     **/
     public void addField(String src, String dest) throws IOException {
         PdfDocument pdfDoc = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
         // Create a signature form field

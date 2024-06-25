@@ -79,6 +79,9 @@ public class C2_01_SignHelloWorld extends SignatureTest {
     }
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());

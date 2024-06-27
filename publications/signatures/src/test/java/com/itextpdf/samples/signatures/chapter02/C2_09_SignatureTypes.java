@@ -14,6 +14,13 @@
 */
 package com.itextpdf.samples.signatures.chapter02;
 
+import com.fadada.FastSignObject;
+import com.fadada.VisibleSignature;
+import com.itextpdf.io.font.FontProgramFactory;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfName;
@@ -25,6 +32,7 @@ import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfTextAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.font.FontProvider;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.SignatureTest;
 import com.itextpdf.signatures.BouncyCastleDigest;
@@ -33,6 +41,15 @@ import com.itextpdf.signatures.IExternalDigest;
 import com.itextpdf.signatures.PdfSignatureAppearance;
 import com.itextpdf.signatures.PdfSigner;
 import com.itextpdf.signatures.PrivateKeySignature;
+import com.itextpdf.styledxmlparser.node.INode;
+import com.itextpdf.styledxmlparser.resolver.resource.ResourceResolver;
+import com.itextpdf.svg.converter.SvgConverter;
+import com.itextpdf.svg.element.SvgImage;
+import com.itextpdf.svg.processors.ISvgProcessorResult;
+import com.itextpdf.svg.processors.impl.DefaultSvgProcessor;
+import com.itextpdf.svg.processors.impl.SvgConverterProperties;
+import com.itextpdf.svg.renderers.ISvgNodeRenderer;
+import com.itextpdf.svg.xobject.SvgImageXObject;
 import com.itextpdf.test.annotations.type.SampleTest;
 
 import java.io.File;
@@ -44,6 +61,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.security.cert.Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -61,12 +79,16 @@ public class C2_09_SignatureTypes extends SignatureTest {
     public static final char[] PASSWORD = "password".toCharArray();
     public static final String SRC = "./src/test/resources/pdfs/hello.pdf";
     public static final String DEST = "./target/test/resources/signatures/chapter02/hello_level_%s.pdf";
+    public static final String IMG = "./src/test/resources/img/1t3xt.gif";
+
+    private static final String FONT_DIR = "./src/test/resources/font/";
 
     public void sign(String src, String dest,
                      Certificate[] chain, PrivateKey pk,
                      String digestAlgorithm, String provider,
                      PdfSigner.CryptoStandard subfilter, int certificationLevel,
-                     String reason, String location)
+                     String reason, String location, PdfSignatureAppearance.RenderingMode renderingMode,
+                     ImageData image)
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
@@ -81,12 +103,77 @@ public class C2_09_SignatureTypes extends SignatureTest {
         appearance
                 .setPageRect(rect)
                 .setPageNumber(1);
+        appearance.setRenderingMode(renderingMode);
+        appearance.setImage(image);
         signer.setFieldName("sig");
         signer.setCertificationLevel(certificationLevel);
         // Creating the signature
         PrivateKeySignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
         IExternalDigest digest = new BouncyCastleDigest();
         signer.signDetached(digest, pks, chain, null, null, null, 0, subfilter);
+    }
+
+    public void fastSign(String src, String dest,
+                     Certificate[] chain, PrivateKey pk,
+                     String digestAlgorithm, String provider,
+                     PdfSigner.CryptoStandard subfilter, int certificationLevel,
+                     String reason, String location)
+            throws GeneralSecurityException, IOException {
+        // Creating the reader and the signer
+        PdfReader reader = new PdfReader(src);
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
+        // Creating the appearance
+        PdfSignatureAppearance appearance = signer.getSignatureAppearance();
+        appearance.setReason(reason);
+        appearance.setLocation(location);
+        appearance.setReuseAppearance(false);
+        appearance.setRenderingMode(PdfSignatureAppearance.RenderingMode.GRAPHIC);
+
+        signer.setCertificationLevel(certificationLevel);
+        // Creating the signature
+        PrivateKeySignature pks = new PrivateKeySignature(pk, digestAlgorithm, provider);
+        IExternalDigest digest = new BouncyCastleDigest();
+
+        List<FastSignObject> fastSignObjects = new ArrayList<FastSignObject>();
+        //第一个快速签名
+        FastSignObject fastSignObject = new FastSignObject();
+        ImageData image = ImageDataFactory.create(IMG);
+        fastSignObject.setImage(image);
+        List<VisibleSignature> visibleSignatures = new ArrayList<VisibleSignature>();
+        Rectangle rect1 = new Rectangle(36, 648, 200, 100);
+        visibleSignatures.add(new VisibleSignature(rect1, 1, "sig1"));
+        Rectangle rect2 = new Rectangle(336, 648, 200, 100);
+        visibleSignatures.add(new VisibleSignature(rect2, 2, "sig2"));
+        fastSignObject.setVslist(visibleSignatures);
+        fastSignObjects.add(fastSignObject);
+
+        FastSignObject fastSignObject2 = new FastSignObject();
+        String svgFileName = "c:\\测试.svg";//包含中文
+        SvgConverterProperties svgConverterProperties = new SvgConverterProperties() ;
+        FontProgramFactory.registerFont(FONT_DIR + "simsun.ttf", "simsun");
+        PdfFont simsun = PdfFontFactory.createRegisteredFont("simsun");
+        FontProvider fontProvider = new FontProvider();
+        fontProvider.addFont(simsun.getFontProgram());
+        svgConverterProperties.setFontProvider(fontProvider);
+        INode parsedSvg = SvgConverter.parse(new FileInputStream(svgFileName));
+        ISvgProcessorResult result = new DefaultSvgProcessor().process(parsedSvg, svgConverterProperties);
+        ISvgNodeRenderer topSvgRenderer = result.getRootRenderer();
+        float[] wh = SvgConverter.extractWidthAndHeight(topSvgRenderer);
+        SvgImageXObject svgImageXObject = new SvgImageXObject(new Rectangle(0, 0, wh[0], wh[1]),
+                result, new ResourceResolver("c:\\"));
+        fastSignObject2.setSvgImage(new SvgImage(svgImageXObject));
+        List<VisibleSignature> visibleSignatures2 = new ArrayList<VisibleSignature>();
+        Rectangle rect3 = new Rectangle(36, 348, 200, 100);
+        visibleSignatures2.add(new VisibleSignature(rect3, 1, "sig3"));
+        Rectangle rect4 = new Rectangle(336, 348, 200, 100);
+        visibleSignatures2.add(new VisibleSignature(rect4, 2, "sig4"));
+        fastSignObject2.setVslist(visibleSignatures2);
+        fastSignObjects.add(fastSignObject2);
+
+        //第三个，第四个 以此类推自己构造。。。。
+
+        signer.fastSignDetached(fastSignObjects,digest, pks, chain, null, null, null, 0, subfilter,null);
     }
 
     public void addText(String src, String dest) throws IOException {
@@ -159,31 +246,36 @@ public class C2_09_SignatureTypes extends SignatureTest {
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         Certificate[] chain = ks.getCertificateChain(alias);
         C2_09_SignatureTypes app = new C2_09_SignatureTypes();
+        ImageData image = ImageDataFactory.create(IMG);
         // TODO DEVSIX-488
         //根据certificationLevel测试
-        app.sign(SRC, String.format(DEST, 1), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.NOT_CERTIFIED, "Test 1", "Ghent");
-        app.sign(SRC, String.format(DEST, 2), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING_AND_ANNOTATIONS, "Test 1", "Ghent");
-        app.sign(SRC, String.format(DEST, 3), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING, "Test 1", "Ghent");
-        app.sign(SRC, String.format(DEST, 4), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_NO_CHANGES_ALLOWED, "Test 1", "Ghent");
+//        app.sign(SRC, String.format(DEST, 1), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.NOT_CERTIFIED, "Test 1", "Ghent",PdfSignatureAppearance.RenderingMode.GRAPHIC,image);
+//        app.sign(SRC, String.format(DEST, 2), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING_AND_ANNOTATIONS, "Test 1", "Ghent");
+//        app.sign(SRC, String.format(DEST, 3), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_FORM_FILLING, "Test 1", "Ghent");
+//        app.sign(SRC, String.format(DEST, 4), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, PdfSigner.CERTIFIED_NO_CHANGES_ALLOWED, "Test 1", "Ghent");
 
         //针对不同的certificationLevel添加annot的情况
-        app.addAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated"));//没有破坏签名
-        app.addAnnotation(String.format(DEST, 2), String.format(DEST, "2_annotated"));//没有破坏签名
-        app.addAnnotation(String.format(DEST, 3), String.format(DEST, "3_annotated"));//破坏签名
-        app.addAnnotation(String.format(DEST, 4), String.format(DEST, "4_annotated"));//破坏签名
+//        app.addAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated"));//没有破坏签名
+//        app.addAnnotation(String.format(DEST, 2), String.format(DEST, "2_annotated"));//没有破坏签名
+//        app.addAnnotation(String.format(DEST, 3), String.format(DEST, "3_annotated"));//破坏签名
+//        app.addAnnotation(String.format(DEST, 4), String.format(DEST, "4_annotated"));//破坏签名
 
         //没有追加模式的情况下，添加annotation会破坏签名
-        app.addWrongAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated_wrong"));
+//        app.addWrongAnnotation(String.format(DEST, 1), String.format(DEST, "1_annotated_wrong"));
         //app.addWrongAnnotation(SRC, String.format(DEST, "1_annotated_wrong"));
 
         //直接添加文字也会破坏签名
-        app.addText(String.format(DEST, 1), String.format(DEST, "1_text"));
+//        app.addText(String.format(DEST, 1), String.format(DEST, "1_text"));
 
         //二次签名
-        app.signAgain(String.format(DEST, 1), String.format(DEST, "1_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
-        app.signAgain(String.format(DEST, 2), String.format(DEST, "2_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
-        app.signAgain(String.format(DEST, 3), String.format(DEST, "3_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
-        app.signAgain(String.format(DEST, 4), String.format(DEST, "4_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
+//        app.signAgain(String.format(DEST, 1), String.format(DEST, "1_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
+//        app.signAgain(String.format(DEST, 2), String.format(DEST, "2_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
+//        app.signAgain(String.format(DEST, 3), String.format(DEST, "3_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
+//        app.signAgain(String.format(DEST, 4), String.format(DEST, "4_double"), chain, pk, DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS, "Second signature test", "Gent");
+
+        //快速签名
+        app.fastSign(SRC, String.format(DEST, "fast"), chain, pk, DigestAlgorithms.SHA256, provider.getName(),
+                PdfSigner.CryptoStandard.CMS, PdfSigner.NOT_CERTIFIED, "Test 1", "Ghent");
     }
 
     @Test

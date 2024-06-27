@@ -61,7 +61,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import static org.junit.Assert.fail;
 
-//文字和图片自定义外观怎么排布  #setRenderingMode
+//对已有的签名域做签名
+// 文字和图片自定义外观怎么排布  #setRenderingMode
 @Category(SampleTest.class)
 public class C2_07_SignatureAppearances extends SignatureTest {
     public static final String KEYSTORE = "./src/test/resources/encryption/ks";
@@ -71,7 +72,26 @@ public class C2_07_SignatureAppearances extends SignatureTest {
     public static final String IMG = "./src/test/resources/img/1t3xt.gif";
     private static final String FONT_DIR = "./src/test/resources/font/";
 
-    public void sign(String src, String name, String dest,
+    /**
+     * <b>概要：</b>
+     *  对已有的签名域做签名
+     * <b>作者：</b>suxh</br>
+     * <b>日期：</b>2024/6/26 14:29</br>
+     * @param src 源文件路径
+     * @param name 已有签名域的域名
+     * @param dest 生成目标文件路径
+     * @param chain 证书信息
+     * @param pk 私钥
+     * @param digestAlgorithm 摘要算法
+     * @param provider 算法提供者
+     * @param subfilter 签名字典subfilter
+     * @param reason
+     * @param location
+     * @param renderingMode 渲染模式
+     * @param image 图片数据
+     * @return
+     **/
+    public void sign2SignField(String src, String name, String dest,
                      Certificate[] chain, PrivateKey pk,
                      String digestAlgorithm, String provider,
                      PdfSigner.CryptoStandard subfilter,
@@ -80,7 +100,7 @@ public class C2_07_SignatureAppearances extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        StampingProperties stampingProperties = new StampingProperties();
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
@@ -97,7 +117,7 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         signer.signDetached(digest, pks, chain, null, null, null, 0, subfilter);
     }
 
-    public void signSVG(String src, String name, String dest,
+    public void signSVG2SignField(String src, String name, String dest,
                      Certificate[] chain, PrivateKey pk,
                      String digestAlgorithm, String provider,
                      PdfSigner.CryptoStandard subfilter,
@@ -106,7 +126,7 @@ public class C2_07_SignatureAppearances extends SignatureTest {
             throws GeneralSecurityException, IOException {
         // Creating the reader and the signer
         PdfReader reader = new PdfReader(src);
-        StampingProperties stampingProperties = new StampingProperties();
+        StampingProperties stampingProperties = new StampingProperties().useAppendMode();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
@@ -136,16 +156,16 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         Certificate[] chain = ks.getCertificateChain(alias);
         ImageData image = ImageDataFactory.create(IMG);
         C2_07_SignatureAppearances app = new C2_07_SignatureAppearances();
-//        app.sign(SRC, "Signature1", String.format(DEST, 1), chain, pk,
+//        app.sign2SignField(SRC, "Signature1", String.format(DEST, 1), chain, pk,
 //                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
 //                "Appearance 1", "Ghent", PdfSignatureAppearance.RenderingMode.DESCRIPTION, null);
-//        app.sign(SRC, "Signature1", String.format(DEST, 2), chain, pk,
+//        app.sign2SignField(SRC, "Signature1", String.format(DEST, 2), chain, pk,
 //                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
 //                "Appearance 2", "Ghent", PdfSignatureAppearance.RenderingMode.NAME_AND_DESCRIPTION, null);
-//        app.sign(SRC, "Signature1", String.format(DEST, 3), chain, pk,
+//        app.sign2SignField(SRC, "Signature1", String.format(DEST, 3), chain, pk,
 //                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
 //                "Appearance 3", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC_AND_DESCRIPTION, image);
-//        app.sign(SRC, "Signature1", String.format(DEST, 4), chain, pk,
+//        app.sign2SignField(SRC, "Signature1", String.format(DEST, 4), chain, pk,
 //                DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
 //                "Appearance 4", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC, image);
 
@@ -169,7 +189,7 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         float[] wh = SvgConverter.extractWidthAndHeight(topSvgRenderer);
         SvgImageXObject svgImageXObject = new SvgImageXObject(new Rectangle(0, 0, wh[0], wh[1]),
                 result, new ResourceResolver("c:\\"));
-        app.signSVG(SRC, "Signature1", String.format(DEST, "svg"), chain, pk,
+        app.signSVG2SignField(SRC, "Signature1", String.format(DEST, "svg"), chain, pk,
                 DigestAlgorithms.SHA256, provider.getName(), PdfSigner.CryptoStandard.CMS,
                 "Appearance 4", "Ghent", PdfSignatureAppearance.RenderingMode.GRAPHIC, new SvgImage(svgImageXObject));
     }

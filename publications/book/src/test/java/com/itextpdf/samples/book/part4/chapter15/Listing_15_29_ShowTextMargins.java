@@ -19,6 +19,7 @@ import org.junit.experimental.categories.Category;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -31,6 +32,9 @@ public class Listing_15_29_ShowTextMargins extends GenericTest {
 
     public static void main(String args[])
             throws IOException, SQLException, ParserConfigurationException, SAXException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_15_29_ShowTextMargins().manipulatePdf(DEST);
     }
 

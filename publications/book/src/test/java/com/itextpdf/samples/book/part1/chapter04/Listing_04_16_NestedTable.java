@@ -11,10 +11,12 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -25,6 +27,9 @@ public class Listing_04_16_NestedTable extends GenericTest {
     public static final String RESOURCE = "./src/test/resources/img/posters/%s.jpg";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_16_NestedTable().manipulatePdf(DEST);
     }
 
@@ -32,10 +37,13 @@ public class Listing_04_16_NestedTable extends GenericTest {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc);
         Table table = new Table(4);
+        table.setWidth(UnitValue.createPercentValue(100));
         Table nested1 = new Table(2);
+        nested1.setWidth(UnitValue.createPercentValue(100));
         nested1.addCell("1.1");
         nested1.addCell("1.2");
         Table nested2 = new Table(1);
+        nested2.setWidth(UnitValue.createPercentValue(100));
         nested2.addCell("12.1");
         nested2.addCell("12.2");
         for (int k = 0; k < 16; ++k) {

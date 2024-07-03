@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 
 import java.io.File;
 
-
+//每一行的cell宽度不一样的情况 https://kb.itextpdf.com/itext/how-to-create-a-table-in-which-the-cells-have-diff
 @Category(SampleTest.class)
 public class TableMeasurements extends GenericTest {
     public static final String DEST = "./target/test/resources/sandbox/tables/tables_measurements.pdf";

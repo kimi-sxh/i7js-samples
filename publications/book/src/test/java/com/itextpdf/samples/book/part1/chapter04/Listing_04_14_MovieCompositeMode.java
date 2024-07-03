@@ -17,6 +17,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
@@ -26,6 +27,7 @@ import com.lowagie.filmfestival.PojoFactory;
 import com.lowagie.filmfestival.PojoToElementFactory;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -40,6 +42,9 @@ public class Listing_04_14_MovieCompositeMode extends GenericTest {
     protected PdfFont italic;
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_14_MovieCompositeMode().manipulatePdf(DEST);
     }
 
@@ -61,10 +66,10 @@ public class Listing_04_14_MovieCompositeMode extends GenericTest {
         for (Movie movie : movies) {
             // a table with two columns
             Table table = new Table(new float[]{1, 7});
-            table.setWidth(100);
+           // table.setWidth(UnitValue.createPercentValue(100));
             table.setMarginTop(5);
             // a cell with an image
-            cell = new Cell().add(new Image(ImageDataFactory.create(String.format(RESOURCE, movie.getImdb()))).setAutoScaleWidth(true));
+            cell = new Cell().add(new Image(ImageDataFactory.create(String.format(RESOURCE, movie.getImdb()))).setAutoScale(false));
             cell.setBorder(Border.NO_BORDER);
             table.addCell(cell);
             cell = new Cell();

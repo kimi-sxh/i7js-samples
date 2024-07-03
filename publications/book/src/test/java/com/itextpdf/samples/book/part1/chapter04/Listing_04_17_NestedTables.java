@@ -21,6 +21,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
@@ -31,6 +32,7 @@ import com.lowagie.filmfestival.PojoToElementFactory;
 import com.lowagie.filmfestival.Screening;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -51,6 +53,9 @@ public class Listing_04_17_NestedTables extends GenericTest {
     protected PdfFont bold;
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_17_NestedTables().manipulatePdf(DEST);
     }
 
@@ -80,6 +85,7 @@ public class Listing_04_17_NestedTables extends GenericTest {
             throws UnsupportedEncodingException, SQLException, MalformedURLException {
         // Create a table with only one column
         Table table = new Table(1);
+        table.setWidth(UnitValue.createPercentValue(100));
         // add the cell with the date
         Cell cell = new Cell().add(new Paragraph(day.toString()).setFontColor(ColorConstants.WHITE));
         cell.setBackgroundColor(ColorConstants.BLACK);
@@ -96,7 +102,7 @@ public class Listing_04_17_NestedTables extends GenericTest {
     private Table getTable(Screening screening) throws MalformedURLException {
         // Create a table with 4 columns
         Table table = new Table(new float[]{1, 5, 10, 10});
-        table.setWidth(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         // Get the movie
         Movie movie = screening.getMovie();
         // A cell with the title as a nested table spanning the complete row
@@ -109,19 +115,23 @@ public class Listing_04_17_NestedTables extends GenericTest {
                 "#" + screening.getMovie().getEntry().getCategory().getColor());
         cell.setBackgroundColor(color);
         table.addCell(cell);
+
         // empty cell
         cell = new Cell();
         cell.setBorder(Border.NO_BORDER);
         table.addCell(cell);
+
         // cell with the movie poster
         cell = new Cell().add(getImage(movie.getImdb()));
         cell.setBorder(Border.NO_BORDER);
         table.addCell(cell);
+
         // cell with the list of directors
         cell = new Cell();
         cell.add(PojoToElementFactory.getDirectorList(movie));
         cell.setBorder(Border.NO_BORDER);
         table.addCell(cell);
+
         // cell with the list of countries
         cell = new Cell();
         cell.add(PojoToElementFactory.getCountryList(movie));
@@ -132,7 +142,7 @@ public class Listing_04_17_NestedTables extends GenericTest {
 
     private Table fullTitle(Screening screening) {
         Table table = new Table(new float[]{3, 15, 2});
-        table.setWidth(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         // cell 1: location and time
         Cell cell = new Cell();
         cell.setBorder(Border.NO_BORDER);

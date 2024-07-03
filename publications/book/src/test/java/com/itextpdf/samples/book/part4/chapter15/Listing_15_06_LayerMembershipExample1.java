@@ -17,6 +17,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 
 @Category(SampleTest.class)
@@ -25,6 +26,9 @@ public class Listing_15_06_LayerMembershipExample1 extends GenericTest {
             = "./target/test/resources/book/part4/chapter15/Listing_15_06_LayerMembershipExample1.pdf";
 
     public static void main(String args[]) throws IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_15_06_LayerMembershipExample1().manipulatePdf(DEST);
     }
 

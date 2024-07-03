@@ -44,7 +44,7 @@ public class Splitting extends GenericTest {
             table.addCell("key " + i);
             table.addCell("value " + i);
         }
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < 40; i++) {
             doc.add(p);
         }
         doc.add(table);
@@ -52,7 +52,7 @@ public class Splitting extends GenericTest {
             doc.add(p);
         }
         table = new Table(2);
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 38; i++) {
             table.addCell("key " + i);
             table.addCell("value " + i);
         }

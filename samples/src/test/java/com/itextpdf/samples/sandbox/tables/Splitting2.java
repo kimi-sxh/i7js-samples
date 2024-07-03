@@ -44,18 +44,19 @@ public class Splitting2 extends GenericTest {
             table.addCell("key " + i);
             table.addCell("value " + i);
         }
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < 40; i++) {
             doc.add(p);
         }
         doc.add(table);
-        for (int i = 0; i < 23; i++) {
+        for (int i = 0; i < 38; i++) {
             doc.add(p);
         }
         table = new Table(2);
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 12; i++) {
             table.addCell("key " + i);
             table.addCell("value " + i);
         }
+        //尽量让table内容保持在一起
         table.setKeepTogether(true);
         doc.add(table);
         doc.close();

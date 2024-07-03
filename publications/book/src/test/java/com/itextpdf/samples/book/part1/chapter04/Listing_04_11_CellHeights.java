@@ -18,6 +18,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,6 +27,9 @@ public class Listing_04_11_CellHeights extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part1/chapter04/Listing_04_11_CellHeights.pdf";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_11_CellHeights().manipulatePdf(DEST);
     }
 
@@ -36,11 +40,12 @@ public class Listing_04_11_CellHeights extends GenericTest {
         Table table = new Table(2);
         // a long phrase
         Paragraph p = new Paragraph(
-                "Dr. iText or: How I Learned to Stop Worrying and Love PDF.");
+                "Dr. iText or: How I Learned to Stop Worrying and Love PDF. Stop Worrying and Love PDF.");
         Cell cell = new Cell().add(p);
-        // the prhase is wrapped
+        // the phrase is wrapped
         table.addCell("wrap");
         table.addCell(cell);
+        table.addCell("no wrap");
         table.addCell(new Cell().add(p));
         // a long phrase with newlines
         p = new Paragraph(

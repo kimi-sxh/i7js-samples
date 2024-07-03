@@ -17,7 +17,9 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -26,6 +28,7 @@ import com.lowagie.database.HsqldbConnection;
 import com.lowagie.filmfestival.*;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -40,6 +43,9 @@ public class Listing_04_06_MovieTextMode extends GenericTest {
     protected PdfFont italic;
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_06_MovieTextMode().manipulatePdf(DEST);
     }
 
@@ -57,7 +63,8 @@ public class Listing_04_06_MovieTextMode extends GenericTest {
         List<Movie> movies = PojoFactory.getMovies(connection);
         for (Movie movie : movies) {
             Table table = new Table(new float[]{1, 4});
-            table.setWidth(100);
+            table.setWidth(UnitValue.createPercentValue(80));
+            table.setHorizontalAlignment(HorizontalAlignment.CENTER);
             Cell cell;
             cell = new Cell(1, 2).add(new Paragraph(movie.getTitle()).setFont(bold));
             cell.setTextAlignment(TextAlignment.CENTER);

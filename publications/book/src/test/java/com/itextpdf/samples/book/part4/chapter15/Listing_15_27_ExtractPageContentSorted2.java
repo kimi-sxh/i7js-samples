@@ -16,6 +16,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.test.annotations.type.SampleTest;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,12 +28,15 @@ import org.xml.sax.SAXException;
 @Category(SampleTest.class)
 public class Listing_15_27_ExtractPageContentSorted2 {
     public static final String DEST
-            = "./samples/target/test/resources/book/part4/chapter15/Listing_15_27_ExtractPageContentSorted2.txt";
+            = "./target/test/resources/book/part4/chapter15/Listing_15_27_ExtractPageContentSorted2.txt";
     public static final String PREFACE
-            = "./samples/src/test/resources/pdfs/preface.pdf";
+            = "./src/test/resources/pdfs/preface.pdf";
 
     public static void main(String args[])
             throws IOException, SQLException, ParserConfigurationException, SAXException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_15_27_ExtractPageContentSorted2().manipulatePdf(DEST);
     }
 

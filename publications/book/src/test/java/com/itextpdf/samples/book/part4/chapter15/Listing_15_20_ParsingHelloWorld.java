@@ -29,6 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.sql.SQLException;
 
+//按照PdfTokenizer解析pdf文档内容流
 @Category(SampleTest.class)
 public class Listing_15_20_ParsingHelloWorld extends GenericTest {
     public static final String DEST =
@@ -108,8 +109,13 @@ public class Listing_15_20_ParsingHelloWorld extends GenericTest {
     }
 
     public void manipulatePdf(String dest) throws IOException, SQLException, ParserConfigurationException, SAXException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         createPdf(DEST);
+        //
         parsePdf(HELLO_WORLD, TEXT[0]);
+        //xobject hello people会丢失 并且读取是按照内容流来
         parsePdf(DEST, TEXT[1]);
         extractText(DEST, TEXT[2]);
     }

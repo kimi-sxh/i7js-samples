@@ -14,18 +14,24 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//设置表格水平位置
 @Category(SampleTest.class)
 public class Listing_04_05_TableAlignment extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part1/chapter04/Listing_04_05_TableAlignment.pdf";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_05_TableAlignment().manipulatePdf(DEST);
     }
 
@@ -34,7 +40,7 @@ public class Listing_04_05_TableAlignment extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = createFirstTable();
-        table.setWidth(50);
+        table.setWidth(UnitValue.createPercentValue(50));
         table.setHorizontalAlignment(HorizontalAlignment.LEFT);
         doc.add(table);
         table.setHorizontalAlignment(HorizontalAlignment.CENTER);

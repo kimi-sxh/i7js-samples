@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import org.junit.experimental.categories.Category;
 import org.xml.sax.SAXException;
 
+//查找关键字：指定区域排除页头，页脚或页码之类的
 @Category(SampleTest.class)
 public class Listing_15_28_ExtractPageContentArea {
     public static final String DEST

@@ -19,6 +19,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,9 @@ public class Listing_15_02_OptionalContentExample extends GenericTest {
             = "./target/test/resources/book/part4/chapter15/Listing_15_02_OptionalContentExample.pdf";
 
     public static void main(String args[]) throws IOException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_15_02_OptionalContentExample().manipulatePdf(DEST);
     }
 

@@ -16,8 +16,10 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 
+//演示OCG使用 /OC tag，BDC EMC包含的内容
 @Category(SampleTest.class)
 public class Listing_15_01_PeekABoo extends GenericTest {
     public static final String DEST
@@ -26,10 +28,13 @@ public class Listing_15_01_PeekABoo extends GenericTest {
             = "./target/test/resources/book/part4/chapter15/Listing_15_01_PickABoo2.pdf";
 
     public static void main(String args[]) throws IOException {
-        new Listing_15_01_PeekABoo().manipulatePdf(DEST);
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
+        new Listing_15_01_PeekABoo().manipulatePdf();
     }
 
-    public void manipulatePdf(String dest) throws IOException {
+    public void manipulatePdf() throws IOException {
         createPdf(DEST, true);
         createPdf(RESULT2, false);
     }

@@ -25,6 +25,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.layout.LayoutArea;
 import com.itextpdf.layout.layout.LayoutResult;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.renderer.DocumentRenderer;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
@@ -87,21 +88,21 @@ public class Listing_04_23_ColumnTable extends GenericTest {
 
     public static Table getHeaderTable(Date day, int page, PdfFont font) {
         Table header = new Table(3);
-        header.setWidth(100);
+        header.setWidth(UnitValue.createPercentValue(100));
         Style style = new Style().setBackgroundColor(ColorConstants.BLACK).setFontColor(ColorConstants.WHITE).setFont(font);
         Paragraph p = new Paragraph("Foobar Film Festival").addStyle(style);
-        header.addCell(new Cell().add(p));
+        header.addCell(new Cell().add(p).setTextAlignment(TextAlignment.CENTER));
         p = new Paragraph(day.toString()).addStyle(style);
         header.addCell(new Cell().add(p).setTextAlignment(TextAlignment.CENTER));
         p = new Paragraph(String.format("page %d", page)).addStyle(style);
-        header.addCell(new Cell().add(p).setTextAlignment(TextAlignment.RIGHT));
+        header.addCell(new Cell().add(p).setTextAlignment(TextAlignment.CENTER));
         return header;
     }
 
     public Table getTable(DatabaseConnection connection, Date day)
             throws SQLException, IOException {
         Table table = new Table(new float[]{2, 1.5f, 2, 4.5f, 1});
-        table.setWidth(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         Style style = new Style().setBackgroundColor(ColorConstants.LIGHT_GRAY);
         table.addHeaderCell(new Cell().add(new Paragraph("Location")).addStyle(style));
         table.addHeaderCell(new Cell().add(new Paragraph("Time")).addStyle(style));
@@ -143,10 +144,10 @@ public class Listing_04_23_ColumnTable extends GenericTest {
                 addChild(getHeaderTable(date, currentPageNumber, bold).createRendererSubTree());
 
                 nextAreaNumber++;
-                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 450));
+                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(36, 36, 383, 500));
             } else {
                 nextAreaNumber++;
-                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 450));
+                currentArea = new com.itextpdf.layout.layout.RootLayoutArea(currentPageNumber, new Rectangle(423, 36, 383, 500));
             }
             return currentArea;
         }

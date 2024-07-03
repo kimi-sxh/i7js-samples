@@ -19,15 +19,19 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-//设置列宽
+//设置table宽度及列宽
 @Category(SampleTest.class)
 public class Listing_04_02_ColumnWidths extends GenericTest {
     public static final String DEST = "./target/test/resources/book/part1/chapter04/Listing_04_02_ColumnWidths.pdf";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_02_ColumnWidths().manipulatePdf(DEST);
     }
 
@@ -53,6 +57,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
         doc.close();
     }
 
+    //table设置百分比宽度
     public static Table createTable1() {
         Table table = new Table(new float[]{2, 1, 1});
         table.setWidth(UnitValue.createPercentValue(288/523f * 100));
@@ -68,6 +73,7 @@ public class Listing_04_02_ColumnWidths extends GenericTest {
         return table;
     }
 
+    //设置绝对宽度
     public static Table createTable2() {
         Table table = new Table(new float[]{2, 1, 1});
         table.setWidth(UnitValue.createPointValue(288));

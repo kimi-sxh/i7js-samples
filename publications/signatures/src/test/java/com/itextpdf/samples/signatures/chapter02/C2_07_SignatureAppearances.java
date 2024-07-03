@@ -128,12 +128,12 @@ public class C2_07_SignatureAppearances extends SignatureTest {
         PdfReader reader = new PdfReader(src);
         StampingProperties stampingProperties = new StampingProperties().useAppendMode();
         PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), stampingProperties);
+        signer.setFieldName(name);
         // Creating the appearance
         PdfSignatureAppearance appearance = signer.getSignatureAppearance();
         appearance.setReason(reason);
         appearance.setLocation(location);
         appearance.setReuseAppearance(false);
-        signer.setFieldName(name);
         appearance.setLayer2Text("Signed on " + new Date().toString());
         appearance.setRenderingMode(renderingMode);
         appearance.setSignatureGraphic(svgImage);

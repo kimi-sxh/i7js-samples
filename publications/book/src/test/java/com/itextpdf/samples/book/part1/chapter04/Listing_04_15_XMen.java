@@ -17,11 +17,13 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -32,6 +34,9 @@ public class Listing_04_15_XMen extends GenericTest {
     public static final String RESOURCE = "./src/test/resources/img/posters/%s.jpg";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_15_XMen().manipulatePdf(DEST);
     }
 
@@ -47,6 +52,7 @@ public class Listing_04_15_XMen extends GenericTest {
         };
         // Creates a table with 6 columns
         Table table = new Table(6);
+        table.setWidth(UnitValue.createPercentValue(100));
         // first movie
         table.addCell(new Cell()
                 .add(new Paragraph("X-Men"))

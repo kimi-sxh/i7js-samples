@@ -32,6 +32,7 @@ import com.itextpdf.kernel.pdf.annot.PdfAnnotation;
 import com.itextpdf.kernel.pdf.annot.PdfTextAnnotation;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.font.FontProvider;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.samples.SignatureTest;
@@ -139,7 +140,7 @@ public class C2_09_SignatureTypes extends SignatureTest {
         //第一个快速签名
         FastSignObject fastSignObject = new FastSignObject();
         ImageData image = ImageDataFactory.create(IMG);
-        fastSignObject.setImage(image);
+        fastSignObject.setImageObj(new Image(image));
         List<VisibleSignature> visibleSignatures = new ArrayList<VisibleSignature>();
         Rectangle rect1 = new Rectangle(36, 648, 200, 100);
         visibleSignatures.add(new VisibleSignature(rect1, 1, "sig1"));
@@ -149,31 +150,48 @@ public class C2_09_SignatureTypes extends SignatureTest {
         fastSignObjects.add(fastSignObject);
 
         FastSignObject fastSignObject2 = new FastSignObject();
-        String svgFileName = "c:\\测试.svg";//包含中文
+        String svgFileName = "./src/test/resources/img/测试.svg";//包含中文
+        Image textSvgImage = getSvgImage(svgFileName,signer.getDocument());
+        fastSignObject2.setImageObj(textSvgImage);
+        List<VisibleSignature> visibleSignatures2 = new ArrayList<VisibleSignature>();
+        Rectangle rect3 = new Rectangle(36, 348, 200, 100);
+        visibleSignatures2.add(new VisibleSignature(rect3, 1, "sig3"));
+        fastSignObject2.setVslist(visibleSignatures2);
+        fastSignObjects.add(fastSignObject2);
+
+        FastSignObject fastSignObject3 = new FastSignObject();
+        String svgFileName2 = "./src/test/resources/img/wechat.svg";//纯绘画
+        Image svgImage = getSvgImage(svgFileName2,signer.getDocument());
+        fastSignObject3.setImageObj(svgImage);
+        List<VisibleSignature> visibleSignatures3 = new ArrayList<VisibleSignature>();
+        Rectangle rect4 = new Rectangle(336, 348, 200, 100);
+        visibleSignatures3.add(new VisibleSignature(rect4, 2, "sig4"));
+        fastSignObject3.setVslist(visibleSignatures3);
+        fastSignObjects.add(fastSignObject3);
+        //第三个，第四个 以此类推自己构造。。。。
+
+        signer.fastSignDetached(fastSignObjects,digest, pks, chain, null, null, null, 0, subfilter,null);
+    }
+
+    private Image getSvgImage(String svgFileName,PdfDocument pdfDocument) throws IOException {
         SvgConverterProperties svgConverterProperties = new SvgConverterProperties() ;
         FontProgramFactory.registerFont(FONT_DIR + "simsun.ttf", "simsun");
         PdfFont simsun = PdfFontFactory.createRegisteredFont("simsun");
         FontProvider fontProvider = new FontProvider();
         fontProvider.addFont(simsun.getFontProgram());
         svgConverterProperties.setFontProvider(fontProvider);
-        INode parsedSvg = SvgConverter.parse(new FileInputStream(svgFileName));
-        ISvgProcessorResult result = new DefaultSvgProcessor().process(parsedSvg, svgConverterProperties);
-        ISvgNodeRenderer topSvgRenderer = result.getRootRenderer();
-        float[] wh = SvgConverter.extractWidthAndHeight(topSvgRenderer);
-        SvgImageXObject svgImageXObject = new SvgImageXObject(new Rectangle(0, 0, wh[0], wh[1]),
-                result, new ResourceResolver("c:\\"));
-        fastSignObject2.setSvgImage(new SvgImage(svgImageXObject));
-        List<VisibleSignature> visibleSignatures2 = new ArrayList<VisibleSignature>();
-        Rectangle rect3 = new Rectangle(36, 348, 200, 100);
-        visibleSignatures2.add(new VisibleSignature(rect3, 1, "sig3"));
-        Rectangle rect4 = new Rectangle(336, 348, 200, 100);
-        visibleSignatures2.add(new VisibleSignature(rect4, 2, "sig4"));
-        fastSignObject2.setVslist(visibleSignatures2);
-        fastSignObjects.add(fastSignObject2);
+//        //默认使用Jsoup解析svg文档为JsoupDocumentNode
+//        INode parsedSvg = SvgConverter.parse(new FileInputStream(svgFileName));
+//
+//        ISvgProcessorResult result = new DefaultSvgProcessor().process(parsedSvg, svgConverterProperties);
+//        ISvgNodeRenderer topSvgRenderer = result.getRootRenderer();
+//        float[] wh = SvgConverter.extractWidthAndHeight(topSvgRenderer);
+//        SvgImageXObject svgImageXObject = new SvgImageXObject(new Rectangle(0, 0, wh[0], wh[1]),
+//                result, new ResourceResolver("c:\\"));
+//        return new SvgImage(svgImageXObject);
 
-        //第三个，第四个 以此类推自己构造。。。。
-
-        signer.fastSignDetached(fastSignObjects,digest, pks, chain, null, null, null, 0, subfilter,null);
+        Image image = SvgConverter.convertToImage(new FileInputStream(svgFileName), pdfDocument,svgConverterProperties);
+        return image;
     }
 
     public void addText(String src, String dest) throws IOException {

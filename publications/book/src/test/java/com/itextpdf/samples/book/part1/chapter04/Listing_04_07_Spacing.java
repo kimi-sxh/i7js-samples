@@ -17,6 +17,7 @@ import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -28,6 +29,9 @@ public class Listing_04_07_Spacing extends GenericTest {
             "and Love the Portable Document Format.";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_07_Spacing().manipulatePdf(DEST);
     }
 
@@ -36,20 +40,23 @@ public class Listing_04_07_Spacing extends GenericTest {
         Document doc = new Document(pdfDoc);
 
         Table table = new Table(2);
-        table.setWidth(100);
+        //table.setWidth(100);
         Cell cell = new Cell().add(new Paragraph(longText));
         table.addCell("default leading / spacing");
         table.addCell(cell);
-        table.addCell("absolute leading: 20");
 
+        table.addCell("absolute leading: 20");
         cell = new Cell().add(new Paragraph(longText).setMultipliedLeading(0).setFixedLeading(20));
         table.addCell(cell);
+
         table.addCell("absolute leading: 3; relative leading: 1.2");
         cell = new Cell().add(new Paragraph(longText).setFixedLeading(3).setMultipliedLeading(1.2f));
         table.addCell(cell);
+
         table.addCell("absolute leading: 0; relative leading: 1.2");
         cell = new Cell().add(new Paragraph(longText).setFixedLeading(0).setMultipliedLeading(1.2f));
         table.addCell(cell);
+
         table.addCell("no leading at all");
         cell = new Cell().add(new Paragraph(longText).setFixedLeading(0).setMultipliedLeading(0));
         table.addCell(cell);
@@ -58,9 +65,11 @@ public class Listing_04_07_Spacing extends GenericTest {
         table.addCell("padding 10");
         cell.setPadding(10);
         table.addCell(cell);
+
         table.addCell("padding 0");
         cell.setPadding(0);
         table.addCell(cell.clone(true));
+
         table.addCell("different padding for left, right, top and bottom");
         cell.setPaddingLeft(20);
         cell.setPaddingRight(50);

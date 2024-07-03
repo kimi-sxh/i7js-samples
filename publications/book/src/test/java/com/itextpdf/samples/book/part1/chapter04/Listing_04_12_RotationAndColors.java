@@ -18,11 +18,13 @@ import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -32,6 +34,9 @@ public class Listing_04_12_RotationAndColors extends GenericTest {
             "./target/test/resources/book/part1/chapter04/Listing_04_12_RotationAndColors.pdf";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_12_RotationAndColors().manipulatePdf(DEST);
     }
 
@@ -40,7 +45,7 @@ public class Listing_04_12_RotationAndColors extends GenericTest {
         Document doc = new Document(pdfDoc, new PageSize(PageSize.A4).rotate());
 
         Table table = new Table(new float[]{1, 3, 3, 3});
-        table.setWidth(100);
+        table.setWidth(UnitValue.createPercentValue(100));
         Cell cell;
         // row 1, cell 1
         cell = new Cell().add(new Paragraph("COLOR"));

@@ -17,6 +17,7 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.samples.GenericTest;
 import com.itextpdf.test.annotations.type.SampleTest;
 import com.lowagie.database.DatabaseConnection;
@@ -27,6 +28,7 @@ import com.lowagie.filmfestival.PojoToElementFactory;
 import com.lowagie.filmfestival.Screening;
 import org.junit.experimental.categories.Category;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -40,6 +42,9 @@ public class Listing_04_19_HeaderFooter2 extends GenericTest {
     public static final String RESOURCE = "./src/test/resources/img/posters/%s.jpg";
 
     public static void main(String args[]) throws IOException, SQLException {
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+
         new Listing_04_19_HeaderFooter2().manipulatePdf(DEST);
     }
 
@@ -68,7 +73,8 @@ public class Listing_04_19_HeaderFooter2 extends GenericTest {
     public Table getTable(DatabaseConnection connection, Date day) throws UnsupportedEncodingException, SQLException {
         // Create a table with 7 columns
         Table table = new Table(new float[]{2, 1, 2, 5, 1, 3, 2});
-        table.setWidth(100);
+        table.setWidth(UnitValue.createPercentValue(100));
+        table.setKeepWithNext(true);
         // Add the first header row
         Cell cell = new Cell(1, 7).add(new Paragraph(day.toString()).setFontColor(ColorConstants.WHITE));
         cell.setBackgroundColor(ColorConstants.BLACK);
